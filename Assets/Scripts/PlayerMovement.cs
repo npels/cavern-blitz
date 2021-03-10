@@ -28,6 +28,13 @@ public class PlayerMovement : MonoBehaviour {
     private bool isAttacking;
     #endregion
 
+    #region Mining Variables
+    private bool isMining;
+    [SerializeField]
+    [Tooltip("The amount of time player must wait after mining before mining again.")] // Right now it won't let you attack or mine again until the attack cooldown and mining cooldown is finished.
+    private int miningCooldown; 
+    #endregion
+
 
     #region Components
     private Rigidbody2D playerRB;
@@ -39,6 +46,8 @@ public class PlayerMovement : MonoBehaviour {
         playerRB = GetComponent<Rigidbody2D>();
         attackTimer = 0;
         isAttacking = false;
+        isMining = false;
+        miningCooldown = 3;
     }
 
     private void Update() {
@@ -49,6 +58,7 @@ public class PlayerMovement : MonoBehaviour {
     private void FixedUpdate() {
         DoMovement();
         DoAttack();
+        DoMining();
     }
     #endregion
 
@@ -73,7 +83,7 @@ public class PlayerMovement : MonoBehaviour {
     #region Attack functions
     private void DoAttack() {
         float attackInput = Input.GetAxis("Fire1");
-        if (attackInput == 0 || isAttacking) {
+        if (attackInput == 0 || isAttacking || isMining) {
             return;
         } else if (attackTimer > 0) { // Yes, this else if can be merged with the above if, I just have it to debug cooldowns for now.
             Debug.Log("On Cooldown!");
@@ -105,6 +115,30 @@ public class PlayerMovement : MonoBehaviour {
         if (attackTimer > 0 && !isAttacking) {
             attackTimer -= Time.deltaTime;
         }
+    }
+    #endregion
+
+    #region Mining Functions
+    private void DoMining()
+    {
+        float miningInput = Input.GetAxis("Fire2");
+        if (miningInput == 0 || isMining || isAttacking)
+        {
+            return;
+        }
+        else
+        {
+            Debug.Log("Mining");
+            StartCoroutine(MiningRoutine());
+        }
+    }
+
+    IEnumerator MiningRoutine()
+    {
+        isMining = true;
+        yield return new WaitForSeconds(miningCooldown);
+        isMining = false;
+        yield return null; 
     }
     #endregion
 }
