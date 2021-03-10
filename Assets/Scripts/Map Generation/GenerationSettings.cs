@@ -18,4 +18,5 @@ public class GenerationSettings : ScriptableObject {
 
     public Tile wallTile;
     public Tile floorTile;
+    public RuleTile wallRuleTile;
 }
