@@ -26,6 +26,10 @@ public class PlayerMovement : MonoBehaviour {
     [Tooltip("The distance from the player that the currently equipped weapon can reach when attacking.")]
     private float reach;
     private bool isAttacking;
+    private Vector2 mousePos;
+    [SerializeField]
+    [Tooltip("The camera. Used to track mouse position.")]
+    private Camera cam;
     #endregion
 
 
@@ -49,6 +53,7 @@ public class PlayerMovement : MonoBehaviour {
     private void FixedUpdate() {
         DoMovement();
         DoAttack();
+        mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
     }
     #endregion
 
@@ -87,8 +92,13 @@ public class PlayerMovement : MonoBehaviour {
 
     IEnumerator AttackRoutine() {
         isAttacking = true;
+        Vector2 direction = mousePos - playerRB.position;
 
-        RaycastHit2D hit = Physics2D.Raycast(playerRB.position, new Vector2(0f, 1f), reach, LayerMask.GetMask("Enemy"));
+        Vector2 cardinalDirection = getCardinal(direction);
+
+        RaycastHit2D hit = Physics2D.Raycast(playerRB.position, cardinalDirection, reach, LayerMask.GetMask("Enemy"));
+        Debug.DrawRay(playerRB.position, direction, Color.blue, 10.0f, false); // For debugging purposes
+        Debug.DrawRay(playerRB.position, cardinalDirection, Color.red, 10.0f, false); // For debugging purposes
 
         if (hit.transform != null) {
             Debug.Log(hit.transform.name);
@@ -99,6 +109,37 @@ public class PlayerMovement : MonoBehaviour {
         isAttacking = false;
 
         yield return null;
+    }
+
+    private Vector2 getCardinal(Vector2 dir) {
+        float angle = Mathf.Atan2(dir.y, dir.x);
+        float octant = Mathf.Round( 8 * angle / (2*Mathf.PI) + 8 ) % 8;
+        if (octant == 0) {
+            // East
+            return new Vector2(1,0);
+        } else if (octant == 1) {
+            // Northeast
+            return new Vector2(1, 1);
+        } else if (octant == 2) {
+            // North
+            return new Vector2(0, 1);
+        } else if (octant == 3) {
+            // Northwest
+            return new Vector2(-1, 1);
+        } else if (octant == 4) {
+            // West
+            return new Vector2(-1, 0);
+        } else if (octant == 5) {
+            // Southwest
+            return new Vector2(-1, -1);
+        } else if (octant == 6) {
+            // South
+            return new Vector2(0, -1);
+        } else if (octant == 7) {
+            // Northeast
+            return new Vector2(1, -1);
+        }
+        return Vector2.zero;
     }
 
     private void UpdateCooldown() {
