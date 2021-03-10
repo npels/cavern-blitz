@@ -26,6 +26,10 @@ public class PlayerMovement : MonoBehaviour {
     [Tooltip("The distance from the player that the currently equipped weapon can reach when attacking.")]
     private float reach;
     private bool isAttacking;
+    private Vector2 mousePos;
+    [SerializeField]
+    [Tooltip("The camera. Used to track mouse position.")]
+    private Camera cam;
     #endregion
 
 
@@ -49,6 +53,7 @@ public class PlayerMovement : MonoBehaviour {
     private void FixedUpdate() {
         DoMovement();
         DoAttack();
+        mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
     }
     #endregion
 
@@ -87,8 +92,9 @@ public class PlayerMovement : MonoBehaviour {
 
     IEnumerator AttackRoutine() {
         isAttacking = true;
+        Vector2 direction = mousePos - playerRB.position;
 
-        RaycastHit2D hit = Physics2D.Raycast(playerRB.position, new Vector2(0f, 1f), reach, LayerMask.GetMask("Enemy"));
+        RaycastHit2D hit = Physics2D.Raycast(playerRB.position, direction, reach, LayerMask.GetMask("Enemy"));
 
         if (hit.transform != null) {
             Debug.Log(hit.transform.name);
