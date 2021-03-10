@@ -30,12 +30,9 @@ public class CaveMap : MonoBehaviour {
             for (int y = -settings.caveRadius; y < settings.caveRadius; y++) {
                 bool isWall = caveGenerator.IsWallAtPoint(x, y);
 
-                Tile tile;
                 if (isWall) {
-                    tile = settings.wallTile;
                     wallLocations.Add(new Vector3Int(x, y, 0));
                 } else {
-                    tile = settings.floorTile;
                     floorLocations.Add(new Vector3Int(x, y, 0));
                 }
             }
@@ -47,10 +44,10 @@ public class CaveMap : MonoBehaviour {
             }
         }
 
-        Tile[] wallTiles = new Tile[wallLocations.Count];
-        for (int i = 0; i < wallLocations.Count; i++) wallTiles[i] = settings.wallTile;
+        TileBase[] wallTiles = new TileBase[wallLocations.Count];
+        for (int i = 0; i < wallLocations.Count; i++) wallTiles[i] = settings.wallRuleTile;
 
-        Tile[] floorTiles = new Tile[floorLocations.Count];
+        TileBase[] floorTiles = new TileBase[floorLocations.Count];
         for (int i = 0; i < floorLocations.Count; i++) floorTiles[i] = settings.floorTile;
 
 

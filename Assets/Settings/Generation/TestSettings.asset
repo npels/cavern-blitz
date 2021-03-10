@@ -15,8 +15,9 @@ MonoBehaviour:
   seed: 0
   caveRadius: 52
   spawnBoxSize: 2
-  threshold: 0.237
+  threshold: 0.201
   roughness: 1.16
   falloff: 0.81
   wallTile: {fileID: 11400000, guid: 2a89bbf2fe6ef014892319377a101469, type: 2}
   floorTile: {fileID: 11400000, guid: 91901e662e550154a89d9ef4247e7a34, type: 2}
+  wallRuleTile: {fileID: 11400000, guid: 5ef26d39b674d1f4baa7647573ace1e7, type: 2}
