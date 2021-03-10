@@ -99924,6 +99924,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8153334603779752005, guid: a73787bc44ee510419017964cf53307c,
         type: 3}
+      propertyPath: cam
+      value: 
+      objectReference: {fileID: 519420031}
+    - target: {fileID: 8153334603779752005, guid: a73787bc44ee510419017964cf53307c,
+        type: 3}
       propertyPath: reach
       value: 6
       objectReference: {fileID: 0}
