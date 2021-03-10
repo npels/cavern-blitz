@@ -30,9 +30,10 @@ public class PlayerMovement : MonoBehaviour {
 
     #region Mining Variables
     private bool isMining;
+    public bool canMine;
     [SerializeField]
     [Tooltip("The amount of time player must wait after mining before mining again.")] // Right now it won't let you attack or mine again until the attack cooldown and mining cooldown is finished.
-    private int miningCooldown; 
+    private float miningCooldown;
     #endregion
 
 
@@ -47,7 +48,7 @@ public class PlayerMovement : MonoBehaviour {
         attackTimer = 0;
         isAttacking = false;
         isMining = false;
-        miningCooldown = 3;
+        miningCooldown = 1;
     }
 
     private void Update() {
@@ -122,13 +123,12 @@ public class PlayerMovement : MonoBehaviour {
     private void DoMining()
     {
         float miningInput = Input.GetAxis("Fire2");
-        if (miningInput == 0 || isMining || isAttacking)
+        if (!canMine || miningInput == 0 || isMining || isAttacking)
         {
             return;
         }
         else
         {
-            Debug.Log("Mining");
             StartCoroutine(MiningRoutine());
         }
     }
@@ -136,9 +136,12 @@ public class PlayerMovement : MonoBehaviour {
     IEnumerator MiningRoutine()
     {
         isMining = true;
+        Debug.Log("You are now Mining");
         yield return new WaitForSeconds(miningCooldown);
+        Debug.Log("Finished mining");
         isMining = false;
-        yield return null; 
+        yield return null;
     }
+
     #endregion
 }
