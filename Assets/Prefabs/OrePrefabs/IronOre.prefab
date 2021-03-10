@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 9107086150037748293}
   - component: {fileID: 4606806729780621632}
   - component: {fileID: -2353614500584865795}
+  - component: {fileID: 2227100323478151282}
   m_Layer: 9
   m_Name: IronOre
   m_TagString: Iron
@@ -74,12 +75,12 @@ SpriteRenderer:
   m_SortingLayerID: 1906057801
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: f0d6b30661aad42c7a3f842bd32140b6, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a99e14edd9fb9e544b1bd2846edd05d9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 100, y: 100}
+  m_Size: {x: 0.32, y: 0.32}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -105,7 +106,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2439855924810609408}
-  m_BodyType: 0
+  m_BodyType: 2
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -146,3 +147,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5822abe8775b45a3bcfebacdcb81c50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2227100323478151282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2439855924810609408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0dc137b9110b443798ad01d0345a27bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shake_decay: 0.002
+  shake_intensity: 0.3

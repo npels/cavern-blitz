@@ -12,14 +12,13 @@ public class OreCollider : MonoBehaviour
     }
     void OnTriggerEnter2D(Collider2D col )
     {
-        player.canMine = true;
-        print("You are close enough to " + col.gameObject.tag);
+        player.SetCanMine(true, this.gameObject);
+        print("You are close enough to " + this.tag);
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        player.canMine = false;
+        player.SetCanMine(false, this.gameObject);
     }
-
 
 }

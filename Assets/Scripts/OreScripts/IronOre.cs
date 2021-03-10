@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class IronOre : Ore
 {
+
     void Awake()
     {
+        miningTime = 2;
         oreName = "Iron Ore";
     }
 }
