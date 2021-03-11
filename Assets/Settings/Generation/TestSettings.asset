@@ -15,13 +15,9 @@ MonoBehaviour:
   seed: 0
   caveRadius: 52
   spawnBoxSize: 2
-  threshold: 0.2
+  threshold: 0.19
   roughness: 1.16
   falloff: 0.81
+  wallTile: {fileID: 0}
   floorTile: {fileID: 11400000, guid: 91901e662e550154a89d9ef4247e7a34, type: 2}
-  wallTile: {fileID: 11400000, guid: 4b30814e9f6913e49a2b1cc29217092d, type: 2}
-  rockSpawnRate: 0.285
-  rockTile: {fileID: 11400000, guid: 779624739e7509d42bf2a2bb0260a3d7, type: 2}
-  oreSpawnInformation:
-  - rarity: 0.1
-    oreTile: {fileID: 11400000, guid: edd3c56d6f47a4d359b3e69f4c3a48d9, type: 2}
+  wallRuleTile: {fileID: 11400000, guid: 4b30814e9f6913e49a2b1cc29217092d, type: 2}

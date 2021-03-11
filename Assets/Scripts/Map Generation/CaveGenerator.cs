@@ -16,12 +16,12 @@ public class CaveGenerator {
         noiseFilter = new NoiseFilter(settings.seed);
     }
 
-    public float IsWallAtPoint(float x, float y) {
+    public bool IsWallAtPoint(float x, float y) {
         Vector3 point = new Vector3(x, y, 0);
         float value = noiseFilter.Evaluate(point * settings.roughness * ROUGHNESS_MULTIPLIER);
 
         value = value * (1 - point.magnitude * settings.falloff * FALLOFF_MULTIPLIER / settings.caveRadius);
 
-        return value;
+        return value < settings.threshold;
     }
 }

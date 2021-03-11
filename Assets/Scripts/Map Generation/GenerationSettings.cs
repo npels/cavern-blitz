@@ -16,18 +16,7 @@ public class GenerationSettings : ScriptableObject {
     public float roughness;
     public float falloff;
 
-    public TileBase floorTile;
-    public TileBase wallTile;
-
-    [Range(0, 1)]
-    public float rockSpawnRate;
-    public TileBase rockTile;
-
-    public List<OreSpawnInformation> oreSpawnInformation;
-
-    [System.Serializable]
-    public class OreSpawnInformation {
-        public float rarity;
-        public TileBase oreTile;
-    }
+    public Tile wallTile;
+    public Tile floorTile;
+    public RuleTile wallRuleTile;
 }
