@@ -5,10 +5,9 @@ using UnityEngine;
 public class IronOre : Ore
 {
 
-    void Awake()
+    void Start()
     {
-        maxHealth = 2;
+        maxHealth = 3;
         currHealth = maxHealth;
-        oreName = "Iron Ore";
     }
 }

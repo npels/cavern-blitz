@@ -34,11 +34,11 @@ public class PlayerMovement : MonoBehaviour {
 
     #region Mining Variables
     private bool isMining;
-    private bool canMine;
     [SerializeField]
-    [Tooltip("The amount of time player must wait after mining before mining again.")] // Right now it won't let you attack or mine again until the attack cooldown and mining cooldown is finished.
+    [Tooltip("The amount of time player must wait after mining before mining again.")] 
     private float miningCooldown;
-    private float miningReach;
+    private float miningReach; // The distance from the player that the currently equipped pickaxe can reach
+    private int pickaxeDamage; // The damage of the currently equipped pickaxe 
     #endregion
 
 
@@ -55,6 +55,7 @@ public class PlayerMovement : MonoBehaviour {
         isMining = false;
         miningReach = 1;
         miningCooldown = 0.5f;
+        pickaxeDamage = 1;
     }
 
     private void Update() {
@@ -194,12 +195,13 @@ public class PlayerMovement : MonoBehaviour {
             
             if (hit.transform.CompareTag("Iron"))
             {
-                hit.transform.gameObject.SetActive(false);
+                hit.transform.GetComponent<IronOre>().TakeDamage(pickaxeDamage);
             }
             else if (hit.transform.CompareTag("Rock"))
             {
-                hit.transform.gameObject.SetActive(false);
+                hit.transform.GetComponent<Ore>().TakeDamage(pickaxeDamage);
             }
+            //hit.transform.gameObject.SetActive(false);
         }
 
         yield return new WaitForSeconds(miningCooldown);

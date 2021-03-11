@@ -10,10 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2439855924810609411}
   - component: {fileID: 2439855924810609421}
-  - component: {fileID: 2439855924810609410}
   - component: {fileID: 9107086150037748293}
   - component: {fileID: 4606806729780621632}
-  - component: {fileID: -2353614500584865795}
+  - component: {fileID: -533823152959795949}
   m_Layer: 9
   m_Name: Rock
   m_TagString: Rock
@@ -85,18 +84,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &2439855924810609410
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2439855924810609408}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 855cffbed115f4f9c88b819cefb5a924, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!50 &9107086150037748293
 Rigidbody2D:
   serializedVersion: 4
@@ -134,7 +121,7 @@ CircleCollider2D:
   m_Offset: {x: 0, y: -0.08}
   serializedVersion: 2
   m_Radius: 0.56818
---- !u!114 &-2353614500584865795
+--- !u!114 &-533823152959795949
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -143,6 +130,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 2439855924810609408}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a5822abe8775b45a3bcfebacdcb81c50, type: 3}
+  m_Script: {fileID: 11500000, guid: 2821bad13e44d4f6ea9f56d04c255c66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
