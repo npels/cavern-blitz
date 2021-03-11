@@ -13,8 +13,6 @@ GameObject:
   - component: {fileID: 2439855924810609410}
   - component: {fileID: 9107086150037748293}
   - component: {fileID: 4606806729780621632}
-  - component: {fileID: -2353614500584865795}
-  - component: {fileID: 2227100323478151282}
   m_Layer: 9
   m_Name: IronOre
   m_TagString: Iron
@@ -134,30 +132,4 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: -0.05, y: 0}
   serializedVersion: 2
-  m_Radius: 0.7077798
---- !u!114 &-2353614500584865795
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2439855924810609408}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a5822abe8775b45a3bcfebacdcb81c50, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &2227100323478151282
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2439855924810609408}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0dc137b9110b443798ad01d0345a27bd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shake_decay: 0.002
-  shake_intensity: 0.3
+  m_Radius: 0.56818

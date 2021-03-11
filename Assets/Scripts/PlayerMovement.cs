@@ -38,6 +38,7 @@ public class PlayerMovement : MonoBehaviour {
     [SerializeField]
     [Tooltip("The amount of time player must wait after mining before mining again.")] // Right now it won't let you attack or mine again until the attack cooldown and mining cooldown is finished.
     private float miningCooldown;
+    private float miningReach;
     #endregion
 
 
@@ -52,7 +53,8 @@ public class PlayerMovement : MonoBehaviour {
         attackTimer = 0;
         isAttacking = false;
         isMining = false;
-        miningCooldown = 1;
+        miningReach = 1;
+        miningCooldown = 0.5f;
     }
 
     private void Update() {
@@ -105,11 +107,11 @@ public class PlayerMovement : MonoBehaviour {
         isAttacking = true;
         Vector2 direction = mousePos - playerRB.position;
 
-        Vector2 cardinalDirection = getCardinal(direction);
+        //Vector2 cardinalDirection = getCardinal(direction);
 
-        RaycastHit2D hit = Physics2D.Raycast(playerRB.position, cardinalDirection, reach, LayerMask.GetMask("Enemy"));
+        RaycastHit2D hit = Physics2D.Raycast(playerRB.position, direction, reach, LayerMask.GetMask("Enemy"));
         Debug.DrawRay(playerRB.position, direction, Color.blue, 10.0f, false); // For debugging purposes
-        Debug.DrawRay(playerRB.position, cardinalDirection, Color.red, 10.0f, false); // For debugging purposes
+        //Debug.DrawRay(playerRB.position, cardinalDirection, Color.red, 10.0f, false); // For debugging purposes
 
         if (hit.transform != null) {
             Debug.Log(hit.transform.name);
@@ -161,21 +163,16 @@ public class PlayerMovement : MonoBehaviour {
     #endregion
 
     #region Mining Functions
-    public void SetCanMine(bool b, GameObject g)
-    {
-        canMine = b;
-        ore = g;
-    }
-    private GameObject ore; 
     private void DoMining()
     {
         float miningInput = Input.GetAxis("Fire2");
-        if (!canMine || miningInput == 0 || isMining || isAttacking)
+        if (miningInput == 0 || isMining || isAttacking)
         {
             return;
         }
         else
         {
+            Debug.Log("mining");
             StartCoroutine(MiningRoutine());
         }
     }
@@ -183,10 +180,29 @@ public class PlayerMovement : MonoBehaviour {
     IEnumerator MiningRoutine()
     {
         isMining = true;
-        Debug.Log("You are now Mining");
+
+        Vector2 direction = mousePos - playerRB.position;
+
+        Vector2 cardinalDirection = getCardinal(direction);
+
+        RaycastHit2D hit = Physics2D.Raycast(playerRB.position, cardinalDirection, miningReach, LayerMask.GetMask("Environment"));
+        Debug.DrawRay(playerRB.position, direction, Color.black, 10.0f, false); // For debugging purposes
+        Debug.DrawRay(playerRB.position, cardinalDirection, Color.green, 10.0f, false); // For debugging purposes
+
+        if (hit.transform != null)
+        {
+            
+            if (hit.transform.CompareTag("Iron"))
+            {
+                hit.transform.gameObject.SetActive(false);
+            }
+            else if (hit.transform.CompareTag("Rock"))
+            {
+                hit.transform.gameObject.SetActive(false);
+            }
+        }
+
         yield return new WaitForSeconds(miningCooldown);
-        ore.SetActive(false);
-        Debug.Log("Finished mining");
         isMining = false;
         yield return null;
     }

@@ -7,7 +7,8 @@ public class IronOre : Ore
 
     void Awake()
     {
-        miningTime = 2;
+        maxHealth = 2;
+        currHealth = maxHealth;
         oreName = "Iron Ore";
     }
 }
