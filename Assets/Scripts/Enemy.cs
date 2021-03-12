@@ -22,6 +22,14 @@ public class Enemy : MonoBehaviour {
         currentHealth -= dmg;
         if (currentHealth <= 0) {
             Destroy(gameObject);
+        } else {
+            StartCoroutine(DamageFlash());
         }
+    }
+
+    private IEnumerator DamageFlash() {
+        GetComponent<SpriteRenderer>().color = Color.white;
+        yield return new WaitForSeconds(0.2f);
+        GetComponent<SpriteRenderer>().color = Color.red;
     }
 }

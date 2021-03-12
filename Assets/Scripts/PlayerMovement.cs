@@ -1,8 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour {
+
+    // Temporary variables, should be removed later
+    public Image attackCooldown;
+    public Image mineCooldown;
+    private float mineTimer;
 
     #region Movement Variables
     [SerializeField]
@@ -56,6 +62,8 @@ public class PlayerMovement : MonoBehaviour {
         miningReach = 1;
         miningCooldown = 0.5f;
         pickaxeDamage = 1;
+
+        mineTimer = 0;
     }
 
     private void Update() {
@@ -159,6 +167,11 @@ public class PlayerMovement : MonoBehaviour {
     private void UpdateCooldown() {
         if (attackTimer > 0 && !isAttacking) {
             attackTimer -= Time.deltaTime;
+            attackCooldown.rectTransform.sizeDelta = new Vector2(100, 100 * attackTimer / cooldown);
+        }
+        if (mineTimer > 0) {
+            mineTimer -= Time.deltaTime;
+            mineCooldown.rectTransform.sizeDelta = new Vector2(100, 100 * mineTimer / miningCooldown);
         }
     }
     #endregion
@@ -170,10 +183,14 @@ public class PlayerMovement : MonoBehaviour {
         if (miningInput == 0 || isMining || isAttacking)
         {
             return;
+        } else if (mineTimer > 0) {
+            Debug.Log("On Cooldown!");
+            return;
         }
         else
         {
             Debug.Log("mining");
+            mineTimer = miningCooldown;
             StartCoroutine(MiningRoutine());
         }
     }

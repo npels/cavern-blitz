@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2439855924810609410}
   - component: {fileID: 9107086150037748293}
   - component: {fileID: 4606806729780621632}
+  - component: {fileID: 3947406550673388198}
   m_Layer: 9
   m_Name: IronOre
   m_TagString: Iron
@@ -133,3 +134,19 @@ CircleCollider2D:
   m_Offset: {x: -0.05, y: 0}
   serializedVersion: 2
   m_Radius: 0.56818
+--- !u!58 &3947406550673388198
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2439855924810609408}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.5
