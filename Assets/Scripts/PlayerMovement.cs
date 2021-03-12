@@ -108,11 +108,11 @@ public class PlayerMovement : MonoBehaviour {
         isAttacking = true;
         Vector2 direction = mousePos - playerRB.position;
 
-        //Vector2 cardinalDirection = getCardinal(direction);
+        Vector2 cardinalDirection = getCardinal(direction);
 
-        RaycastHit2D hit = Physics2D.Raycast(playerRB.position, direction, reach, LayerMask.GetMask("Enemy"));
+        RaycastHit2D hit = Physics2D.Raycast(playerRB.position, cardinalDirection, reach, LayerMask.GetMask("Enemy"));
         Debug.DrawRay(playerRB.position, direction, Color.blue, 10.0f, false); // For debugging purposes
-        //Debug.DrawRay(playerRB.position, cardinalDirection, Color.red, 10.0f, false); // For debugging purposes
+        Debug.DrawRay(playerRB.position, cardinalDirection, Color.red, 10.0f, false); // For debugging purposes
 
         if (hit.transform != null) {
             Debug.Log(hit.transform.name);

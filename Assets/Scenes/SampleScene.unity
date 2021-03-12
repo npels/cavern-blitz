@@ -99749,6 +99749,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63dc0b0f3951ccf44a1f222f8413bf8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHealth: 5
 --- !u!1 &800265474
 GameObject:
   m_ObjectHideFlags: 0
@@ -99957,7 +99958,7 @@ PrefabInstance:
     - target: {fileID: 8153334603779752005, guid: a73787bc44ee510419017964cf53307c,
         type: 3}
       propertyPath: reach
-      value: 6
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8153334603779752005, guid: a73787bc44ee510419017964cf53307c,
         type: 3}
