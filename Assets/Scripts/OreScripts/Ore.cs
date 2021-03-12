@@ -10,7 +10,7 @@ public class Ore : MonoBehaviour
 
     private void Start()
     {
-        maxHealth = 2;
+        maxHealth = 1;
         currHealth = maxHealth;
     }
 
@@ -20,7 +20,7 @@ public class Ore : MonoBehaviour
         Debug.Log(this.tag + " Health: " + currHealth);
         if (currHealth <= 0)
         {
-            this.gameObject.SetActive(false);
+            Destroy(gameObject);
         }
     }
 }
