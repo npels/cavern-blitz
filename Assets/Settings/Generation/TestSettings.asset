@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e764e19e4820174fadf8d8572a53d70, type: 3}
   m_Name: TestSettings
   m_EditorClassIdentifier: 
-  seed: 0
+  seed: 1
   mapSize: 50
   caveRadius: 40
   spawnBoxSize: 2

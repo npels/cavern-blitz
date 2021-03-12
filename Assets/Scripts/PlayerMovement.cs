@@ -11,7 +11,7 @@ public class PlayerMovement : MonoBehaviour {
     public TMPro.TextMeshProUGUI oreText;
     private float mineTimer;
     private string oreTextBase;
-    private int oreNum;
+    private static int oreNum = 0;
 
     #region Movement Variables
     [SerializeField]
@@ -67,7 +67,7 @@ public class PlayerMovement : MonoBehaviour {
 
         mineTimer = 0;
         oreTextBase = oreText.text;
-        oreText.text = oreTextBase + "0";
+        oreText.text = oreTextBase + oreNum;
     }
 
     private void Update() {
