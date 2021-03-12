@@ -8,6 +8,9 @@ public class GenerationSettings : ScriptableObject {
 
     public int seed;
 
+    [Range(0, 120)]
+    public int mapSize;
+    [Range(0, 100)]
     public int caveRadius;
     public int spawnBoxSize;
 

@@ -18,6 +18,10 @@ public class CaveMap : MonoBehaviour {
     List<Vector3Int> wallLocations;
     List<Vector3Int> rockLocations;
 
+    private void Start() {
+        GenerateCave();
+    }
+
     void Initialize() {
         floorLocations = new List<Vector3Int>();
         wallLocations = new List<Vector3Int>();
@@ -34,8 +38,8 @@ public class CaveMap : MonoBehaviour {
     }
 
     void GenerateTiles() {
-        for (int x = -settings.caveRadius; x < settings.caveRadius; x++) {
-            for (int y = -settings.caveRadius; y < settings.caveRadius; y++) {
+        for (int x = -settings.mapSize; x < settings.mapSize; x++) {
+            for (int y = -settings.mapSize; y < settings.mapSize; y++) {
                 float value = caveGenerator.IsWallAtPoint(x, y);
 
                 if (value < settings.threshold) {
