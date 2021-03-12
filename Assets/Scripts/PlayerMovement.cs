@@ -8,7 +8,10 @@ public class PlayerMovement : MonoBehaviour {
     // Temporary variables, should be removed later
     public Image attackCooldown;
     public Image mineCooldown;
+    public TMPro.TextMeshProUGUI oreText;
     private float mineTimer;
+    private string oreTextBase;
+    private int oreNum;
 
     #region Movement Variables
     [SerializeField]
@@ -60,10 +63,11 @@ public class PlayerMovement : MonoBehaviour {
         isAttacking = false;
         isMining = false;
         miningReach = 1;
-        miningCooldown = 0.5f;
         pickaxeDamage = 1;
 
         mineTimer = 0;
+        oreTextBase = oreText.text;
+        oreText.text = oreTextBase + "0";
     }
 
     private void Update() {
@@ -213,6 +217,8 @@ public class PlayerMovement : MonoBehaviour {
             if (hit.transform.CompareTag("Iron"))
             {
                 hit.transform.GetComponent<IronOre>().TakeDamage(pickaxeDamage);
+                oreNum++;
+                oreText.text = oreTextBase + oreNum;
             }
             else if (hit.transform.CompareTag("Rock"))
             {

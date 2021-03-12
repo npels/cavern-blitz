@@ -7,7 +7,7 @@ public class IronOre : Ore
 
     void Start()
     {
-        maxHealth = 3;
+        maxHealth = 1;
         currHealth = maxHealth;
     }
 }
