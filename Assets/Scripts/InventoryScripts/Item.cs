@@ -3,29 +3,30 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Item
+public class Item : MonoBehaviour
 {
     // An enum of all possible items including ores, weapons, and armour 
     public enum Items { rock, ironOre }
 
-    public static Image rockImage;
-    public static Image ironImage;
+    public GameObject rockPrefab;
+    public GameObject ironPrefab;
 
-    public static Image GetItemIcon(Items item)
+
+    public GameObject GetItemIcon(Items item)
     {
         if (item == Items.rock)
         {
-            return rockImage;
+            return rockPrefab;
         }
         else
         {
-            return ironImage;
+            return ironPrefab;
         }
     }
 
 
     //mainly for debugging 
-    public static string GetItemName(Items item)
+    public string GetItemName(Items item)
     {
         if (item == Items.rock)
         {

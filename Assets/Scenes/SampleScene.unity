@@ -101223,6 +101223,7 @@ GameObject:
   - component: {fileID: 1007389680}
   - component: {fileID: 1007389682}
   - component: {fileID: 1007389681}
+  - component: {fileID: 1007389683}
   m_Layer: 5
   m_Name: Inventory
   m_TagString: Untagged
@@ -101277,6 +101278,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1007389679}
   m_CullTransparentMesh: 0
+--- !u!114 &1007389683
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1007389679}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1100a8d9df9cf457d8ee8ca73eb248ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rockPrefab: {fileID: 2439855924810609408, guid: 7386b437bda6b1b4089b07efb1859488,
+    type: 3}
+  ironPrefab: {fileID: 2439855924810609408, guid: 228998e813d294dd4b207adca8f0ea66,
+    type: 3}
 --- !u!1001 &1039017346
 PrefabInstance:
   m_ObjectHideFlags: 0
