@@ -208,23 +208,15 @@ public class PlayerMovement : MonoBehaviour {
         Vector2 cardinalDirection = getCardinal(direction);
 
         RaycastHit2D hit = Physics2D.Raycast(playerRB.position, cardinalDirection, miningReach, LayerMask.GetMask("Environment"));
-        Debug.DrawRay(playerRB.position, direction, Color.black, 10.0f, false); // For debugging purposes
-        Debug.DrawRay(playerRB.position, cardinalDirection, Color.green, 10.0f, false); // For debugging purposes
+        //Debug.DrawRay(playerRB.position, direction, Color.black, 10.0f, false); // For debugging purposes
+        //Debug.DrawRay(playerRB.position, cardinalDirection, Color.green, 10.0f, false); // For debugging purposes
 
         if (hit.transform != null)
         {
-            
-            if (hit.transform.CompareTag("Iron"))
-            {
-                hit.transform.GetComponent<IronOre>().TakeDamage(pickaxeDamage);
-                oreNum++;
-                oreText.text = oreTextBase + oreNum;
-            }
-            else if (hit.transform.CompareTag("Rock"))
-            {
-                hit.transform.GetComponent<Ore>().TakeDamage(pickaxeDamage);
-            }
-            //hit.transform.gameObject.SetActive(false);
+            Ore ore = hit.transform.GetComponent<Ore>();
+            ore.TakeDamage(pickaxeDamage);
+            oreNum += ore.GetNumDrops();
+            oreText.text = oreTextBase + oreNum;
         }
 
         yield return new WaitForSeconds(miningCooldown);
