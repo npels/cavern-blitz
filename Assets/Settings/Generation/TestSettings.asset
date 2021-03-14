@@ -16,7 +16,7 @@ MonoBehaviour:
   mapSize: 50
   caveRadius: 40
   spawnBoxSize: 2
-  threshold: 0.215
+  threshold: 0.2
   roughness: 1.5
   falloff: 0.81
   floorTile: {fileID: 11400000, guid: 91901e662e550154a89d9ef4247e7a34, type: 2}
