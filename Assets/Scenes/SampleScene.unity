@@ -101224,6 +101224,7 @@ GameObject:
   - component: {fileID: 1007389682}
   - component: {fileID: 1007389681}
   - component: {fileID: 1007389683}
+  - component: {fileID: 1007389684}
   m_Layer: 5
   m_Name: Inventory
   m_TagString: Untagged
@@ -101266,10 +101267,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e3996e9988594956bbb2368f65f941e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventoryBar: {fileID: 813380732}
-  inventoryMenu: {fileID: 1309357426}
-  openButton: {fileID: 1967137418}
-  closeButton: {fileID: 1884370200}
 --- !u!222 &1007389682
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -101294,6 +101291,22 @@ MonoBehaviour:
     type: 3}
   ironPrefab: {fileID: 2439855924810609408, guid: 228998e813d294dd4b207adca8f0ea66,
     type: 3}
+--- !u!114 &1007389684
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1007389679}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 100dc7cf6ca91453fb660800434eb466, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inventoryBar: {fileID: 813380732}
+  inventoryMenu: {fileID: 1309357426}
+  openButton: {fileID: 1967137418}
+  closeButton: {fileID: 1884370200}
 --- !u!1001 &1039017346
 PrefabInstance:
   m_ObjectHideFlags: 0

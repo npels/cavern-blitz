@@ -8,19 +8,28 @@ public class Item : MonoBehaviour
     // An enum of all possible items including ores, weapons, and armour 
     public enum Items { rock, ironOre }
 
+    private Sprite rockSprite;
+    private Sprite ironSprite;
+
     public GameObject rockPrefab;
     public GameObject ironPrefab;
 
+    private void Start()
+    {
+        rockSprite = rockPrefab.GetComponent<SpriteRenderer>().sprite;
+        ironSprite = ironPrefab.GetComponent<SpriteRenderer>().sprite;
 
-    public GameObject GetItemIcon(Items item)
+    }
+
+    public Sprite GetItemObject(Items item)
     {
         if (item == Items.rock)
         {
-            return rockPrefab;
+            return rockSprite;
         }
         else
         {
-            return ironPrefab;
+            return ironSprite;
         }
     }
 
