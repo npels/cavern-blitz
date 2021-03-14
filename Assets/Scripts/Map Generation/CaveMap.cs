@@ -79,6 +79,7 @@ public class CaveMap : MonoBehaviour {
             alteredMap = false;
             numIterations++;
         }
+        Debug.Log("Filtered map with " + numIterations + " iterations");
     }
 
     void DecideTiles() {
