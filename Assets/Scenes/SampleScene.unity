@@ -98875,14 +98875,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbdf7bdf54a1846a79c61e49ca651ad0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackCooldown: {fileID: 0}
-  mineCooldown: {fileID: 0}
-  oreText: {fileID: 0}
-  damage: 0
-  cooldown: 0
-  reach: 0
-  cam: {fileID: 0}
-  miningCooldown: 0
+  attackCooldown: {fileID: 1929486034}
+  mineCooldown: {fileID: 1480428581}
+  oreText: {fileID: 1514049700}
+  damage: 3
+  cooldown: 1
+  reach: 1.5
+  cam: {fileID: 519420031}
+  miningCooldown: 0.7
 --- !u!1 &1293602141
 GameObject:
   m_ObjectHideFlags: 0
