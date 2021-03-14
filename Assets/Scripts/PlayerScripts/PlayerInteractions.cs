@@ -196,7 +196,6 @@ public class PlayerInteractions : MonoBehaviour
         }
         else
         {
-            Debug.Log("mining");
             mineTimer = miningCooldown;
             StartCoroutine(MiningRoutine());
         }
@@ -211,8 +210,8 @@ public class PlayerInteractions : MonoBehaviour
         Vector2 cardinalDirection = getCardinal(direction);
 
         RaycastHit2D hit = Physics2D.Raycast(playerRB.position, cardinalDirection, miningReach, LayerMask.GetMask("Environment"));
-        //Debug.DrawRay(playerRB.position, direction, Color.black, 10.0f, false); // For debugging purposes
-        //Debug.DrawRay(playerRB.position, cardinalDirection, Color.green, 10.0f, false); // For debugging purposes
+        Debug.DrawRay(playerRB.position, direction, Color.black, 10.0f, false); // For debugging purposes
+        Debug.DrawRay(playerRB.position, cardinalDirection, Color.green, 10.0f, false); // For debugging purposes
 
         if (hit.transform != null)
         {

@@ -19,7 +19,6 @@ public class Ore : MonoBehaviour
     public void TakeDamage(int val)
     {
         currHealth -= val;
-        Debug.Log(this.tag + " Health: " + currHealth);
         if (currHealth <= 0)
         {
             Destroy(gameObject);
