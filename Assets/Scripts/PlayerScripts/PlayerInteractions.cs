@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerMovement : MonoBehaviour {
-
+public class PlayerInteractions : MonoBehaviour
+{
     // Temporary variables, should be removed later
     public Image attackCooldown;
     public Image mineCooldown;
@@ -13,15 +13,6 @@ public class PlayerMovement : MonoBehaviour {
     private string oreTextBase;
     private static int oreNum = 0;
 
-    #region Movement Variables
-    [SerializeField]
-    [Tooltip("The maximum speed at which the player can move.")]
-    private float maxSpeed;
-
-    [SerializeField]
-    [Tooltip("The rate at which the player accelerates in the direction they are moving.")]
-    private float acceleration;
-    #endregion
 
     #region Attack Variables
     [SerializeField]
@@ -44,12 +35,11 @@ public class PlayerMovement : MonoBehaviour {
     #region Mining Variables
     private bool isMining;
     [SerializeField]
-    [Tooltip("The amount of time player must wait after mining before mining again.")] 
+    [Tooltip("The amount of time player must wait after mining before mining again.")]
     private float miningCooldown;
     private float miningReach; // The distance from the player that the currently equipped pickaxe can reach
     private int pickaxeDamage; // The damage of the currently equipped pickaxe 
     #endregion
-
 
     #region Components
     private Rigidbody2D playerRB;
@@ -57,7 +47,8 @@ public class PlayerMovement : MonoBehaviour {
 
 
     #region Unity functions
-    private void Start() {
+    private void Start()
+    {
         playerRB = GetComponent<Rigidbody2D>();
         attackTimer = 0;
         isAttacking = false;
@@ -70,53 +61,42 @@ public class PlayerMovement : MonoBehaviour {
         oreText.text = oreTextBase + oreNum;
     }
 
-    private void Update() {
-        CheckVelocity();
+    private void Update()
+    {
         UpdateCooldown();
     }
 
-    private void FixedUpdate() {
-        DoMovement();
+    private void FixedUpdate()
+    {
         DoAttack();
         mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
         DoMining();
     }
     #endregion
 
-
-    #region Movement functions
-    private void DoMovement() {
-        float xInput = Input.GetAxis("Horizontal");
-        float yInput = Input.GetAxis("Vertical");
-        Vector2 direction = new Vector2(xInput, yInput);
-        direction.Normalize();
-
-        playerRB.AddForce(direction * acceleration, ForceMode2D.Impulse);
-    }
-
-    private void CheckVelocity() {
-        if (playerRB.velocity.magnitude > maxSpeed) {
-            playerRB.velocity = playerRB.velocity.normalized * maxSpeed;
-        }
-    }
-    #endregion
-
     #region Attack functions
-    private void DoAttack() {
+    private void DoAttack()
+    {
         float attackInput = Input.GetAxis("Fire1");
-        if (attackInput == 0 || isAttacking || isMining) {
+        if (attackInput == 0 || isAttacking || isMining)
+        {
             return;
-        } else if (attackTimer > 0) { // Yes, this else if can be merged with the above if, I just have it to debug cooldowns for now.
+        }
+        else if (attackTimer > 0)
+        { // Yes, this else if can be merged with the above if, I just have it to debug cooldowns for now.
             Debug.Log("On Cooldown!");
             return;
-        } else {
+        }
+        else
+        {
             Debug.Log("Fire1");
             attackTimer = cooldown;
             StartCoroutine(AttackRoutine());
         }
     }
 
-    IEnumerator AttackRoutine() {
+    IEnumerator AttackRoutine()
+    {
         isAttacking = true;
         Vector2 direction = mousePos - playerRB.position;
 
@@ -126,9 +106,11 @@ public class PlayerMovement : MonoBehaviour {
         Debug.DrawRay(playerRB.position, direction, Color.blue, 10.0f, false); // For debugging purposes
         Debug.DrawRay(playerRB.position, cardinalDirection, Color.red, 10.0f, false); // For debugging purposes
 
-        if (hit.transform != null) {
+        if (hit.transform != null)
+        {
             Debug.Log(hit.transform.name);
-            if (hit.transform.CompareTag("Enemy")) {
+            if (hit.transform.CompareTag("Enemy"))
+            {
                 hit.transform.GetComponent<Enemy>().takeDamage(damage);
             }
         }
@@ -137,43 +119,62 @@ public class PlayerMovement : MonoBehaviour {
         yield return null;
     }
 
-    private Vector2 getCardinal(Vector2 dir) {
+    private Vector2 getCardinal(Vector2 dir)
+    {
         float angle = Mathf.Atan2(dir.y, dir.x);
-        float octant = Mathf.Round( 8 * angle / (2*Mathf.PI) + 8 ) % 8;
-        if (octant == 0) {
+        float octant = Mathf.Round(8 * angle / (2 * Mathf.PI) + 8) % 8;
+        if (octant == 0)
+        {
             // East
-            return new Vector2(1,0);
-        } else if (octant == 1) {
+            return new Vector2(1, 0);
+        }
+        else if (octant == 1)
+        {
             // Northeast
             return new Vector2(1, 1);
-        } else if (octant == 2) {
+        }
+        else if (octant == 2)
+        {
             // North
             return new Vector2(0, 1);
-        } else if (octant == 3) {
+        }
+        else if (octant == 3)
+        {
             // Northwest
             return new Vector2(-1, 1);
-        } else if (octant == 4) {
+        }
+        else if (octant == 4)
+        {
             // West
             return new Vector2(-1, 0);
-        } else if (octant == 5) {
+        }
+        else if (octant == 5)
+        {
             // Southwest
             return new Vector2(-1, -1);
-        } else if (octant == 6) {
+        }
+        else if (octant == 6)
+        {
             // South
             return new Vector2(0, -1);
-        } else if (octant == 7) {
+        }
+        else if (octant == 7)
+        {
             // Northeast
             return new Vector2(1, -1);
         }
         return Vector2.zero;
     }
 
-    private void UpdateCooldown() {
-        if (attackTimer > 0 && !isAttacking) {
+    private void UpdateCooldown()
+    {
+        if (attackTimer > 0 && !isAttacking)
+        {
             attackTimer -= Time.deltaTime;
             attackCooldown.rectTransform.sizeDelta = new Vector2(100, 100 * attackTimer / cooldown);
         }
-        if (mineTimer > 0) {
+        if (mineTimer > 0)
+        {
             mineTimer -= Time.deltaTime;
             mineCooldown.rectTransform.sizeDelta = new Vector2(100, 100 * mineTimer / miningCooldown);
         }
@@ -187,7 +188,9 @@ public class PlayerMovement : MonoBehaviour {
         if (miningInput == 0 || isMining || isAttacking)
         {
             return;
-        } else if (mineTimer > 0) {
+        }
+        else if (mineTimer > 0)
+        {
             Debug.Log("On Cooldown!");
             return;
         }
