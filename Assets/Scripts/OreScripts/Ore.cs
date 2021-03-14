@@ -9,6 +9,7 @@ public class Ore : MonoBehaviour
     //The number of ores that drops when broken
     public int numDrops;
     private int currHealth;
+    public Item.Items itemType;
 
     private void Start()
     {
@@ -22,6 +23,7 @@ public class Ore : MonoBehaviour
         if (currHealth <= 0)
         {
             Destroy(gameObject);
+            Inventory.inv.AddItemToInventory(this.itemType, numDrops);
         }
     }
 
@@ -31,4 +33,3 @@ public class Ore : MonoBehaviour
     }
     
 }
-

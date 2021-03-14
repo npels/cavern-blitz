@@ -152,3 +152,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 1
   numDrops: 1
+  itemType: 1

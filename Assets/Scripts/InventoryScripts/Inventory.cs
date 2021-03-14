@@ -7,21 +7,34 @@ using UnityEngine.UI;
 public class Inventory : MonoBehaviour
 {
     #region UI Vars
-    private GameObject inventoryBar;
-    private GameObject inventoryMenu;
-    private GameObject openButton;
-    private GameObject closeButton;
+    public GameObject inventoryBar;
+    public GameObject inventoryMenu;
+    public GameObject openButton;
+    public GameObject closeButton;
+    #endregion
+
+    #region Inventory vars
+    private static Dictionary<Item.Items, int> inventory;
+    public static Inventory inv;
     #endregion
 
     #region Unity Funcs
     // Start is called before the first frame update
+    private void Awake()
+    {
+        if (inv != null)
+        {
+            Debug.Log("More than one inventory found");
+            return;
+        }
+        inv = this;
+    }
+
     void Start()
     {
+        inventory = new Dictionary<Item.Items, int>();
+
         //Set up UI
-        inventoryBar = GameObject.Find("InventoryBar");
-        inventoryMenu = GameObject.Find("InventoryMenu");
-        openButton = GameObject.Find("OpenInventory");
-        closeButton = GameObject.Find("CloseInventory");
         inventoryBar.SetActive(true);
         inventoryMenu.SetActive(false);
         openButton.SetActive(true);
@@ -45,6 +58,20 @@ public class Inventory : MonoBehaviour
         inventoryMenu.SetActive(false);
         openButton.SetActive(true);
         closeButton.SetActive(false);
+    }
+    #endregion
+
+    #region Item Funcs
+    public void AddItemToInventory(Item.Items item, int num)
+    {
+        if (inventory.ContainsKey(item))
+        {
+            inventory[item] += num;
+        }
+        else
+        {
+            inventory.Add(item, num);
+        }
     }
     #endregion
 }
