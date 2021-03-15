@@ -6,9 +6,7 @@ public class InventoryUI : MonoBehaviour
 {
     public GameObject inventoryBar;
     public GameObject inventoryMenu;
-    public GameObject openButton;
-    public GameObject closeButton;
-
+   
     private Inventory inventory;
 
     private bool inMenu = false;
@@ -24,19 +22,28 @@ public class InventoryUI : MonoBehaviour
         barSlots = inventoryBar.GetComponentsInChildren<InventorySlot>();
         inventoryBar.SetActive(true);
         inventoryMenu.SetActive(false);
-        openButton.SetActive(true);
-        closeButton.SetActive(false);
     }
 
-
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            if (inMenu)
+            {
+                CloseMenu();
+            }
+            else
+            {
+                OpenMenu();
+            }
+        }
+    }
 
     public void OpenMenu()
     {
         inMenu = true;
         inventoryMenu.SetActive(true);
         inventoryBar.SetActive(false);
-        openButton.SetActive(false);
-        closeButton.SetActive(true);
 
         UpdateUI();
     }
@@ -46,8 +53,6 @@ public class InventoryUI : MonoBehaviour
         inMenu = false;
         inventoryBar.SetActive(true);
         inventoryMenu.SetActive(false);
-        openButton.SetActive(true);
-        closeButton.SetActive(false);
 
         UpdateUI();
     }
