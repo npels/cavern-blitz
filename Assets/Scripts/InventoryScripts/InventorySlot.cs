@@ -9,18 +9,16 @@ public class InventorySlot : MonoBehaviour
     public TMPro.TextMeshProUGUI quantityText;
 
     Item item;
-    Item.Items icon;
 
-    private void Start()
+    private void Awake()
     {
         item = GameObject.Find("Inventory").GetComponent<Item>();
     }
 
     public void AddItem(Item.Items newItem, int i)
     {
-        icon = newItem;
         quantityText.text = i.ToString();
-        image.sprite = item.GetItemObject(icon);
+        image.sprite = item.GetItemObject(newItem);
         image.enabled = true;
         quantityText.enabled = true;
     }

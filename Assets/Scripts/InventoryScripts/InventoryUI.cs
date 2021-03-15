@@ -15,17 +15,17 @@ public class InventoryUI : MonoBehaviour
     private InventorySlot[] menuSlots;
     private InventorySlot[] barSlots;
 
+   
     void Start()
     {
         inventory = Inventory.inv;
         //Set up UI
+        menuSlots = inventoryMenu.GetComponentsInChildren<InventorySlot>();
+        barSlots = inventoryBar.GetComponentsInChildren<InventorySlot>();
         inventoryBar.SetActive(true);
         inventoryMenu.SetActive(false);
         openButton.SetActive(true);
         closeButton.SetActive(false);
-
-        menuSlots = inventoryMenu.GetComponentsInChildren<InventorySlot>();
-        barSlots = inventoryBar.GetComponentsInChildren<InventorySlot>();
     }
 
 
@@ -33,10 +33,12 @@ public class InventoryUI : MonoBehaviour
     public void OpenMenu()
     {
         inMenu = true;
-        inventoryBar.SetActive(false);
         inventoryMenu.SetActive(true);
+        inventoryBar.SetActive(false);
         openButton.SetActive(false);
         closeButton.SetActive(true);
+
+        UpdateUI();
     }
 
     public void CloseMenu()
@@ -46,25 +48,32 @@ public class InventoryUI : MonoBehaviour
         inventoryMenu.SetActive(false);
         openButton.SetActive(true);
         closeButton.SetActive(false);
+
+        UpdateUI();
     }
 
     public void UpdateUI()
     {
-        Debug.Log("update UI");
-        if (inMenu)
-        {
-
-        } else
-        {
-            int i = 0;
-            foreach (KeyValuePair<Item.Items, int> item in inventory.GetInventory()) {
-                if (i >= barSlots.Length)
+       int i = 0;
+       foreach (KeyValuePair<Item.Items, int> item in inventory.GetInventory()) {
+           if (!inMenu)
+           {
+               if (i >= barSlots.Length)
+               {
+                    break;
+               }
+                barSlots[i].AddItem(item.Key, item.Value);
+           }
+           else
+           {
+                if (i >= menuSlots.Length)
                 {
                     break;
                 }
-                barSlots[i].AddItem(item.Key, item.Value);
-                i++;
-            }
-        }
+                menuSlots[i].AddItem(item.Key, item.Value);
+           }   
+           i++;
+           }
+        
     }
 }

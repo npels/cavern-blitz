@@ -14,7 +14,7 @@ public class Item : MonoBehaviour
     public GameObject rockPrefab;
     public GameObject ironPrefab;
 
-    private void Start()
+    private void Awake()
     {
         rockSprite = rockPrefab.GetComponent<SpriteRenderer>().sprite;
         ironSprite = ironPrefab.GetComponent<SpriteRenderer>().sprite;

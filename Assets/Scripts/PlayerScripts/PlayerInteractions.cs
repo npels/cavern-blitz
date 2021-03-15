@@ -8,11 +8,7 @@ public class PlayerInteractions : MonoBehaviour
     // Temporary variables, should be removed later
     public Image attackCooldown;
     public Image mineCooldown;
-    public TMPro.TextMeshProUGUI oreText;
     private float mineTimer;
-    private string oreTextBase;
-    private static int oreNum = 0;
-
 
     #region Attack Variables
     [SerializeField]
@@ -57,8 +53,6 @@ public class PlayerInteractions : MonoBehaviour
         pickaxeDamage = 1;
 
         mineTimer = 0;
-        oreTextBase = oreText.text;
-        oreText.text = oreTextBase + oreNum;
     }
 
     private void Update()
@@ -217,8 +211,6 @@ public class PlayerInteractions : MonoBehaviour
         {
             Ore ore = hit.transform.GetComponent<Ore>();
             ore.TakeDamage(pickaxeDamage);
-            oreNum += ore.GetNumDrops();
-            oreText.text = oreTextBase + oreNum;
         }
 
         yield return new WaitForSeconds(miningCooldown);
