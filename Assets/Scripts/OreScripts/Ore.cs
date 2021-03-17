@@ -4,15 +4,20 @@ using UnityEngine;
 
 public class Ore : MonoBehaviour
 {
-    //The number of hits it takes to break the ore 
-    public int maxHealth;
-    //The number of ores that drops when broken
-    public int numDrops;
+    public int maxHealth; //The number of hits it takes to break the ore 
+    public int numDrops; //The number of ores that drops when broken
     private int currHealth;
     public Item.Items itemType;
 
+    private GameObject player;
+
+    private bool isPickupable = false;
+    private Shake shakeScript;
+
     private void Start()
     {
+        shakeScript = GetComponent<Shake>();
+        player = GameObject.Find("Player");
         currHealth = maxHealth;
     }
 
@@ -20,10 +25,11 @@ public class Ore : MonoBehaviour
     public void TakeDamage(int val)
     {
         currHealth -= val;
+        //shakeScript.DoShake();
         if (currHealth <= 0)
         {
-            Destroy(gameObject);
-            Inventory.inv.AddItemToInventory(this.itemType, numDrops);
+            //Destroy(gameObject);
+            DropOre(this.gameObject);
         }
     }
 
@@ -31,5 +37,30 @@ public class Ore : MonoBehaviour
     {
         return numDrops;
     }
-    
+
+    #region Drop Functions/Animations
+    private void DropOre(GameObject g)
+    {
+        g.transform.localScale = new Vector3(0.5f, 0.5f, 0);
+        isPickupable = true;
+    }
+    private void PickupOre()
+    {
+        Inventory.inv.AddItemToInventory(this.itemType, numDrops);
+        isPickupable = false;
+        Destroy(this.gameObject);
+
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.tag == "Player" && isPickupable)
+        {
+            PickupOre();
+            Debug.Log("Move out my way " + other.tag);
+        }
+    }
+
+
+    #endregion
 }
