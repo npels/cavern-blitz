@@ -485,11 +485,11 @@ MonoBehaviour:
   m_AssetsPPU: 32
   m_RefResolutionX: 320
   m_RefResolutionY: 180
-  m_UpscaleRT: 1
+  m_UpscaleRT: 0
   m_PixelSnapping: 0
   m_CropFrameX: 0
   m_CropFrameY: 0
-  m_StretchFill: 0
+  m_StretchFill: 1
 --- !u!1 &528808230
 GameObject:
   m_ObjectHideFlags: 0
@@ -97056,7 +97056,7 @@ PrefabInstance:
     - target: {fileID: 8153334603779752005, guid: a73787bc44ee510419017964cf53307c,
         type: 3}
       propertyPath: maxSpeed
-      value: 3
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 8153334603779752007, guid: a73787bc44ee510419017964cf53307c,
         type: 3}
