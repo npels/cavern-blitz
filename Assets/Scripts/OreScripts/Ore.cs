@@ -12,11 +12,9 @@ public class Ore : MonoBehaviour
     private GameObject player;
 
     private bool isPickupable = false;
-    private Shake shakeScript;
 
     private void Start()
     {
-        shakeScript = GetComponent<Shake>();
         player = GameObject.Find("Player");
         currHealth = maxHealth;
     }
@@ -25,10 +23,8 @@ public class Ore : MonoBehaviour
     public void TakeDamage(int val)
     {
         currHealth -= val;
-        //shakeScript.DoShake();
         if (currHealth <= 0)
         {
-            //Destroy(gameObject);
             DropOre(this.gameObject);
         }
     }
