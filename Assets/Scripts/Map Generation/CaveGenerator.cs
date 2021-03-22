@@ -5,14 +5,18 @@ using UnityEngine.Tilemaps;
 
 public class CaveGenerator {
 
+    #region Static variables
     private static float ROUGHNESS_MULTIPLIER = 0.05f;
     private static float FALLOFF_MULTIPLIER = 1f;
+    #endregion
 
+    #region Generation variables
     GenerationSettings settings;
     NoiseFilter noiseFilter;
-
     public int seed;
+    #endregion
 
+    #region Constructors
     public CaveGenerator(GenerationSettings settings) {
         this.settings = settings;
         seed = Random.Range(int.MinValue, int.MaxValue);
@@ -24,7 +28,9 @@ public class CaveGenerator {
         this.seed = seed;
         noiseFilter = new NoiseFilter(seed);
     }
+    #endregion
 
+    #region Generation functions
     public float IsWallAtPoint(float x, float y) {
         Vector3 point = new Vector3(x, y, 0);
         float value = noiseFilter.Evaluate(point * settings.roughness * ROUGHNESS_MULTIPLIER);
@@ -33,4 +39,5 @@ public class CaveGenerator {
 
         return value;
     }
+    #endregion
 }

@@ -5,10 +5,14 @@ using UnityEngine.Tilemaps;
 
 public class CaveMap : MonoBehaviour {
 
+    #region Public settings
+    [Tooltip("Whether changes made to the settings are applied in the editor.")]
     public bool autoUpdateInEditor;
-
+    [Tooltip("The settings for generating this map.")]
     public GenerationSettings settings;
+    #endregion
 
+    #region Map variables
     CaveGenerator caveGenerator;
 
     Tilemap tilemap;
@@ -21,11 +25,15 @@ public class CaveMap : MonoBehaviour {
     List<Vector3Int> rockLocations;
 
     Random.State randomState;
+    #endregion
 
+    #region Unity functions
     private void Start() {
         GenerateCave();
     }
+    #endregion
 
+    #region Generation functions
     public void GenerateCave() {
         Initialize();
         GenerateMap();
@@ -60,6 +68,7 @@ public class CaveMap : MonoBehaviour {
         RestoreState();
     }
 
+    /* Use the cave generator to get a 2D array of float values. */
     void PopulateValueMap() {
         for (int x = -settings.mapSize; x < settings.mapSize; x++) {
             for (int y = -settings.mapSize; y < settings.mapSize; y++) {
@@ -68,6 +77,7 @@ public class CaveMap : MonoBehaviour {
         }
     }
 
+    /* Ensure that none of the values around the player spawn area are walls. */
     void ClearSpawnArea() {
         for (int x = -settings.spawnBoxSize; x < settings.spawnBoxSize; x++) {
             for (int y = -settings.spawnBoxSize; y < settings.spawnBoxSize; y++) {
@@ -76,6 +86,7 @@ public class CaveMap : MonoBehaviour {
         }
     }
 
+    /* Filter the float values in the value map to avoid uncommon wall configurations. */
     void FilterValueMap() {
         bool alteredMap = false;
         int numIterations = 0;
@@ -96,6 +107,27 @@ public class CaveMap : MonoBehaviour {
         Debug.Log("Filtered map with " + numIterations + " iterations");
     }
 
+    /* Check if a wall tile passes through the filter. */
+    bool CheckValueValid(int x, int y) {
+        float value = GetPointValue(x, y);
+        if (value < settings.threshold) {
+            if (GetPointValue(x - 1, y - 1) >= settings.threshold && GetPointValue(x + 1, y + 1) >= settings.threshold) {
+                return false;
+            }
+            if (GetPointValue(x, y - 1) >= settings.threshold && GetPointValue(x, y + 1) >= settings.threshold) {
+                return false;
+            }
+            if (GetPointValue(x + 1, y - 1) >= settings.threshold && GetPointValue(x - 1, y + 1) >= settings.threshold) {
+                return false;
+            }
+            if (GetPointValue(x - 1, y) >= settings.threshold && GetPointValue(x + 1, y) >= settings.threshold) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /* Use the value map to decide what tiles should be walls, floors and rocks. */
     void DecideTiles() {
         for (int x = -settings.mapSize; x < settings.mapSize; x++) {
             for (int y = -settings.mapSize; y < settings.mapSize; y++) {
@@ -115,6 +147,7 @@ public class CaveMap : MonoBehaviour {
         }
     }
 
+    /* Remove any floor tiles that cannot be reached from the spawn area. */
     void RemoveUnreachableTiles() {
         List<Vector3Int> newFloor = new List<Vector3Int>();
         newFloor.Add(Vector3Int.zero);
@@ -128,6 +161,7 @@ public class CaveMap : MonoBehaviour {
         }
     }
 
+    /* Recursive function to determine which floor tiles are accessible. */
     void FindNearbyFloors(Vector3Int loc, ref List<Vector3Int> newFloor) {
         Vector3Int north = loc;
         north.y++;
@@ -167,6 +201,7 @@ public class CaveMap : MonoBehaviour {
         if (checkWest) FindNearbyFloors(west, ref newFloor);
     }
 
+    /* Create the map's tiles. */
     void SetTiles() {
         TileBase[] wallTiles = new TileBase[wallLocations.Count];
         for (int i = 0; i < wallLocations.Count; i++) wallTiles[i] = settings.wallTile;
@@ -193,7 +228,8 @@ public class CaveMap : MonoBehaviour {
         tilemap.SetTiles(floorLocations.ToArray(), floorTiles);
         oreTilemap.SetTiles(rockLocations.ToArray(), oreTiles);
     }
-
+    
+    /* Choose a location to place the staircase down. */
     void PlaceStaircase() {
         Vector3Int loc = floorLocations[Random.Range(0, floorLocations.Count)];
         while (Vector3Int.Distance(Vector3Int.zero, loc) < settings.spawnBoxSize) {
@@ -202,30 +238,14 @@ public class CaveMap : MonoBehaviour {
         tilemap.SetTile(loc, settings.staircaseTile);
         oreTilemap.SetTile(loc, null);
     }
-
-    bool CheckValueValid(int x, int y) {
-        float value = GetPointValue(x, y);
-        if (value < settings.threshold) {
-            if (GetPointValue(x - 1, y - 1) >= settings.threshold && GetPointValue(x + 1, y + 1) >= settings.threshold) {
-                return false;
-            }
-            if (GetPointValue(x, y - 1) >= settings.threshold && GetPointValue(x, y + 1) >= settings.threshold) {
-                return false;
-            }
-            if (GetPointValue(x + 1, y - 1) >= settings.threshold && GetPointValue(x - 1, y + 1) >= settings.threshold) {
-                return false;
-            }
-            if (GetPointValue(x - 1, y) >= settings.threshold && GetPointValue(x + 1, y) >= settings.threshold) {
-                return false;
-            }
-        }
-        return true;
-    }
-
+    
+    /* Return the random state to its original value. */
     void RestoreState() {
         Random.state = randomState;
     }
+    #endregion
 
+    #region Helper Functions
     void ShuffleList<T>(List<T> list) {
         int count = list.Count;
         for (int i = 0; i < count; i++) {
@@ -249,4 +269,5 @@ public class CaveMap : MonoBehaviour {
         if (x < -settings.mapSize || x >= settings.mapSize || y < -settings.mapSize || y >= settings.mapSize) return;
         valueMap[ValueMapIndex(x, y)] = value;
     }
+    #endregion
 }

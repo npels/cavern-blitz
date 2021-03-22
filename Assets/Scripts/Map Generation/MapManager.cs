@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class MapManager : MonoBehaviour {
 
+    [Tooltip("The prefab for a floor object.")]
     public GameObject floorPrefab;
 
     [HideInInspector]
@@ -15,6 +16,7 @@ public class MapManager : MonoBehaviour {
     public void Initialize() {
         floorObjects = new List<GameObject>();
         currentFloor = Instantiate(floorPrefab, transform);
+        currentFloor.GetComponent<CaveMap>().GenerateCave();
         floorObjects.Add(currentFloor);
     }
 
