@@ -20,8 +20,15 @@ public class CaveMap : MonoBehaviour {
     List<Vector3Int> wallLocations;
     List<Vector3Int> rockLocations;
 
+    Random.State randomState;
+
     private void Start() {
         GenerateCave();
+    }
+
+    public void GenerateCave() {
+        Initialize();
+        GenerateMap();
     }
 
     void Initialize() {
@@ -37,8 +44,9 @@ public class CaveMap : MonoBehaviour {
         oreTilemap = transform.GetChild(0).GetComponent<Tilemap>();
         oreTilemap.ClearAllTiles();
 
+        randomState = Random.state;
         caveGenerator = new CaveGenerator(settings);
-        Random.InitState(settings.seed);
+        Random.InitState(caveGenerator.seed);
     }
 
     void GenerateMap() {
@@ -49,11 +57,7 @@ public class CaveMap : MonoBehaviour {
         RemoveUnreachableTiles();
         SetTiles();
         PlaceStaircase();
-    }
-
-    public void GenerateCave() {
-        Initialize();
-        GenerateMap();
+        RestoreState();
     }
 
     void PopulateValueMap() {
@@ -192,6 +196,9 @@ public class CaveMap : MonoBehaviour {
 
     void PlaceStaircase() {
         Vector3Int loc = floorLocations[Random.Range(0, floorLocations.Count)];
+        while (Vector3Int.Distance(Vector3Int.zero, loc) < settings.spawnBoxSize) {
+            loc = floorLocations[Random.Range(0, floorLocations.Count)];
+        }
         tilemap.SetTile(loc, settings.staircaseTile);
         oreTilemap.SetTile(loc, null);
     }
@@ -213,6 +220,10 @@ public class CaveMap : MonoBehaviour {
             }
         }
         return true;
+    }
+
+    void RestoreState() {
+        Random.state = randomState;
     }
 
     void ShuffleList<T>(List<T> list) {

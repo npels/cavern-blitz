@@ -3,12 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerInteractions : MonoBehaviour
-{
-    // Temporary variables, should be removed later
-    public Image attackCooldown;
-    public Image mineCooldown;
-    public TMPro.TextMeshProUGUI oreText;
+public class PlayerInteractions : MonoBehaviour {
+    private Image attackCooldown;
+    private Image mineCooldown;
+    private TMPro.TextMeshProUGUI oreText;
     private float mineTimer;
     private string oreTextBase;
     private static int oreNum = 0;
@@ -27,9 +25,6 @@ public class PlayerInteractions : MonoBehaviour
     private float reach;
     private bool isAttacking;
     private Vector2 mousePos;
-    [SerializeField]
-    [Tooltip("The camera. Used to track mouse position.")]
-    private Camera cam;
     #endregion
 
     #region Mining Variables
@@ -56,6 +51,10 @@ public class PlayerInteractions : MonoBehaviour
         miningReach = 1;
         pickaxeDamage = 1;
 
+        attackCooldown = GameManager.instance.uiManager.attackCooldown;
+        mineCooldown = GameManager.instance.uiManager.mineCooldown;
+        oreText = GameManager.instance.uiManager.oreText;
+
         mineTimer = 0;
         oreTextBase = oreText.text;
         oreText.text = oreTextBase + oreNum;
@@ -69,7 +68,7 @@ public class PlayerInteractions : MonoBehaviour
     private void FixedUpdate()
     {
         DoAttack();
-        mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
+        mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         DoMining();
     }
     #endregion

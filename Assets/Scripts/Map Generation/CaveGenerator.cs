@@ -11,9 +11,18 @@ public class CaveGenerator {
     GenerationSettings settings;
     NoiseFilter noiseFilter;
 
+    public int seed;
+
     public CaveGenerator(GenerationSettings settings) {
         this.settings = settings;
-        noiseFilter = new NoiseFilter(settings.seed);
+        seed = Random.Range(int.MinValue, int.MaxValue);
+        noiseFilter = new NoiseFilter(seed);
+    }
+
+    public CaveGenerator(GenerationSettings settings, int seed) {
+        this.settings = settings;
+        this.seed = seed;
+        noiseFilter = new NoiseFilter(seed);
     }
 
     public float IsWallAtPoint(float x, float y) {
