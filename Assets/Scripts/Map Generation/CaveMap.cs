@@ -27,12 +27,6 @@ public class CaveMap : MonoBehaviour {
     Random.State randomState;
     #endregion
 
-    #region Unity functions
-    private void Start() {
-        GenerateCave();
-    }
-    #endregion
-
     #region Generation functions
     public void GenerateCave() {
         Initialize();
