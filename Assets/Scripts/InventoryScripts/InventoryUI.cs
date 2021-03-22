@@ -15,6 +15,7 @@ public class InventoryUI : MonoBehaviour
 
     private GameObject player;
     private PlayerInteractions playerInteractions;
+    private PlayerMovement playerMovement; 
 
     void Start()
     {
@@ -28,6 +29,7 @@ public class InventoryUI : MonoBehaviour
 
         player = GameObject.Find("Player");
         playerInteractions = player.GetComponent<PlayerInteractions>();
+        playerMovement = player.GetComponent<PlayerMovement>();
     }
 
     private void Update()
@@ -51,6 +53,7 @@ public class InventoryUI : MonoBehaviour
         inventoryMenu.SetActive(true);
         inventoryBar.SetActive(false);
         playerInteractions.SetMenuOpen(true);
+        playerMovement.SetMenuOpen(true);
 
         UpdateUI();
     }
@@ -61,6 +64,7 @@ public class InventoryUI : MonoBehaviour
         inventoryBar.SetActive(true);
         inventoryMenu.SetActive(false);
         playerInteractions.SetMenuOpen(false);
+        playerMovement.SetMenuOpen(false);
 
         UpdateUI();
     }
