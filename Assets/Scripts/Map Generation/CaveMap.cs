@@ -43,10 +43,12 @@ public class CaveMap : MonoBehaviour {
 
     void GenerateMap() {
         PopulateValueMap();
+        ClearSpawnArea();
         FilterValueMap();
         DecideTiles();
-        ClearSpawnArea();
+        RemoveUnreachableTiles();
         SetTiles();
+        PlaceStaircase();
     }
 
     public void GenerateCave() {
@@ -58,6 +60,14 @@ public class CaveMap : MonoBehaviour {
         for (int x = -settings.mapSize; x < settings.mapSize; x++) {
             for (int y = -settings.mapSize; y < settings.mapSize; y++) {
                 SetPointValue(x, y, caveGenerator.IsWallAtPoint(x, y));
+            }
+        }
+    }
+
+    void ClearSpawnArea() {
+        for (int x = -settings.spawnBoxSize; x < settings.spawnBoxSize; x++) {
+            for (int y = -settings.spawnBoxSize; y < settings.spawnBoxSize; y++) {
+                SetPointValue(x, y, 1);
             }
         }
     }
@@ -101,12 +111,56 @@ public class CaveMap : MonoBehaviour {
         }
     }
 
-    void ClearSpawnArea() {
-        for (int x = -settings.spawnBoxSize; x < settings.spawnBoxSize; x++) {
-            for (int y = -settings.spawnBoxSize; y < settings.spawnBoxSize; y++) {
-                floorLocations.Add(new Vector3Int(x, y, 0));
+    void RemoveUnreachableTiles() {
+        List<Vector3Int> newFloor = new List<Vector3Int>();
+        newFloor.Add(Vector3Int.zero);
+        FindNearbyFloors(Vector3Int.zero, ref newFloor);
+        foreach (Vector3Int loc in floorLocations) {
+            if (!newFloor.Contains(loc)) {
+                wallLocations.Add(loc);
+                rockLocations.Remove(loc);
             }
+            floorLocations = newFloor;
         }
+    }
+
+    void FindNearbyFloors(Vector3Int loc, ref List<Vector3Int> newFloor) {
+        Vector3Int north = loc;
+        north.y++;
+        bool checkNorth = false;
+        if (floorLocations.Contains(north) && !newFloor.Contains(north)) {
+            newFloor.Add(north);
+            checkNorth = true;
+        }
+
+        Vector3Int east = loc;
+        east.x++;
+        bool checkEast = false;
+        if (floorLocations.Contains(east) && !newFloor.Contains(east)) {
+            newFloor.Add(east);
+            checkEast = true;
+        }
+
+        Vector3Int south = loc;
+        south.y--;
+        bool checkSouth = false;
+        if (floorLocations.Contains(south) && !newFloor.Contains(south)) {
+            newFloor.Add(south);
+            checkSouth = true;
+        }
+
+        Vector3Int west = loc;
+        west.x--;
+        bool checkWest = false;
+        if (floorLocations.Contains(west) && !newFloor.Contains(west)) {
+            newFloor.Add(west);
+            checkWest = true;
+        }
+
+        if (checkNorth) FindNearbyFloors(north, ref newFloor);
+        if (checkEast) FindNearbyFloors(east, ref newFloor);
+        if (checkSouth) FindNearbyFloors(south, ref newFloor);
+        if (checkWest) FindNearbyFloors(west, ref newFloor);
     }
 
     void SetTiles() {
@@ -134,6 +188,12 @@ public class CaveMap : MonoBehaviour {
         tilemap.SetTiles(wallLocations.ToArray(), wallTiles);
         tilemap.SetTiles(floorLocations.ToArray(), floorTiles);
         oreTilemap.SetTiles(rockLocations.ToArray(), oreTiles);
+    }
+
+    void PlaceStaircase() {
+        Vector3Int loc = floorLocations[Random.Range(0, floorLocations.Count)];
+        tilemap.SetTile(loc, settings.staircaseTile);
+        oreTilemap.SetTile(loc, null);
     }
 
     bool CheckValueValid(int x, int y) {

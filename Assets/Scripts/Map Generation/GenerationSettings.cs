@@ -25,6 +25,7 @@ public class GenerationSettings : ScriptableObject {
     [Range(0, 1)]
     public float rockSpawnRate;
     public TileBase rockTile;
+    public TileBase staircaseTile;
 
     public List<OreSpawnInformation> oreSpawnInformation;
 
