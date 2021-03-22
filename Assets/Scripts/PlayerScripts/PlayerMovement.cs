@@ -12,16 +12,20 @@ public class PlayerMovement : MonoBehaviour {
     [SerializeField]
     [Tooltip("The rate at which the player accelerates in the direction they are moving.")]
     private float acceleration;
+
+    private int facingDirection = 0;
     #endregion
 
     #region Components
     private Rigidbody2D playerRB;
+    private Animator animator;
     #endregion
 
 
     #region Unity functions
     private void Start() {
         playerRB = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
     }
 
     private void Update()
@@ -40,6 +44,20 @@ public class PlayerMovement : MonoBehaviour {
     private void DoMovement() {
         float xInput = Input.GetAxis("Horizontal");
         float yInput = Input.GetAxis("Vertical");
+
+        if (xInput > 0) {
+            facingDirection = 3;
+        } else if (xInput < 0) {
+            facingDirection = 1;
+        } else if (yInput > 0) {
+            facingDirection = 2;
+        } else if (yInput < 0) {
+            facingDirection = 0;
+        }
+
+        animator.SetBool("Moving", xInput != 0 && yInput != 0);
+        animator.SetInteger("FacingDirection", facingDirection);
+
         Vector2 direction = new Vector2(xInput, yInput);
         direction.Normalize();
 

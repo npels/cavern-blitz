@@ -12,16 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e764e19e4820174fadf8d8572a53d70, type: 3}
   m_Name: TestSettings
   m_EditorClassIdentifier: 
-  seed: 1
+  seed: 47
   mapSize: 50
   caveRadius: 40
   spawnBoxSize: 2
-  threshold: 0.215
-  roughness: 1.5
-  falloff: 0.81
+  threshold: 0.371
+  roughness: 2
+  falloff: 0.55
   floorTile: {fileID: 11400000, guid: 91901e662e550154a89d9ef4247e7a34, type: 2}
   wallTile: {fileID: 11400000, guid: 4b30814e9f6913e49a2b1cc29217092d, type: 2}
-  rockSpawnRate: 0.295
+  rockSpawnRate: 0.37
   rockTile: {fileID: 11400000, guid: 779624739e7509d42bf2a2bb0260a3d7, type: 2}
   oreSpawnInformation:
   - rarity: 0.1

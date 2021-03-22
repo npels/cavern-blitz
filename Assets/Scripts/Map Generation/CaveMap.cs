@@ -14,6 +14,8 @@ public class CaveMap : MonoBehaviour {
     Tilemap tilemap;
     Tilemap oreTilemap;
 
+    float[] valueMap;
+    
     List<Vector3Int> floorLocations;
     List<Vector3Int> wallLocations;
     List<Vector3Int> rockLocations;
@@ -23,6 +25,8 @@ public class CaveMap : MonoBehaviour {
     }
 
     void Initialize() {
+        valueMap = new float[settings.mapSize * settings.mapSize * 4];
+
         floorLocations = new List<Vector3Int>();
         wallLocations = new List<Vector3Int>();
         rockLocations = new List<Vector3Int>();
@@ -37,11 +41,51 @@ public class CaveMap : MonoBehaviour {
         Random.InitState(settings.seed);
     }
 
-    void GenerateTiles() {
+    void GenerateMap() {
+        PopulateValueMap();
+        FilterValueMap();
+        DecideTiles();
+        ClearSpawnArea();
+        SetTiles();
+    }
+
+    public void GenerateCave() {
+        Initialize();
+        GenerateMap();
+    }
+
+    void PopulateValueMap() {
         for (int x = -settings.mapSize; x < settings.mapSize; x++) {
             for (int y = -settings.mapSize; y < settings.mapSize; y++) {
-                float value = caveGenerator.IsWallAtPoint(x, y);
+                SetPointValue(x, y, caveGenerator.IsWallAtPoint(x, y));
+            }
+        }
+    }
 
+    void FilterValueMap() {
+        bool alteredMap = false;
+        int numIterations = 0;
+        while (numIterations < 1000) {
+            for (int x = -settings.mapSize; x < settings.mapSize; x++) {
+                for (int y = -settings.mapSize; y < settings.mapSize; y++) {
+                    bool valid = CheckValueValid(x, y);
+                    if (!valid) {
+                        SetPointValue(x, y, settings.threshold);
+                        alteredMap = true;
+                    }
+                }
+            }
+            if (!alteredMap) break;
+            alteredMap = false;
+            numIterations++;
+        }
+        Debug.Log("Filtered map with " + numIterations + " iterations");
+    }
+
+    void DecideTiles() {
+        for (int x = -settings.mapSize; x < settings.mapSize; x++) {
+            for (int y = -settings.mapSize; y < settings.mapSize; y++) {
+                float value = GetPointValue(x, y);
                 if (value < settings.threshold) {
                     wallLocations.Add(new Vector3Int(x, y, 0));
                 } else {
@@ -55,13 +99,17 @@ public class CaveMap : MonoBehaviour {
                 }
             }
         }
+    }
 
+    void ClearSpawnArea() {
         for (int x = -settings.spawnBoxSize; x < settings.spawnBoxSize; x++) {
             for (int y = -settings.spawnBoxSize; y < settings.spawnBoxSize; y++) {
                 floorLocations.Add(new Vector3Int(x, y, 0));
             }
         }
+    }
 
+    void SetTiles() {
         TileBase[] wallTiles = new TileBase[wallLocations.Count];
         for (int i = 0; i < wallLocations.Count; i++) wallTiles[i] = settings.wallTile;
 
@@ -88,9 +136,23 @@ public class CaveMap : MonoBehaviour {
         oreTilemap.SetTiles(rockLocations.ToArray(), oreTiles);
     }
 
-    public void GenerateCave() {
-        Initialize();
-        GenerateTiles();
+    bool CheckValueValid(int x, int y) {
+        float value = GetPointValue(x, y);
+        if (value < settings.threshold) {
+            if (GetPointValue(x - 1, y - 1) >= settings.threshold && GetPointValue(x + 1, y + 1) >= settings.threshold) {
+                return false;
+            }
+            if (GetPointValue(x, y - 1) >= settings.threshold && GetPointValue(x, y + 1) >= settings.threshold) {
+                return false;
+            }
+            if (GetPointValue(x + 1, y - 1) >= settings.threshold && GetPointValue(x - 1, y + 1) >= settings.threshold) {
+                return false;
+            }
+            if (GetPointValue(x - 1, y) >= settings.threshold && GetPointValue(x + 1, y) >= settings.threshold) {
+                return false;
+            }
+        }
+        return true;
     }
 
     void ShuffleList<T>(List<T> list) {
@@ -101,5 +163,19 @@ public class CaveMap : MonoBehaviour {
             list[r] = list[i];
             list[i] = t;
         }
+    }
+
+    public int ValueMapIndex(int x, int y) {
+        return (x + settings.mapSize) + (y + settings.mapSize) * settings.mapSize * 2;
+    }
+
+    public float GetPointValue(int x, int y) {
+        if (x < -settings.mapSize || x >= settings.mapSize || y < -settings.mapSize || y >= settings.mapSize) return 0;
+        return valueMap[ValueMapIndex(x, y)];
+    }
+
+    public void SetPointValue(int x, int y, float value) {
+        if (x < -settings.mapSize || x >= settings.mapSize || y < -settings.mapSize || y >= settings.mapSize) return;
+        valueMap[ValueMapIndex(x, y)] = value;
     }
 }
