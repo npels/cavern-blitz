@@ -9,13 +9,12 @@ public class Ore : MonoBehaviour
     private int currHealth;
     public Item.Items itemType;
 
-    private GameObject player;
+    
 
     private bool isPickupable = false;
 
     private void Start()
     {
-        player = GameObject.Find("Player");
         currHealth = maxHealth;
     }
 
@@ -53,7 +52,6 @@ public class Ore : MonoBehaviour
         if (other.tag == "Player" && isPickupable)
         {
             PickupOre();
-            Debug.Log("Move out my way " + other.tag);
         }
     }
 

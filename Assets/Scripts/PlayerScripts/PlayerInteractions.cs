@@ -37,6 +37,10 @@ public class PlayerInteractions : MonoBehaviour
     private int pickaxeDamage; // The damage of the currently equipped pickaxe 
     #endregion
 
+    #region Inventory Vars
+    private bool menuOpen;
+    #endregion
+
     #region Components
     private Rigidbody2D playerRB;
     #endregion
@@ -51,7 +55,7 @@ public class PlayerInteractions : MonoBehaviour
         isMining = false;
         miningReach = 1;
         pickaxeDamage = 1;
-
+        menuOpen = false;
         mineTimer = 0;
     }
 
@@ -72,7 +76,7 @@ public class PlayerInteractions : MonoBehaviour
     private void DoAttack()
     {
         float attackInput = Input.GetAxis("Fire1");
-        if (attackInput == 0 || isAttacking || isMining)
+        if (attackInput == 0 || isAttacking || isMining || menuOpen)
         {
             return;
         }
@@ -179,7 +183,7 @@ public class PlayerInteractions : MonoBehaviour
     private void DoMining()
     {
         float miningInput = Input.GetAxis("Fire2");
-        if (miningInput == 0 || isMining || isAttacking)
+        if (miningInput == 0 || isMining || isAttacking || menuOpen)
         {
             return;
         }
@@ -216,6 +220,13 @@ public class PlayerInteractions : MonoBehaviour
         yield return new WaitForSeconds(miningCooldown);
         isMining = false;
         yield return null;
+    }
+    #endregion
+
+    #region Inventory Functions
+    public void SetMenuOpen(bool b)
+    {
+        menuOpen = b;
     }
     #endregion
 }

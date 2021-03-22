@@ -13,7 +13,9 @@ public class InventoryUI : MonoBehaviour
     private InventorySlot[] menuSlots;
     private InventorySlot[] barSlots;
 
-   
+    private GameObject player;
+    private PlayerInteractions playerInteractions;
+
     void Start()
     {
         inventory = Inventory.inv;
@@ -22,6 +24,10 @@ public class InventoryUI : MonoBehaviour
         barSlots = inventoryBar.GetComponentsInChildren<InventorySlot>();
         inventoryBar.SetActive(true);
         inventoryMenu.SetActive(false);
+
+
+        player = GameObject.Find("Player");
+        playerInteractions = player.GetComponent<PlayerInteractions>();
     }
 
     private void Update()
@@ -44,6 +50,7 @@ public class InventoryUI : MonoBehaviour
         inMenu = true;
         inventoryMenu.SetActive(true);
         inventoryBar.SetActive(false);
+        playerInteractions.SetMenuOpen(true);
 
         UpdateUI();
     }
@@ -53,6 +60,7 @@ public class InventoryUI : MonoBehaviour
         inMenu = false;
         inventoryBar.SetActive(true);
         inventoryMenu.SetActive(false);
+        playerInteractions.SetMenuOpen(false);
 
         UpdateUI();
     }
@@ -67,7 +75,7 @@ public class InventoryUI : MonoBehaviour
                {
                     break;
                }
-                barSlots[i].AddItem(item.Key, item.Value);
+               barSlots[i].AddItem(item.Key, item.Value);
            }
            else
            {

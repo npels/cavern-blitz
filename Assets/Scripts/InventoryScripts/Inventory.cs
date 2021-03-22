@@ -37,15 +37,19 @@ public class Inventory : MonoBehaviour
     #region Item Funcs
     public void AddItemToInventory(Item.Items item, int num)
     {
-        if (inventory.ContainsKey(item))
+        if (num > 0)
         {
-            inventory[item] += num;
+            if (inventory.ContainsKey(item))
+            {
+                inventory[item] += num;
+            }
+            else
+            {
+                inventory.Add(item, num);
+            }
+            UI.UpdateUI();
         }
-        else
-        {
-            inventory.Add(item, num);
-        }
-        UI.UpdateUI();
+        
     }
 
     public Dictionary<Item.Items, int> GetInventory()
