@@ -38,7 +38,7 @@ public class PlayerInteractions : MonoBehaviour
     #endregion
 
     #region Inventory Vars
-    private bool menuOpen;
+    private bool inventoryOpen;
     #endregion
 
     #region Components
@@ -55,7 +55,7 @@ public class PlayerInteractions : MonoBehaviour
         isMining = false;
         miningReach = 1;
         pickaxeDamage = 1;
-        menuOpen = false;
+        inventoryOpen = false;
         mineTimer = 0;
     }
 
@@ -76,7 +76,7 @@ public class PlayerInteractions : MonoBehaviour
     private void DoAttack()
     {
         float attackInput = Input.GetAxis("Fire1");
-        if (attackInput == 0 || isAttacking || isMining || attackTimer > 0 || menuOpen)
+        if (attackInput == 0 || isAttacking || isMining || attackTimer > 0 || inventoryOpen)
         {
             return;
         }
@@ -161,7 +161,7 @@ public class PlayerInteractions : MonoBehaviour
     private void DoMining()
     {
         float miningInput = Input.GetAxis("Fire2");
-        if (miningInput == 0 || isMining || isAttacking || menuOpen)
+        if (miningInput == 0 || isMining || isAttacking || inventoryOpen)
         {
             return;
         }
@@ -204,7 +204,7 @@ public class PlayerInteractions : MonoBehaviour
     #region Inventory Functions
     public void SetMenuOpen(bool b)
     {
-        menuOpen = b;
+        inventoryOpen = b;
     }
     #endregion
 }

@@ -4,19 +4,24 @@ using UnityEngine;
 
 public class InventoryUI : MonoBehaviour
 {
+    #region Inventory Variables
     public GameObject inventoryBar;
     public GameObject inventoryMenu;
-   
-    private Inventory inventory;
-
-    private bool inMenu = false;
     private InventorySlot[] menuSlots;
     private InventorySlot[] barSlots;
 
+    private Inventory inventory;
+
+    private bool opened = false;
+    #endregion
+
+    #region Player Variables
     private GameObject player;
     private PlayerInteractions playerInteractions;
-    private PlayerMovement playerMovement; 
+    private PlayerMovement playerMovement;
+    #endregion
 
+    #region Unity Functions 
     void Start()
     {
         inventory = Inventory.inv;
@@ -36,20 +41,22 @@ public class InventoryUI : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
-            if (inMenu)
+            if (opened)
             {
-                CloseMenu();
+                CloseInventory();
             }
             else
             {
-                OpenMenu();
+                OpenInventory();
             }
         }
     }
+    #endregion 
 
-    public void OpenMenu()
+    #region Menu Functions
+    public void OpenInventory()
     {
-        inMenu = true;
+        opened = true;
         inventoryMenu.SetActive(true);
         inventoryBar.SetActive(false);
         playerInteractions.SetMenuOpen(true);
@@ -58,9 +65,9 @@ public class InventoryUI : MonoBehaviour
         UpdateUI();
     }
 
-    public void CloseMenu()
+    public void CloseInventory()
     {
-        inMenu = false;
+        opened = false;
         inventoryBar.SetActive(true);
         inventoryMenu.SetActive(false);
         playerInteractions.SetMenuOpen(false);
@@ -68,12 +75,13 @@ public class InventoryUI : MonoBehaviour
 
         UpdateUI();
     }
+    #endregion
 
     public void UpdateUI()
     {
        int i = 0;
        foreach (KeyValuePair<Item.Items, int> item in inventory.GetInventory()) {
-           if (!inMenu)
+           if (!opened)
            {
                if (i >= barSlots.Length)
                {
@@ -93,4 +101,6 @@ public class InventoryUI : MonoBehaviour
            }
         
     }
+
+
 }
