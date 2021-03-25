@@ -15,6 +15,21 @@ public class InventorySlot : MonoBehaviour
         item = GameObject.Find("Inventory").GetComponent<Item>();
     }
 
+    private void Update()
+    {
+            if (Input.GetMouseButtonDown(0))
+            {
+                Vector3 clickpos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                Vector2 click2D = new Vector2(clickpos.x, clickpos.y);
+
+                RaycastHit2D hit = Physics2D.Raycast(click2D, Vector2.zero);
+                if (hit.collider != null)
+                {
+                    Debug.Log(hit.collider.gameObject.name);
+                }
+            }
+        
+    }
     public void AddItem(Item.Items newItem, int i)
     {
         quantityText.text = i.ToString();
@@ -30,5 +45,10 @@ public class InventorySlot : MonoBehaviour
         image.sprite = null;
         image.enabled = false;
         quantityText.enabled = true;
+    }
+
+    private void OnMouseDown()
+    {
+        Debug.Log("clicked");
     }
 }

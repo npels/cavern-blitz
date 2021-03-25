@@ -76,13 +76,8 @@ public class PlayerInteractions : MonoBehaviour
     private void DoAttack()
     {
         float attackInput = Input.GetAxis("Fire1");
-        if (attackInput == 0 || isAttacking || isMining || menuOpen)
+        if (attackInput == 0 || isAttacking || isMining || attackTimer > 0 || menuOpen)
         {
-            return;
-        }
-        else if (attackTimer > 0)
-        { // Yes, this else if can be merged with the above if, I just have it to debug cooldowns for now.
-            Debug.Log("On Cooldown!");
             return;
         }
         else
@@ -100,18 +95,21 @@ public class PlayerInteractions : MonoBehaviour
 
         Vector2 cardinalDirection = getCardinal(direction);
 
-        RaycastHit2D hit = Physics2D.Raycast(playerRB.position, cardinalDirection, reach, LayerMask.GetMask("Enemy"));
+        RaycastHit2D[] hits = Physics2D.BoxCastAll(playerRB.position + (cardinalDirection * 0.5f), new Vector2(0.3f, 0.3f), 0, cardinalDirection, reach, LayerMask.GetMask("Enemy"));
         Debug.DrawRay(playerRB.position, direction, Color.blue, 10.0f, false); // For debugging purposes
         Debug.DrawRay(playerRB.position, cardinalDirection, Color.red, 10.0f, false); // For debugging purposes
-
-        if (hit.transform != null)
-        {
-            Debug.Log(hit.transform.name);
-            if (hit.transform.CompareTag("Enemy"))
+        foreach (RaycastHit2D hit in hits) {
+            if (hit.transform != null)
             {
-                hit.transform.GetComponent<Enemy>().takeDamage(damage);
+                Debug.Log(hit.transform.name);
+
+                if (hit.transform.CompareTag("Enemy"))
+                {
+                    hit.transform.GetComponent<Enemy>().takeDamage(damage);
+                }
             }
         }
+        
         isAttacking = false;
 
         yield return null;
@@ -119,47 +117,27 @@ public class PlayerInteractions : MonoBehaviour
 
     private Vector2 getCardinal(Vector2 dir)
     {
-        float angle = Mathf.Atan2(dir.y, dir.x);
-        float octant = Mathf.Round(8 * angle / (2 * Mathf.PI) + 8) % 8;
-        if (octant == 0)
-        {
-            // East
-            return new Vector2(1, 0);
-        }
-        else if (octant == 1)
-        {
-            // Northeast
-            return new Vector2(1, 1);
-        }
-        else if (octant == 2)
+        float angle = Mathf.Rad2Deg * Mathf.Atan2(dir.y, dir.x);
+        //Debug.Log(angle);
+        if (angle >= 45 && angle < 135)
         {
             // North
             return new Vector2(0, 1);
         }
-        else if (octant == 3)
-        {
-            // Northwest
-            return new Vector2(-1, 1);
-        }
-        else if (octant == 4)
+        else if (angle >= 135 || angle < -135)
         {
             // West
             return new Vector2(-1, 0);
         }
-        else if (octant == 5)
-        {
-            // Southwest
-            return new Vector2(-1, -1);
-        }
-        else if (octant == 6)
+        else if (angle >= -135 && angle < -45)
         {
             // South
             return new Vector2(0, -1);
         }
-        else if (octant == 7)
+        else if (angle >= -45 || angle < 45)
         {
-            // Northeast
-            return new Vector2(1, -1);
+            // East
+            return new Vector2(1, 0);
         }
         return Vector2.zero;
     }
