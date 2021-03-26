@@ -75,7 +75,7 @@ SpriteRenderer:
   m_SortingLayerID: -1712121853
   m_SortingLayer: 4
   m_SortingOrder: 0
-  m_Sprite: {fileID: 1840293236442141911, guid: 3e277c70a638f084982f68b66baa800a,
+  m_Sprite: {fileID: 8793639957104055765, guid: ffe6d283db56197499749655d1c13cab,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -99,7 +99,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f9b3d067d30c7c47b91aa64da8069be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSpeed: 5
+  maxSpeed: 2.5
   acceleration: 3
 --- !u!114 &1256970680
 MonoBehaviour:
@@ -113,13 +113,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbdf7bdf54a1846a79c61e49ca651ad0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackCooldown: {fileID: 0}
-  mineCooldown: {fileID: 0}
-  oreText: {fileID: 0}
   damage: 3
   cooldown: 1
   reach: 1.5
-  cam: {fileID: 0}
   miningCooldown: 0.7
 --- !u!95 &5789233828953361236
 Animator:
