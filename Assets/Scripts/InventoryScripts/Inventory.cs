@@ -9,7 +9,6 @@ public class Inventory : MonoBehaviour
     
 
     #region Inventory vars
-    private static Dictionary<Item.Items, int> inventory1;
     private static List<KeyValuePair<Item.Items, int>>inventory;
     public static Inventory inv;
     private static int maxItemSize;
@@ -31,59 +30,59 @@ public class Inventory : MonoBehaviour
 
     void Start()
     {
-        inventory1 = new Dictionary<Item.Items, int>();
         inventory = new List<KeyValuePair<Item.Items, int>>();
         UI = GetComponent<InventoryUI>();
         maxItemSize = 64;
+
+        for (int i = 0; i < UI.NUM_SLOTS; i ++)
+        {
+            inventory.Add(new KeyValuePair<Item.Items, int>(Item.Items.empty, 0));
+        }
     }
     #endregion
 
     #region Item Funcs
     public void AddItemToInventory(Item.Items item, int num)
     {
-        /*if (num > 0)
-        {
-            if (inventory1.ContainsKey(item) && inventory1[item] <= 2 - num)
-            {
-                inventory1[item] += num;
-            }
-            else
-            {
-                inventory1.Add(item, num);
-            }
-            UI.UpdateUI();
-        }*/
-
         if (num > 0)
         {
             int size = inventory.Count;
-            if (size > 0)
+            int indexToAdd = 0;
+            for (int i = 0; i < size; i++)
             {
-                for (int i = 0; i < size; i++)
+                if ((inventory[i].Key == item && inventory[i].Value <= maxItemSize - num) || inventory[i].Key == Item.Items.empty)
                 {
-
-                    if (inventory[i].Key == item && inventory[i].Value <= maxItemSize - num)
-                    {
-                        inventory[i] = new KeyValuePair<Item.Items, int>(item, inventory[i].Value + num);
-                        break;
-                    }
-                    if (i == size - 1)
-                    {
-                        inventory.Add(new KeyValuePair<Item.Items, int>(item, num));
-                    }
-                }
-            } else
-            {
-                inventory.Add(new KeyValuePair<Item.Items, int>(item, num));
+                    indexToAdd = i;
+                    break;
+                } 
             }
+            inventory[indexToAdd] = new KeyValuePair<Item.Items, int>(item, inventory[indexToAdd].Value + num);
             UI.UpdateUI();
         }
 
     }
 
+    
+    #endregion
+
+    #region Get/Set Funcs
     public List<KeyValuePair<Item.Items, int>> GetInventory()
     {
         return inventory;
+    }
+    public KeyValuePair<Item.Items, int> GetItemAtIndex(int index)
+    {
+        return inventory[index];
+    }
+
+    public void MoveItemInInventory(int fromIndex, int toIndex, KeyValuePair<Item.Items, int> item)
+    {
+        if (fromIndex >= inventory.Count || toIndex >= inventory.Count)
+        {
+            return;
+        }
+        inventory[fromIndex] = new KeyValuePair<Item.Items, int>(Item.Items.empty, 0);
+        inventory[toIndex] = item;
     }
 
     #endregion

@@ -13,23 +13,30 @@ public class InventorySlot : MonoBehaviour
     private void Awake()
     {
         item = GameObject.Find("Inventory").GetComponent<Item>();
+        
     }
 
     public void AddItem(Item.Items newItem, int i)
     {
+        quantityText.enabled = true;
+        image.enabled = true;
+
         quantityText.text = i.ToString();
-        image.sprite = item.GetItemObject(newItem);
+        image.sprite = item.GetItemSprite(newItem);
         image.enabled = true;
         quantityText.enabled = true;
     }
 
     public void RemoveItem()
     {
-        image = null;
-        quantityText = null;
-        image.sprite = null;
+        quantityText.enabled = false;
         image.enabled = false;
-        quantityText.enabled = true;
+    }
+
+    public void Moving()
+    {
+        image.enabled = true;
+        quantityText.enabled = false;
     }
 
 }
