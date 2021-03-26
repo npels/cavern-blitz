@@ -21,11 +21,16 @@ public class PlayerMovement : MonoBehaviour {
     private Animator animator;
     #endregion
 
+    #region Menu Variables
+    private bool menuOpen; 
+    #endregion
+
 
     #region Unity functions
     private void Start() {
         playerRB = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        menuOpen = false;
     }
 
     private void Update()
@@ -35,7 +40,8 @@ public class PlayerMovement : MonoBehaviour {
 
     private void FixedUpdate()
     {
-        DoMovement();
+        if (!menuOpen)
+            DoMovement();
     }
     #endregion
 
@@ -71,5 +77,11 @@ public class PlayerMovement : MonoBehaviour {
     }
     #endregion
 
-    
+    #region Menu Functions
+    public void SetMenuOpen(bool b)
+    {
+        menuOpen = b;
+    }
+    #endregion
+
 }

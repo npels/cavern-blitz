@@ -138,6 +138,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 1
   numDrops: 0
+  itemType: 0
 --- !u!61 &4034958281851038167
 BoxCollider2D:
   m_ObjectHideFlags: 0

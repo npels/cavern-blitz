@@ -7,10 +7,8 @@ public class PlayerInteractions : MonoBehaviour {
     private Image attackCooldown;
     private Image mineCooldown;
     private TMPro.TextMeshProUGUI oreText;
+  
     private float mineTimer;
-    private string oreTextBase;
-    private static int oreNum = 0;
-
 
     #region Attack Variables
     [SerializeField]
@@ -36,6 +34,10 @@ public class PlayerInteractions : MonoBehaviour {
     private int pickaxeDamage; // The damage of the currently equipped pickaxe 
     #endregion
 
+    #region Inventory Vars
+    private bool inventoryOpen;
+    #endregion
+
     #region Components
     private Rigidbody2D playerRB;
     #endregion
@@ -54,10 +56,9 @@ public class PlayerInteractions : MonoBehaviour {
         attackCooldown = GameManager.instance.uiManager.attackCooldown;
         mineCooldown = GameManager.instance.uiManager.mineCooldown;
         oreText = GameManager.instance.uiManager.oreText;
-
+        
+        inventoryOpen = false;
         mineTimer = 0;
-        oreTextBase = oreText.text;
-        oreText.text = oreTextBase + oreNum;
     }
 
     private void Update()
@@ -77,7 +78,7 @@ public class PlayerInteractions : MonoBehaviour {
     private void DoAttack()
     {
         float attackInput = Input.GetAxis("Fire1");
-        if (attackInput == 0 || isAttacking || isMining || attackTimer > 0)
+        if (attackInput == 0 || isAttacking || isMining || attackTimer > 0 || inventoryOpen)
         {
             return;
         }
@@ -162,7 +163,7 @@ public class PlayerInteractions : MonoBehaviour {
     private void DoMining()
     {
         float miningInput = Input.GetAxis("Fire2");
-        if (miningInput == 0 || isMining || isAttacking)
+        if (miningInput == 0 || isMining || isAttacking || inventoryOpen)
         {
             return;
         }
@@ -194,13 +195,18 @@ public class PlayerInteractions : MonoBehaviour {
         {
             Ore ore = hit.transform.GetComponent<Ore>();
             ore.TakeDamage(pickaxeDamage);
-            oreNum += ore.GetNumDrops();
-            oreText.text = oreTextBase + oreNum;
         }
 
         yield return new WaitForSeconds(miningCooldown);
         isMining = false;
         yield return null;
+    }
+    #endregion
+
+    #region Inventory Functions
+    public void SetMenuOpen(bool b)
+    {
+        inventoryOpen = b;
     }
     #endregion
 }
