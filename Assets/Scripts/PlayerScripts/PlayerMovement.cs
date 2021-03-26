@@ -14,6 +14,7 @@ public class PlayerMovement : MonoBehaviour {
     private float acceleration;
 
     private int facingDirection = 0;
+    private bool moving = false;
     #endregion
 
     #region Components
@@ -24,7 +25,6 @@ public class PlayerMovement : MonoBehaviour {
     #region Menu Variables
     private bool menuOpen; 
     #endregion
-
 
     #region Unity functions
     private void Start() {
@@ -45,11 +45,12 @@ public class PlayerMovement : MonoBehaviour {
     }
     #endregion
 
-
     #region Movement functions
     private void DoMovement() {
         float xInput = Input.GetAxis("Horizontal");
         float yInput = Input.GetAxis("Vertical");
+
+        int oldDirection = facingDirection;
 
         if (xInput > 0) {
             facingDirection = 3;
@@ -61,8 +62,13 @@ public class PlayerMovement : MonoBehaviour {
             facingDirection = 0;
         }
 
-        animator.SetBool("Moving", xInput != 0 && yInput != 0);
+        bool oldMoving = moving;
+        moving = xInput != 0 || yInput != 0;
+
+        animator.SetBool("Moving", moving);
         animator.SetInteger("FacingDirection", facingDirection);
+        animator.SetFloat("Speed", playerRB.velocity.magnitude / maxSpeed);
+        if (oldDirection != facingDirection || oldMoving != moving) animator.SetTrigger("ChangeMode");
 
         Vector2 direction = new Vector2(xInput, yInput);
         direction.Normalize();

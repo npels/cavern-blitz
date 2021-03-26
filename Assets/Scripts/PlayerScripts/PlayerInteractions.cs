@@ -42,7 +42,6 @@ public class PlayerInteractions : MonoBehaviour {
     private Rigidbody2D playerRB;
     #endregion
 
-
     #region Unity functions
     private void Start()
     {
