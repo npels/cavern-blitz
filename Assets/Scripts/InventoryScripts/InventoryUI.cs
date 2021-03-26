@@ -164,13 +164,11 @@ public class InventoryUI : MonoBehaviour
             KeyValuePair<Item.Items, int> previouslySelected = currentlySelected;
             currentlySelected = inventory.GetItemAtIndex(toIndex);
 
-            //Debug.Log("from: " + fromIndex + " to: " + toIndex);
             inventory.MoveItemInInventory(fromIndex, toIndex, previouslySelected);
             SelectItem(currentlySelected.Key);
 
-            if (currentlySelected.Key.Equals(Item.Items.empty))
+            if (currentlySelected.Key.Equals(Item.Items.empty) || toIndex == fromIndex)
             {
-                Debug.Log("empty"); 
                 selectedItemUI.SetActive(false);
                 itemIsSelected = false;
             }

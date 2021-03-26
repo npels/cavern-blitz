@@ -9,7 +9,7 @@ public class Inventory : MonoBehaviour
     
 
     #region Inventory vars
-    private static List<KeyValuePair<Item.Items, int>>inventory;
+    private static List<KeyValuePair<Item.Items, int>> inventory;
     public static Inventory inv;
     private static int maxItemSize;
     #endregion
@@ -47,16 +47,26 @@ public class Inventory : MonoBehaviour
         if (num > 0)
         {
             int size = inventory.Count;
-            int indexToAdd = 0;
+            int indexToAdd = -1;
+            int firstEmpty = -1;
             for (int i = 0; i < size; i++)
             {
-                if ((inventory[i].Key == item && inventory[i].Value <= maxItemSize - num) || inventory[i].Key == Item.Items.empty)
+                if ((inventory[i].Key == item && inventory[i].Value <= maxItemSize - num))
                 {
                     indexToAdd = i;
+                    PutItemAtIndex(indexToAdd, new KeyValuePair<Item.Items, int>(item, inventory[indexToAdd].Value + num));
                     break;
-                } 
+                }
+                else if (inventory[i].Key == Item.Items.empty && firstEmpty == -1)
+                {
+                    firstEmpty = i;
+                }
             }
-            inventory[indexToAdd] = new KeyValuePair<Item.Items, int>(item, inventory[indexToAdd].Value + num);
+            if (indexToAdd == -1)
+            {
+                PutItemAtIndex(firstEmpty, new KeyValuePair<Item.Items, int>(item, num));
+
+            }
             UI.UpdateUI();
         }
 
@@ -70,19 +80,30 @@ public class Inventory : MonoBehaviour
     {
         return inventory;
     }
+
     public KeyValuePair<Item.Items, int> GetItemAtIndex(int index)
     {
+        if (index >= inventory.Count)
+        {
+            Debug.LogError("Index is out of range");
+            return new KeyValuePair<Item.Items, int>(Item.Items.empty, 0);
+        }
         return inventory[index];
+    }
+    public void PutItemAtIndex(int index, KeyValuePair<Item.Items, int> item)
+    {
+        if (index >= inventory.Count)
+        {
+            Debug.LogError("Index is out of range");
+            return;
+        }
+        inventory[index] = item;
     }
 
     public void MoveItemInInventory(int fromIndex, int toIndex, KeyValuePair<Item.Items, int> item)
     {
-        if (fromIndex >= inventory.Count || toIndex >= inventory.Count)
-        {
-            return;
-        }
-        inventory[fromIndex] = new KeyValuePair<Item.Items, int>(Item.Items.empty, 0);
-        inventory[toIndex] = item;
+        PutItemAtIndex(fromIndex, new KeyValuePair<Item.Items, int>(Item.Items.empty, 0));
+        PutItemAtIndex(toIndex, item);
     }
 
     #endregion
