@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class Ore : MonoBehaviour
 {
-    //The number of hits it takes to break the ore 
-    public int maxHealth;
-    //The number of ores that drops when broken
-    public int numDrops;
+    public int maxHealth; //The number of hits it takes to break the ore 
+    public int numDrops; //The number of ores that drops when broken
     private int currHealth;
+    public Item.Items itemType;
+
+    
+
+    private bool isPickupable = false;
 
     private void Start()
     {
@@ -21,7 +24,7 @@ public class Ore : MonoBehaviour
         currHealth -= val;
         if (currHealth <= 0)
         {
-            Destroy(gameObject);
+            DropOre(this.gameObject);
         }
     }
 
@@ -29,6 +32,29 @@ public class Ore : MonoBehaviour
     {
         return numDrops;
     }
-    
-}
 
+    #region Drop Functions/Animations
+    private void DropOre(GameObject g)
+    {
+        g.transform.localScale = new Vector3(0.5f, 0.5f, 0);
+        isPickupable = true;
+    }
+    private void PickupOre()
+    {
+        Inventory.inv.AddItemToInventory(this.itemType, numDrops);
+        isPickupable = false;
+        Destroy(this.gameObject);
+
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.tag == "Player" && isPickupable)
+        {
+            PickupOre();
+        }
+    }
+
+
+    #endregion
+}
