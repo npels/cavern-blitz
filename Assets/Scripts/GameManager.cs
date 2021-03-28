@@ -14,6 +14,8 @@ public class GameManager : MonoBehaviour {
 
     public Cinemachine.CinemachineVirtualCamera vcam;
 
+    public Inventory inventory;
+
     [HideInInspector]
     public GameObject player;
 

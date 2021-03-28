@@ -3,40 +3,39 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class InventorySlot : MonoBehaviour
-{
-    public Image image;
-    public TMPro.TextMeshProUGUI quantityText;
+public class InventorySlot : MonoBehaviour {
 
-    Item item;
+    public ItemStack stack;
+    public GameObject itemObject;
 
-    private void Awake()
-    {
-        item = GameObject.Find("Inventory").GetComponent<Item>();
-        
+    public void UpdateSlot(ItemStack newStack) {
+        if (stack == null) {
+            stack = newStack;
+            if (stack.item != null) {
+                itemObject = Instantiate(stack.item.gameObject, transform);
+                itemObject.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = stack.count.ToString();
+            }
+        } else if (newStack.item == null && stack.item != null) {
+            stack = newStack;
+            Destroy(itemObject);
+            itemObject = null;
+            return;
+        } else if (newStack.item != stack.item) {
+            stack = newStack;
+            Destroy(itemObject);
+            itemObject = Instantiate(stack.item.gameObject, transform);
+            itemObject.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = stack.count.ToString();
+            return;
+        }
+        stack = newStack;
+
+        if (stack.item != null && itemObject == null) {
+            itemObject = Instantiate(stack.item.gameObject, transform);
+        }
+
+        if (itemObject != null) {
+            itemObject.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = stack.count.ToString();
+            itemObject.transform.localPosition = Vector3.zero;
+        }
     }
-
-    public void AddItem(Item.Items newItem, int i)
-    {
-        quantityText.enabled = true;
-        image.enabled = true;
-
-        quantityText.text = i.ToString();
-        image.sprite = item.GetItemSprite(newItem);
-        image.enabled = true;
-        quantityText.enabled = true;
-    }
-
-    public void RemoveItem()
-    {
-        quantityText.enabled = false;
-        image.enabled = false;
-    }
-
-    public void Moving()
-    {
-        image.enabled = true;
-        quantityText.enabled = false;
-    }
-
 }

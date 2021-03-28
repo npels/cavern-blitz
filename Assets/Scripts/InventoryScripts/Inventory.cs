@@ -4,107 +4,133 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-public class Inventory : MonoBehaviour
-{
-    
+public class Inventory : MonoBehaviour {
 
-    #region Inventory vars
-    private static List<KeyValuePair<Item.Items, int>> inventory;
-    public static Inventory inv;
-    private static int maxItemSize;
+    #region Inventory parameters
+    [Tooltip("The number of slots this inventory has.")]
+    public int numSlots;
+    [Tooltip("If true, the maximum stack sizes of items are ignored.")]
+    public bool allowStockpile;
+    [Tooltip("The last 'numPrioritySlots' inventory slots will be filled first before any others.")]
+    public int numPrioritySlots;
     #endregion
 
-    InventoryUI UI; 
+    #region Inventory variables
+    public List<ItemStack> stacks;
+    #endregion
 
-    #region Unity Funcs
-    // Start is called before the first frame update
-    private void Awake()
-    {
-        if (inv != null)
-        {
-            Debug.Log("More than one inventory found");
-            return;
-        }
-        inv = this;
+    #region Event declarations
+    public delegate void UpdateUIFunction();
+    public event UpdateUIFunction UpdateUIEvent;
+
+    /* Update any UI objects that are following this inventory. */
+    public void UpdateUI() {
+        UpdateUIEvent?.Invoke();
     }
+    #endregion
 
-    void Start()
-    {
-        inventory = new List<KeyValuePair<Item.Items, int>>();
-        UI = GetComponent<InventoryUI>();
-        maxItemSize = 64;
+    #region Unity functions
+    void Start() {
+        stacks = new List<ItemStack>();
 
-        for (int i = 0; i < UI.NUM_SLOTS; i ++)
-        {
-            inventory.Add(new KeyValuePair<Item.Items, int>(Item.Items.empty, 0));
+        for (int i = 0; i < numSlots; i ++) {
+            stacks.Add(new ItemStack(allowStockpile));
         }
     }
     #endregion
+
 
     #region Item Funcs
-    public void AddItemToInventory(Item.Items item, int num)
-    {
-        if (num > 0)
-        {
-            int size = inventory.Count;
-            int indexToAdd = -1;
-            int firstEmpty = -1;
-            for (int i = 0; i < size; i++)
-            {
-                if ((inventory[i].Key == item && inventory[i].Value <= maxItemSize - num))
-                {
-                    indexToAdd = i;
-                    PutItemAtIndex(indexToAdd, new KeyValuePair<Item.Items, int>(item, inventory[indexToAdd].Value + num));
-                    break;
-                }
-                else if (inventory[i].Key == Item.Items.empty && firstEmpty == -1)
-                {
-                    firstEmpty = i;
-                }
-            }
-            if (indexToAdd == -1)
-            {
-                PutItemAtIndex(firstEmpty, new KeyValuePair<Item.Items, int>(item, num));
+    /* Tries to add the item to the inventory.
+     * If there is no space, return -1. 
+     * Otherwise, add the item and return the index of the slot. */
+    public int TryAddItem(Item item, int count) {
+        if (count <= 0) return -1;
+        if (item == null) return -1;
 
+        ItemStack stack = GetItemStack(item);
+        if (stack != null) {
+            if (stack.TryStackItem(item, count)) {
+                UpdateUI();
+                return stacks.IndexOf(stack);
             }
-            UI.UpdateUI();
         }
 
-    }
-
-    
-    #endregion
-
-    #region Get/Set Funcs
-    public List<KeyValuePair<Item.Items, int>> GetInventory()
-    {
-        return inventory;
-    }
-
-    public KeyValuePair<Item.Items, int> GetItemAtIndex(int index)
-    {
-        if (index >= inventory.Count)
-        {
-            Debug.LogError("Index is out of range");
-            return new KeyValuePair<Item.Items, int>(Item.Items.empty, 0);
+        for (int i = stacks.Count - numPrioritySlots; i < stacks.Count; i++) {
+            ItemStack s = stacks[i];
+            if (s.TryStackItem(item, count)) {
+                UpdateUI();
+                return stacks.IndexOf(s);
+            }
         }
-        return inventory[index];
+
+        foreach (ItemStack s in stacks) {
+            if (s.TryStackItem(item, count)) {
+                UpdateUI();
+                return stacks.IndexOf(s);
+            }
+        }
+
+        return -1;
     }
-    public void PutItemAtIndex(int index, KeyValuePair<Item.Items, int> item)
-    {
-        if (index >= inventory.Count)
-        {
-            Debug.LogError("Index is out of range");
+
+    /* Returns the ItemStack at slot 'slotIndex'. */
+    public ItemStack GetItemStack(int slotIndex) {
+        if (slotIndex >= numSlots) {
+            Debug.LogError("Tried to access item at slot " + slotIndex + " when the max slot index is " + (numSlots - 1));
+            return null;
+        }
+
+        return stacks[slotIndex];
+    }
+
+    /* Returns the first stack of 'item' in the inventory, or null if there are none. */
+    public ItemStack GetItemStack(Item item) {
+        for (int i = stacks.Count - numPrioritySlots; i < stacks.Count; i++) {
+            ItemStack stack = stacks[i];
+            if (stack.item == item) {
+                return stack;
+            }
+        }
+
+        foreach (ItemStack stack in stacks) {
+            if (stack.item == item) {
+                return stack;
+            }
+        }
+
+        return null;
+    }
+
+    /* Returns the first empty ItemStack in the inventory, or null if there are none. */
+    public ItemStack GetFirstEmptySlot() {
+        return GetItemStack(null);
+    }
+
+    /* Sets the item and count at slot 'slotIndex'. */
+    public void SetItemStack(int slotIndex, Item item, int count) {
+        ItemStack stack = GetItemStack(slotIndex);
+        if (stack == null) return;
+
+        stack.SetStack(item, count, allowStockpile);
+    }
+
+    public void SetItemStack(int slotIndex, ItemStack stack) {
+        if (slotIndex >= numSlots) {
+            Debug.LogError("Tried to set item at slot " + slotIndex + " when the max slot index is " + (numSlots - 1));
             return;
         }
-        inventory[index] = item;
+
+        stacks[slotIndex] = new ItemStack(stack);
     }
 
-    public void MoveItemInInventory(int fromIndex, int toIndex, KeyValuePair<Item.Items, int> item)
-    {
-        PutItemAtIndex(fromIndex, new KeyValuePair<Item.Items, int>(Item.Items.empty, 0));
-        PutItemAtIndex(toIndex, item);
+    /* Removes the item at slot 'slotIndex'. */
+    public void RemoveItem(int slotIndex) {
+        SetItemStack(slotIndex, null, 0);
     }
 
+    public int GetPriorityIndex(int i) {
+        return stacks.Count - numPrioritySlots + i;
+    }
     #endregion
 }

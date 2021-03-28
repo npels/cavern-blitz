@@ -2,14 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Ore : MonoBehaviour
-{
+public class Ore : MonoBehaviour {
     public int maxHealth; //The number of hits it takes to break the ore 
     public int numDrops; //The number of ores that drops when broken
     private int currHealth;
-    public Item.Items itemType;
-
-    
+    public Item oreItem;
 
     private bool isPickupable = false;
 
@@ -41,10 +38,14 @@ public class Ore : MonoBehaviour
     }
     private void PickupOre()
     {
-        Inventory.inv.AddItemToInventory(this.itemType, numDrops);
-        isPickupable = false;
-        Destroy(this.gameObject);
-
+        if (oreItem == null) {
+            isPickupable = false;
+            Destroy(gameObject);
+        }
+        if (GameManager.instance.inventory.TryAddItem(oreItem, 1) != -1) {
+            isPickupable = false;
+            Destroy(gameObject);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
