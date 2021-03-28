@@ -211,6 +211,7 @@ public class CaveMap : MonoBehaviour {
 
         for (int i = 0; i < rockLocations.Count; i++) {
             float oreSpawnValue = Random.Range(0f, 1f);
+            ShuffleList(oreSpawnInformation);
             foreach (GenerationSettings.OreSpawnInformation ore in oreSpawnInformation) {
                 if (oreSpawnValue < ore.rarity) {
                     oreTiles[i] = ore.oreTile;
