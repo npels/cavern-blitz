@@ -15,6 +15,9 @@ public class PlayerMovement : MonoBehaviour {
 
     private int facingDirection = 0;
     private bool moving = false;
+
+    [HideInInspector]
+    public bool canMove = true;
     #endregion
 
     #region Components
@@ -47,6 +50,8 @@ public class PlayerMovement : MonoBehaviour {
 
     #region Movement functions
     private void DoMovement() {
+        if (!canMove) return;
+
         float xInput = Input.GetAxis("Horizontal");
         float yInput = Input.GetAxis("Vertical");
 

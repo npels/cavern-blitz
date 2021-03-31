@@ -43,16 +43,23 @@ public class PlayerInteractions : MonoBehaviour {
 
     #region Inventory Vars
     private bool inventoryOpen;
+
+    public Item attackItem;
+    public Item mineItem;
     #endregion
 
     #region Components
     private Rigidbody2D playerRB;
+    private PlayerMovement playerMovement;
+    private Animator animator;
     #endregion
 
     #region Unity functions
     private void Start()
     {
         playerRB = GetComponent<Rigidbody2D>();
+        playerMovement = GetComponent<PlayerMovement>();
+        animator = GetComponent<Animator>();
         attackTimer = 0;
         isAttacking = false;
         isMining = false;
@@ -101,9 +108,31 @@ public class PlayerInteractions : MonoBehaviour {
     IEnumerator AttackRoutine()
     {
         isAttacking = true;
+        GetComponent<Animator>().SetTrigger("Swing");
+
+        playerMovement.canMove = false;
+
         Vector2 direction = mousePos - playerRB.position;
 
         Vector2 cardinalDirection = getCardinal(direction);
+
+        int facingDirection = 0;
+
+        if (cardinalDirection.x > 0) {
+            facingDirection = 3;
+        } else if (cardinalDirection.x < 0) {
+            facingDirection = 1;
+        } else if (cardinalDirection.y > 0) {
+            facingDirection = 2;
+        } else if (cardinalDirection.y < 0) {
+            facingDirection = 0;
+        }
+
+        animator.SetInteger("FacingDirection", facingDirection);
+        animator.SetTrigger("ChangeMode");
+        animator.SetTrigger("Swing");
+
+        transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = attackItem.sprite;
 
         RaycastHit2D[] hits = Physics2D.BoxCastAll(playerRB.position + (cardinalDirection * 0.5f), new Vector2(0.3f, 0.3f), 0, cardinalDirection, reach, LayerMask.GetMask("Enemy"));
         Debug.DrawRay(playerRB.position, direction, Color.blue, 10.0f, false); // For debugging purposes
@@ -157,12 +186,13 @@ public class PlayerInteractions : MonoBehaviour {
         if (attackTimer > 0 && !isAttacking)
         {
             attackTimer -= Time.deltaTime;
-            attackCooldown.rectTransform.sizeDelta = new Vector2(100, 100 * attackTimer / cooldown);
+            attackCooldown.rectTransform.sizeDelta = new Vector2(20, 20 * attackTimer / cooldown);
+            if (attackTimer <= 0) playerMovement.canMove = true;
         }
         if (mineTimer > 0)
         {
             mineTimer -= Time.deltaTime;
-            mineCooldown.rectTransform.sizeDelta = new Vector2(100, 100 * mineTimer / miningCooldown);
+            mineCooldown.rectTransform.sizeDelta = new Vector2(20, 20 * mineTimer / miningCooldown);
         }
     }
     #endregion
@@ -207,6 +237,24 @@ public class PlayerInteractions : MonoBehaviour {
 
         Vector2 cardinalDirection = getCardinal(direction);
 
+        int facingDirection = 0;
+
+        if (cardinalDirection.x > 0) {
+            facingDirection = 3;
+        } else if (cardinalDirection.x < 0) {
+            facingDirection = 1;
+        } else if (cardinalDirection.y > 0) {
+            facingDirection = 2;
+        } else if (cardinalDirection.y < 0) {
+            facingDirection = 0;
+        }
+
+        transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = mineItem.sprite;
+
+        animator.SetInteger("FacingDirection", facingDirection);
+        animator.SetTrigger("ChangeMode");
+        animator.SetTrigger("Swing");
+
         RaycastHit2D hit = Physics2D.Raycast(playerRB.position, cardinalDirection, miningReach, LayerMask.GetMask("Environment"));
         Debug.DrawRay(playerRB.position, direction, Color.black, 10.0f, false); // For debugging purposes
         Debug.DrawRay(playerRB.position, cardinalDirection, Color.green, 10.0f, false); // For debugging purposes
@@ -217,8 +265,11 @@ public class PlayerInteractions : MonoBehaviour {
             ore.TakeDamage(pickaxeDamage);
         }
 
+        playerMovement.canMove = false;
+
         yield return new WaitForSeconds(miningCooldown);
         isMining = false;
+        playerMovement.canMove = true;
         yield return null;
     }
     #endregion

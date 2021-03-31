@@ -8,4 +8,6 @@ public class Item : MonoBehaviour {
     public string itemName;
     [Tooltip("The maximum number of this item that can fit in a single stack.")]
     public int maxStack;
+    [Tooltip("The sprite that this item uses.")]
+    public Sprite sprite;
 }
