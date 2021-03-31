@@ -23,6 +23,7 @@ public class MapManager : MonoBehaviour {
     public void GenerateNextFloor() {
         currentFloor.SetActive(false);
         currentFloor = Instantiate(floorPrefab, transform);
+        currentFloor.GetComponent<CaveMap>().GenerateCave();
         floorObjects.Add(currentFloor);
     }
 }

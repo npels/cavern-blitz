@@ -26,5 +26,5 @@ MonoBehaviour:
   oreSpawnInformation:
   - rarity: 0.1
     oreTile: {fileID: 11400000, guid: edd3c56d6f47a4d359b3e69f4c3a48d9, type: 2}
-  - rarity: 0.1
-    oreTile: {fileID: 11400000, guid: edd3c56d6f47a4d359b3e69f4c3a48d9, type: 2}
+  - rarity: 0.15
+    oreTile: {fileID: 11400000, guid: d22d09d6257102a4e98b4869933ca23b, type: 2}
