@@ -25,6 +25,13 @@ public class PlayerInteractions : MonoBehaviour {
     private Vector2 mousePos;
     #endregion
 
+    #region Health variables
+    [SerializeField]
+    [Tooltip("The maximum full health of the player.")]
+    private int maxHealth;
+    private int currentHealth;
+    #endregion
+
     #region Mining Variables
     private bool isMining;
     [SerializeField]
@@ -51,6 +58,8 @@ public class PlayerInteractions : MonoBehaviour {
         isMining = false;
         miningReach = 1;
         pickaxeDamage = 1;
+
+        currentHealth = maxHealth;
 
         attackCooldown = GameManager.instance.uiManager.attackCooldown;
         mineCooldown = GameManager.instance.uiManager.mineCooldown;
@@ -154,6 +163,18 @@ public class PlayerInteractions : MonoBehaviour {
         {
             mineTimer -= Time.deltaTime;
             mineCooldown.rectTransform.sizeDelta = new Vector2(100, 100 * mineTimer / miningCooldown);
+        }
+    }
+    #endregion
+
+    #region Health Functions
+    public void takeDamage(int dmg) {
+        Debug.Log("Damage taken!");
+        currentHealth -= dmg;
+        if (currentHealth <= 0) {
+            Destroy(gameObject);
+        } else {
+            //StartCoroutine(DamageFlash());
         }
     }
     #endregion
