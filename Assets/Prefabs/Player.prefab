@@ -200,8 +200,9 @@ MonoBehaviour:
   damage: 3
   cooldown: 0.7
   reach: 1.5
-  maxHealth: 0
+  maxHealth: 3
   miningCooldown: 0.7
+  miningOffset: {x: 0, y: -0.3}
   attackItem: {fileID: 5582871322809918087, guid: d7172619fd810f6458b25ccb37c9e0ad,
     type: 3}
   mineItem: {fileID: 5582871322809918087, guid: 8ecc3c4beb7e9b0418cd63d5afae28ad,

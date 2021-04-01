@@ -28,8 +28,8 @@ public class PlayerInteractions : MonoBehaviour {
     #region Health variables
     [SerializeField]
     [Tooltip("The maximum full health of the player.")]
-    private int maxHealth;
-    private int currentHealth;
+    private float maxHealth;
+    private float currentHealth;
     #endregion
 
     #region Mining Variables
@@ -37,6 +37,9 @@ public class PlayerInteractions : MonoBehaviour {
     [SerializeField]
     [Tooltip("The amount of time player must wait after mining before mining again.")]
     private float miningCooldown;
+    [SerializeField]
+    [Tooltip("The offset from which the pickaxe ray is cast when mining.")]
+    private Vector2 miningOffset;
     private float miningReach; // The distance from the player that the currently equipped pickaxe can reach
     private int pickaxeDamage; // The damage of the currently equipped pickaxe 
     #endregion
@@ -202,10 +205,18 @@ public class PlayerInteractions : MonoBehaviour {
         Debug.Log("Damage taken!");
         currentHealth -= dmg;
         if (currentHealth <= 0) {
-            Destroy(gameObject);
+            gameObject.SetActive(false);
+            GameManager.instance.PlayerDie();
         } else {
-            //StartCoroutine(DamageFlash());
+            StartCoroutine(DamageFlash());
+            GameManager.instance.uiManager.SetHealth(currentHealth / maxHealth);
         }
+    }
+
+    public IEnumerator DamageFlash() {
+        GetComponent<SpriteRenderer>().color = Color.red;
+        yield return new WaitForSeconds(0.1f);
+        GetComponent<SpriteRenderer>().color = Color.white;
     }
     #endregion
 
@@ -255,9 +266,9 @@ public class PlayerInteractions : MonoBehaviour {
         animator.SetTrigger("ChangeMode");
         animator.SetTrigger("Swing");
 
-        RaycastHit2D hit = Physics2D.Raycast(playerRB.position, cardinalDirection, miningReach, LayerMask.GetMask("Environment"));
-        Debug.DrawRay(playerRB.position, direction, Color.black, 10.0f, false); // For debugging purposes
-        Debug.DrawRay(playerRB.position, cardinalDirection, Color.green, 10.0f, false); // For debugging purposes
+        RaycastHit2D hit = Physics2D.Raycast(playerRB.position + miningOffset, cardinalDirection, miningReach, LayerMask.GetMask("Environment"));
+        Debug.DrawRay(playerRB.position + miningOffset, direction, Color.black, 10.0f, false); // For debugging purposes
+        Debug.DrawRay(playerRB.position + miningOffset, cardinalDirection, Color.green, 10.0f, false); // For debugging purposes
 
         if (hit.transform != null)
         {

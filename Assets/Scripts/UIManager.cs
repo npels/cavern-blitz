@@ -11,6 +11,7 @@ public class UIManager : MonoBehaviour {
     public Image mineCooldown;
     public TMPro.TextMeshProUGUI oreText;
     public Image blackout;
+    public Slider healthSlider;
 
     [HideInInspector]
     public bool fading = false;
@@ -55,5 +56,9 @@ public class UIManager : MonoBehaviour {
         if (func != null) {
             func();
         }
+    }
+
+    public void SetHealth(float percentage) {
+        healthSlider.value = percentage;
     }
 }

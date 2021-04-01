@@ -12,8 +12,11 @@ public class Enemy : MonoBehaviour {
 
     #region Movement variables
     [SerializeField]
-    [Tooltip("The speed at which this enemy will move.")]
+    [Tooltip("The max speed at which this enemy will move.")]
     private float speed;
+    [SerializeField]
+    [Tooltip("The rate at which this enemy accelerates.")]
+    private float acceleration;
     [SerializeField]
     [Tooltip("The furthest distance this enemy can detect the player.")]
     private float aggroRange;
@@ -40,7 +43,13 @@ public class Enemy : MonoBehaviour {
         }
     }
 
-     void OnTriggerEnter2D(Collider2D col)
+    private void Update() {
+        if (EnemyRB.velocity.magnitude > speed) {
+            EnemyRB.velocity = EnemyRB.velocity.normalized * speed;
+        }
+    }
+
+    void OnTriggerEnter2D(Collider2D col)
     {
         if (col.transform.CompareTag("Player")) {
             col.transform.GetComponent<PlayerInteractions>().takeDamage(attackDamage);
@@ -49,8 +58,7 @@ public class Enemy : MonoBehaviour {
 
     private void Move() {
         Vector2 direction = target.position - transform.position;
-
-        EnemyRB.velocity = direction.normalized * speed;
+        EnemyRB.AddForce(direction.normalized * acceleration, ForceMode2D.Force);
     }
 
     public void takeDamage(int dmg) {

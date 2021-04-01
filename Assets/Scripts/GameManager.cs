@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
 
@@ -38,5 +39,13 @@ public class GameManager : MonoBehaviour {
         vcam.ForceCameraPosition(new Vector3(0, 0, -10), Quaternion.identity);
         player.transform.position = Vector3.zero;
         StartCoroutine(uiManager.FadeIn());
+    }
+
+    public void PlayerDie() {
+        StartCoroutine(uiManager.FadeOut(FinishPlayerDeath));
+    }
+
+    private void FinishPlayerDeath() {
+        SceneManager.LoadScene("GameOver");
     }
 }

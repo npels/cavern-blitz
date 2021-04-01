@@ -135,5 +135,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 1
   speed: 3
+  acceleration: 3
   aggroRange: 6
-  attackDamage: 0
+  attackDamage: 1

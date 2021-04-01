@@ -18,6 +18,7 @@ public class Ore : MonoBehaviour {
     //Decrements the current health of the ore
     public void TakeDamage(int val)
     {
+        GetComponent<ParticleSystem>().Play();
         currHealth -= val;
         if (currHealth <= 0)
         {
@@ -33,8 +34,14 @@ public class Ore : MonoBehaviour {
     #region Drop Functions/Animations
     private void DropOre(GameObject g)
     {
-        g.transform.localScale = new Vector3(0.5f, 0.5f, 0);
-        isPickupable = true;
+        if (numDrops > 0) {
+            g.transform.localScale = new Vector3(0.5f, 0.5f, 0);
+            isPickupable = true;
+        } else {
+            GetComponent<SpriteRenderer>().enabled = false;
+            foreach (Collider2D c in GetComponents<Collider2D>()) c.enabled = false;
+        }
+        
     }
     private void PickupOre()
     {

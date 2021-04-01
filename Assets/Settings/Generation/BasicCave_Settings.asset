@@ -24,10 +24,12 @@ MonoBehaviour:
   rockTile: {fileID: 11400000, guid: 779624739e7509d42bf2a2bb0260a3d7, type: 2}
   staircaseTile: {fileID: 11400000, guid: ae7daa9662896b844a9bedec96894355, type: 2}
   oreSpawnInformation:
-  - rarity: 0.1
-    oreTile: {fileID: 11400000, guid: edd3c56d6f47a4d359b3e69f4c3a48d9, type: 2}
   - rarity: 0.15
     oreTile: {fileID: 11400000, guid: d22d09d6257102a4e98b4869933ca23b, type: 2}
+  - rarity: 0.05
+    oreTile: {fileID: 11400000, guid: 36e29d226c2ecb042bb55e955dad9bb4, type: 2}
+  - rarity: 0.1
+    oreTile: {fileID: 11400000, guid: edd3c56d6f47a4d359b3e69f4c3a48d9, type: 2}
   enemySpawnLimits: {x: 3, y: 7}
   enemySpawnInformation:
   - rarity: 0.5

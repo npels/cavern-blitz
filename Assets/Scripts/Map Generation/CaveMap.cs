@@ -252,6 +252,7 @@ public class CaveMap : MonoBehaviour {
             foreach (GenerationSettings.EnemySpawnInformation enemy in enemySpawnInformation) {
                 if (enemySpawnValue < enemy.rarity) {
                     Vector3Int loc = floorLocations[Random.Range(0, floorLocations.Count)];
+                    while (loc.magnitude < 10) loc = floorLocations[Random.Range(0, floorLocations.Count)];
                     Instantiate(enemy.enemyPrefab, loc, Quaternion.identity, transform);
                 }
             }
