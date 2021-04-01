@@ -39,11 +39,24 @@ public class GenerationSettings : ScriptableObject {
     [Tooltip("Data for spawning different types of ores.")]
     public List<OreSpawnInformation> oreSpawnInformation;
 
+    [Tooltip("The min/max number of enemies that can spawn on this floor.")]
+    public Vector2Int enemySpawnLimits;
+    [Tooltip("Data for spawning enemies.")]
+    public List<EnemySpawnInformation> enemySpawnInformation;
+
     [System.Serializable]
     public class OreSpawnInformation {
         [Tooltip("How likely a rock is to be an ore of this type.")]
         public float rarity;
         [Tooltip("The tile for this ore.")]
         public TileBase oreTile;
+    }
+
+    [System.Serializable]
+    public class EnemySpawnInformation {
+        [Tooltip("How likely this enemy is to spawn.")]
+        public float rarity;
+        [Tooltip("The prefab for this enemy.")]
+        public GameObject enemyPrefab;
     }
 }

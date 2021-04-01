@@ -59,6 +59,7 @@ public class CaveMap : MonoBehaviour {
         RemoveUnreachableTiles();
         SetTiles();
         PlaceStaircase();
+        SpawnEnemies();
         RestoreState();
     }
 
@@ -232,6 +233,29 @@ public class CaveMap : MonoBehaviour {
         }
         tilemap.SetTile(loc, settings.staircaseTile);
         oreTilemap.SetTile(loc, null);
+    }
+
+    /* Spawn enemies on the map. */
+    void SpawnEnemies() {
+        List<GenerationSettings.EnemySpawnInformation> enemySpawnInformation = settings.enemySpawnInformation;
+
+        int numEnemies = Random.Range(settings.enemySpawnLimits.x, settings.enemySpawnLimits.y);
+        float enemyRarityMax = 0;
+
+        foreach (GenerationSettings.EnemySpawnInformation enemy in enemySpawnInformation) {
+            if (enemy.rarity > enemyRarityMax) enemyRarityMax = enemy.rarity;
+        }
+
+        for (int i = 0; i < numEnemies; i++) {
+            float enemySpawnValue = Random.Range(0f, enemyRarityMax);
+            ShuffleList(enemySpawnInformation);
+            foreach (GenerationSettings.EnemySpawnInformation enemy in enemySpawnInformation) {
+                if (enemySpawnValue < enemy.rarity) {
+                    Vector3Int loc = floorLocations[Random.Range(0, floorLocations.Count)];
+                    Instantiate(enemy.enemyPrefab, loc, Quaternion.identity, transform);
+                }
+            }
+        }
     }
     
     /* Return the random state to its original value. */
