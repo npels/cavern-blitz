@@ -7,21 +7,27 @@ public class Ore : MonoBehaviour {
     public int numDrops; //The number of ores that drops when broken
     private int currHealth;
     public Item oreItem;
+    private AudioSource mineAudio;
+    private AudioSource popAudio;
 
     private bool isPickupable = false;
 
     private void Start()
     {
         currHealth = maxHealth;
+        mineAudio = GetComponents<AudioSource>()[0];
+        popAudio = GetComponents<AudioSource>()[1];
     }
 
     //Decrements the current health of the ore
     public void TakeDamage(int val)
     {
         GetComponent<ParticleSystem>().Play();
+        mineAudio.Play();
         currHealth -= val;
         if (currHealth <= 0)
         {
+            
             DropOre(this.gameObject);
         }
     }
@@ -35,6 +41,7 @@ public class Ore : MonoBehaviour {
     private void DropOre(GameObject g)
     {
         if (numDrops > 0) {
+            popAudio.Play();
             g.transform.localScale = new Vector3(0.5f, 0.5f, 0);
             isPickupable = true;
         } else {

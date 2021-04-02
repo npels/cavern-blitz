@@ -23,6 +23,8 @@ public class PlayerMovement : MonoBehaviour {
     #region Components
     private Rigidbody2D playerRB;
     private Animator animator;
+    private AudioSource walkAudio;
+    private AudioSource walkAudioTwo;
     #endregion
 
     #region Menu Variables
@@ -33,6 +35,8 @@ public class PlayerMovement : MonoBehaviour {
     private void Start() {
         playerRB = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        walkAudio = GetComponents<AudioSource>()[1];
+        walkAudioTwo = GetComponents<AudioSource>()[2];
         menuOpen = false;
     }
 
@@ -50,7 +54,10 @@ public class PlayerMovement : MonoBehaviour {
 
     #region Movement functions
     private void DoMovement() {
-        if (!canMove) return;
+        if (!canMove)
+        {
+            return;
+        }
 
         float xInput = Input.GetAxis("Horizontal");
         float yInput = Input.GetAxis("Vertical");
@@ -85,6 +92,16 @@ public class PlayerMovement : MonoBehaviour {
         if (playerRB.velocity.magnitude > maxSpeed) {
             playerRB.velocity = playerRB.velocity.normalized * maxSpeed;
         }
+    }
+
+    private void PlayWalkOne()
+    {
+        walkAudio.Play();
+    }
+
+    private void PlayWalkTwo()
+    {
+        walkAudioTwo.Play();
     }
     #endregion
 
