@@ -18,6 +18,8 @@ public class GenerationSettings : ScriptableObject {
     public int spawnBoxSize;
     [Tooltip("The minimum distance from spawn that a staircase can be placed.")]
     public int minStaircaseDistance;
+    [Tooltip("Whether there are any unreachable areas on this map.")]
+    public bool removeUnreachableAreas;
 
     [Range(0, 1)]
     [Tooltip("Any points with a noise value below the threshold are walls, any above the treshold are floors.")]

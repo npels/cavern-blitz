@@ -157,6 +157,8 @@ public class CaveMap : MonoBehaviour {
 
     /* Remove any floor tiles that cannot be reached from the spawn area. */
     void RemoveUnreachableTiles() {
+        if (!settings.removeUnreachableAreas) return;
+
         List<Vector3Int> newFloor = new List<Vector3Int>();
         List<Vector3Int> toCheck = new List<Vector3Int>();
         newFloor.Add(Vector3Int.zero);
