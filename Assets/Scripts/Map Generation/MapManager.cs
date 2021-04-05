@@ -16,14 +16,14 @@ public class MapManager : MonoBehaviour {
     public void Initialize() {
         floorObjects = new List<GameObject>();
         currentFloor = Instantiate(floorPrefab, transform);
-        currentFloor.GetComponent<CaveMap>().GenerateCave();
+        currentFloor.GetComponent<CaveMap>().GenerateRandomCave();
         floorObjects.Add(currentFloor);
     }
 
     public void GenerateNextFloor() {
         currentFloor.SetActive(false);
         currentFloor = Instantiate(floorPrefab, transform);
-        currentFloor.GetComponent<CaveMap>().GenerateCave();
+        currentFloor.GetComponent<CaveMap>().GenerateRandomCave();
         floorObjects.Add(currentFloor);
     }
 }

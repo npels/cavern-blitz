@@ -12,32 +12,34 @@ public class CaveGenerator {
 
     #region Generation variables
     GenerationSettings settings;
-    NoiseFilter noiseFilter;
-    public int seed;
+    Noise noiseFilter;
     #endregion
 
     #region Constructors
     public CaveGenerator(GenerationSettings settings) {
         this.settings = settings;
-        seed = Random.Range(int.MinValue, int.MaxValue);
-        noiseFilter = new NoiseFilter(seed);
-    }
-
-    public CaveGenerator(GenerationSettings settings, int seed) {
-        this.settings = settings;
-        this.seed = seed;
-        noiseFilter = new NoiseFilter(seed);
+        noiseFilter = new Noise(settings.seed);
     }
     #endregion
 
     #region Generation functions
     public float IsWallAtPoint(float x, float y) {
         Vector3 point = new Vector3(x, y, 0);
-        float value = noiseFilter.Evaluate(point * settings.roughness * ROUGHNESS_MULTIPLIER);
+        float totalValue = 0;
 
-        value = value * (1 - point.magnitude * settings.falloff * FALLOFF_MULTIPLIER / settings.caveRadius);
+        for (int i = 0; i < settings.noiseFilterSettings.Count; i++) {
+            GenerationSettings.NoiseFilterSettings noiseSettings = settings.noiseFilterSettings[i];
 
-        return value;
+            float value = noiseFilter.Evaluate(point * noiseSettings.roughness * ROUGHNESS_MULTIPLIER);
+
+            value = (value + 1) * 0.5f;
+            value = value * noiseSettings.strength;
+            value = value * (1 - point.magnitude * noiseSettings.falloff * FALLOFF_MULTIPLIER / settings.caveRadius);
+
+            totalValue += value;
+        }
+
+        return totalValue;
     }
     #endregion
 }

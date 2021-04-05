@@ -33,7 +33,17 @@ public class CaveMap : MonoBehaviour {
         GenerateMap();
     }
 
+    public void GenerateRandomCave() {
+        settings.seed = Random.Range(int.MinValue, int.MaxValue);
+        Initialize();
+        GenerateMap();
+    }
+
     void Initialize() {
+        foreach (Transform child in transform.GetChild(1)) {
+            DestroyImmediate(child.gameObject);
+        }
+
         valueMap = new float[settings.mapSize * settings.mapSize * 4];
 
         floorLocations = new List<Vector3Int>();
@@ -48,7 +58,7 @@ public class CaveMap : MonoBehaviour {
 
         randomState = Random.state;
         caveGenerator = new CaveGenerator(settings);
-        Random.InitState(caveGenerator.seed);
+        Random.InitState(settings.seed);
     }
 
     void GenerateMap() {
@@ -70,6 +80,7 @@ public class CaveMap : MonoBehaviour {
                 SetPointValue(x, y, caveGenerator.IsWallAtPoint(x, y));
             }
         }
+        Debug.Log("Populated value map");
     }
 
     /* Ensure that none of the values around the player spawn area are walls. */
@@ -79,6 +90,7 @@ public class CaveMap : MonoBehaviour {
                 SetPointValue(x, y, 1);
             }
         }
+        Debug.Log("Cleared spawn area");
     }
 
     /* Filter the float values in the value map to avoid uncommon wall configurations. */
@@ -140,13 +152,20 @@ public class CaveMap : MonoBehaviour {
                 }
             }
         }
+        Debug.Log("Decided tiles");
     }
 
     /* Remove any floor tiles that cannot be reached from the spawn area. */
     void RemoveUnreachableTiles() {
         List<Vector3Int> newFloor = new List<Vector3Int>();
+        List<Vector3Int> toCheck = new List<Vector3Int>();
         newFloor.Add(Vector3Int.zero);
-        FindNearbyFloors(Vector3Int.zero, ref newFloor);
+        toCheck.Add(Vector3Int.zero);
+
+        while (toCheck.Count > 0) {
+            FindNearbyFloors(toCheck[0], ref newFloor, ref toCheck);
+        }
+
         foreach (Vector3Int loc in floorLocations) {
             if (!newFloor.Contains(loc)) {
                 wallLocations.Add(loc);
@@ -154,46 +173,40 @@ public class CaveMap : MonoBehaviour {
             }
             floorLocations = newFloor;
         }
+        Debug.Log("Removed unreachable tiles");
     }
 
-    /* Recursive function to determine which floor tiles are accessible. */
-    void FindNearbyFloors(Vector3Int loc, ref List<Vector3Int> newFloor) {
+    /* Function to determine which floor tiles are accessible. */
+    void FindNearbyFloors(Vector3Int loc, ref List<Vector3Int> newFloor, ref List<Vector3Int> toCheck) {
         Vector3Int north = loc;
         north.y++;
-        bool checkNorth = false;
         if (floorLocations.Contains(north) && !newFloor.Contains(north)) {
             newFloor.Add(north);
-            checkNorth = true;
+            toCheck.Add(north);
         }
 
         Vector3Int east = loc;
         east.x++;
-        bool checkEast = false;
         if (floorLocations.Contains(east) && !newFloor.Contains(east)) {
             newFloor.Add(east);
-            checkEast = true;
+            toCheck.Add(east);
         }
 
         Vector3Int south = loc;
         south.y--;
-        bool checkSouth = false;
         if (floorLocations.Contains(south) && !newFloor.Contains(south)) {
             newFloor.Add(south);
-            checkSouth = true;
+            toCheck.Add(south);
         }
 
         Vector3Int west = loc;
         west.x--;
-        bool checkWest = false;
         if (floorLocations.Contains(west) && !newFloor.Contains(west)) {
             newFloor.Add(west);
-            checkWest = true;
+            toCheck.Add(west);
         }
 
-        if (checkNorth) FindNearbyFloors(north, ref newFloor);
-        if (checkEast) FindNearbyFloors(east, ref newFloor);
-        if (checkSouth) FindNearbyFloors(south, ref newFloor);
-        if (checkWest) FindNearbyFloors(west, ref newFloor);
+        toCheck.Remove(loc);
     }
 
     /* Create the map's tiles. */
@@ -223,16 +236,22 @@ public class CaveMap : MonoBehaviour {
         tilemap.SetTiles(wallLocations.ToArray(), wallTiles);
         tilemap.SetTiles(floorLocations.ToArray(), floorTiles);
         oreTilemap.SetTiles(rockLocations.ToArray(), oreTiles);
+
+        Debug.Log("Set tiles");
     }
     
     /* Choose a location to place the staircase down. */
     void PlaceStaircase() {
+        int numIterations = 0;
         Vector3Int loc = floorLocations[Random.Range(0, floorLocations.Count)];
-        while (Vector3Int.Distance(Vector3Int.zero, loc) < settings.spawnBoxSize) {
+        while (Vector3Int.Distance(Vector3Int.zero, loc) < settings.minStaircaseDistance && numIterations < 1000) {
             loc = floorLocations[Random.Range(0, floorLocations.Count)];
+            numIterations++;
         }
         tilemap.SetTile(loc, settings.staircaseTile);
         oreTilemap.SetTile(loc, null);
+
+        Debug.Log("Placed staircase");
     }
 
     /* Spawn enemies on the map. */
@@ -252,11 +271,17 @@ public class CaveMap : MonoBehaviour {
             foreach (GenerationSettings.EnemySpawnInformation enemy in enemySpawnInformation) {
                 if (enemySpawnValue < enemy.rarity) {
                     Vector3Int loc = floorLocations[Random.Range(0, floorLocations.Count)];
-                    while (loc.magnitude < 10) loc = floorLocations[Random.Range(0, floorLocations.Count)];
-                    Instantiate(enemy.enemyPrefab, loc, Quaternion.identity, transform);
+                    int numIterations = 0;
+                    while (loc.magnitude < 10 && numIterations < 1000) {
+                        loc = floorLocations[Random.Range(0, floorLocations.Count)];
+                        numIterations++;
+                    }
+                    Instantiate(enemy.enemyPrefab, loc, Quaternion.identity, transform.GetChild(1));
                 }
             }
         }
+
+        Debug.Log("Spawned enemies");
     }
     
     /* Return the random state to its original value. */
