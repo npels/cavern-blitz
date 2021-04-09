@@ -12,8 +12,12 @@ public class Ore : MonoBehaviour {
 
     private bool isPickupable = false;
 
+    #region Animation Variables
+    private ObjectShake objShake; 
+    #endregion
     private void Start()
     {
+        objShake = GetComponent<ObjectShake>();
         currHealth = maxHealth;
         mineAudio = GetComponents<AudioSource>()[0];
         popAudio = GetComponents<AudioSource>()[1];
@@ -24,6 +28,12 @@ public class Ore : MonoBehaviour {
     {
         GetComponent<ParticleSystem>().Play();
         mineAudio.Play();
+
+        //Shake
+        Quaternion rotation = transform.rotation;  
+        objShake.Shake();
+        transform.rotation = rotation; 
+
         currHealth -= val;
         if (currHealth <= 0)
         {

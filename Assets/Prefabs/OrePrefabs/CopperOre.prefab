@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: -4737509754570503003}
   - component: {fileID: 2737610772778821298}
   - component: {fileID: 4944327477727871168}
+  - component: {fileID: 340210690704579724}
   m_Layer: 9
   m_Name: CopperOre
   m_TagString: Iron
@@ -5152,3 +5153,17 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &340210690704579724
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2439855924810609408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac1bcc785ab594142b7ccefe41489c35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shake_decay: 0.3
+  shake_intensity: 0.5
