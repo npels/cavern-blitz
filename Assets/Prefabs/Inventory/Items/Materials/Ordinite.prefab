@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5582871322809918087}
   - component: {fileID: 3433882965983963345}
   m_Layer: 5
-  m_Name: GoldOre
+  m_Name: Ordinite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -67,7 +67,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 928d3ef31a815f0408138121282e52a4, type: 3}
+  m_Sprite: {fileID: -1687325867822468099, guid: 7983e539a275c4349a23412436ed0aea,
+    type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -89,7 +90,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a7f0e9bac07b6b49afbf007230d5e96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemName: GoldOre
+  itemName: Ordinite
   maxStack: 99
   sprite: {fileID: 0}
 --- !u!225 &3433882965983963345

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5582871322809918087}
   - component: {fileID: 3433882965983963345}
   m_Layer: 5
-  m_Name: IronOre
+  m_Name: OreCharm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -67,7 +67,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: a99e14edd9fb9e544b1bd2846edd05d9, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 225143332bbc5ca46854ca74e1cbbb85, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -89,8 +89,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a7f0e9bac07b6b49afbf007230d5e96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemName: IronOre
-  maxStack: 99
+  itemName: OreCharm
+  maxStack: 1
+  sprite: {fileID: 1559704157218881296, guid: a4422c3191c68604a9d652fbc47f83c5, type: 3}
 --- !u!225 &3433882965983963345
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -120,7 +121,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2598082303165601634
 RectTransform:
   m_ObjectHideFlags: 0

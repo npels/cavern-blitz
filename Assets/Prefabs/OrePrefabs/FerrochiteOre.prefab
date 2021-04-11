@@ -101,7 +101,7 @@ GameObject:
   - component: {fileID: 9157028791416771270}
   - component: {fileID: 6542876895980082238}
   m_Layer: 9
-  m_Name: IronOre
+  m_Name: FerrochiteOre
   m_TagString: Iron
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

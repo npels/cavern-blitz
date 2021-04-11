@@ -1,16 +1,16 @@
 fileFormatVersion: 2
-guid: a4422c3191c68604a9d652fbc47f83c5
+guid: c7cfb5486d3a728478e1306a19648c60
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 1559704157218881296
-    second: ExplorerClub
+      213: 622970793744358341
+    second: ImprovedPickaxe
   - first:
-      213: 8699069900992395679
-    second: ExplorerMachete
+      213: 3744024631493419868
+    second: ImprovedMachete
   - first:
-      213: 7155652846937496742
-    second: ExplorerPickaxe
+      213: -1393196237062221584
+    second: ImprovedClub
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -120,49 +120,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: ExplorerClub
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 1
-        width: 9
-        height: 19
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 01f3bb5daae25a510800000000000000
-      internalID: 1559704157218881296
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ExplorerMachete
-      rect:
-        serializedVersion: 2
-        x: 20
-        y: 20
-        width: 6
-        height: 20
-      alignment: 9
-      pivot: {x: 0.5, y: 0.15}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f99b1fc3cfd49b870800000000000000
-      internalID: 8699069900992395679
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ExplorerPickaxe
+      name: ImprovedPickaxe
       rect:
         serializedVersion: 2
         x: 0
@@ -176,8 +134,50 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6acd8bd1a5cfd4360800000000000000
-      internalID: 7155652846937496742
+      spriteID: 5cb5392e2ac35a800800000000000000
+      internalID: 622970793744358341
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ImprovedMachete
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 20
+        width: 6
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c536a7ec09275f330800000000000000
+      internalID: 3744024631493419868
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ImprovedClub
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1
+        width: 9
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0f0de73676f5aace0800000000000000
+      internalID: -1393196237062221584
       vertices: []
       indices: 
       edges: []
