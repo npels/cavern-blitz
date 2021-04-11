@@ -11,13 +11,8 @@ public class Ore : MonoBehaviour {
     private AudioSource popAudio;
 
     private bool isPickupable = false;
-
-    #region Animation Variables
-    private ObjectShake objShake; 
-    #endregion
     private void Start()
     {
-        objShake = GetComponent<ObjectShake>();
         currHealth = maxHealth;
         mineAudio = GetComponents<AudioSource>()[0];
         popAudio = GetComponents<AudioSource>()[1];
@@ -28,11 +23,7 @@ public class Ore : MonoBehaviour {
     {
         GetComponent<ParticleSystem>().Play();
         mineAudio.Play();
-
-        //Shake
-        Quaternion rotation = transform.rotation;  
-        objShake.Shake();
-        transform.rotation = rotation; 
+        if (GetComponent<Animation>()) GetComponent<Animation>().Play();
 
         currHealth -= val;
         if (currHealth <= 0)
@@ -55,7 +46,7 @@ public class Ore : MonoBehaviour {
             g.transform.localScale = new Vector3(0.5f, 0.5f, 0);
             isPickupable = true;
         } else {
-            GetComponent<SpriteRenderer>().enabled = false;
+            GetComponentInChildren<SpriteRenderer>().enabled = false;
             foreach (Collider2D c in GetComponents<Collider2D>()) c.enabled = false;
         }
         

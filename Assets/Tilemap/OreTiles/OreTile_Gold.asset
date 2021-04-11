@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d1514134bc4fbd41bb739b1b9a49231, type: 3}
   m_Name: OreTile_Gold
   m_EditorClassIdentifier: 
-  m_DefaultSprite: {fileID: 21300000, guid: 928d3ef31a815f0408138121282e52a4, type: 3}
+  m_DefaultSprite: {fileID: 0}
   m_DefaultGameObject: {fileID: 2439855924810609408, guid: 688fb5835c0416241b88222476de4f59,
     type: 3}
   m_DefaultColliderType: 0
