@@ -10,4 +10,8 @@ public class Item : MonoBehaviour {
     public int maxStack;
     [Tooltip("The sprite that this item uses.")]
     public Sprite sprite;
+    [Tooltip("The flavor text shown in the recipe information.")]
+    public string flavorText;
+    [Tooltip("Additional attributes shown in the recipe information.")]
+    public string attributeText;
 }

@@ -49,4 +49,13 @@ public class ItemStack {
         count += num;
         return true;
     }
+
+    public bool TrySubtractItem(int num) {
+        if (item == null) {
+            return false;
+        }
+        if (count < num) return false;
+        count -= num;
+        return true;
+    }
 }

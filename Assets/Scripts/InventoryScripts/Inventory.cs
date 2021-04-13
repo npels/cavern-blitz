@@ -30,7 +30,7 @@ public class Inventory : MonoBehaviour {
     #endregion
 
     #region Unity functions
-    void Start() {
+    void Awake() {
         stacks = new List<ItemStack>();
 
         for (int i = 0; i < numSlots; i ++) {
@@ -127,6 +127,48 @@ public class Inventory : MonoBehaviour {
     /* Removes the item at slot 'slotIndex'. */
     public void RemoveItem(int slotIndex) {
         SetItemStack(slotIndex, null, 0);
+    }
+
+    /* Add additional slots to this inventory. */
+    public void ExpandInventorySize(int additionalSlots) {
+        numSlots += additionalSlots;
+        while (stacks.Count < numSlots) {
+            stacks.Add(new ItemStack(allowStockpile));
+        }
+    }
+
+    public int GetTotalItemCount(Item item) {
+        int count = 0;
+        foreach (ItemStack stack in stacks) {
+            if (stack.item == item) {
+                count += stack.count;
+            }
+        }
+        return count;
+    }
+
+    public int TryRemoveItem(Item item, int count) {
+        if (count <= 0) return -1;
+        if (item == null) return -1;
+
+        ItemStack stack = GetItemStack(item);
+        if (stack != null) {
+            if (stack.TrySubtractItem(count)) {
+                int index = stacks.IndexOf(stack);
+                if (stack.count <= 0) {
+                    if (allowStockpile) {
+                        stacks.Remove(stack);
+                        stacks.Add(new ItemStack(allowStockpile));
+                    } else {
+                        stack.item = null;
+                    }
+                }
+                UpdateUI();
+                return index;
+            }
+        }
+
+        return -1;
     }
 
     public int GetPriorityIndex(int i) {
