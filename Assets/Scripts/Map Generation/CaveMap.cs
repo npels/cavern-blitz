@@ -253,6 +253,9 @@ public class CaveMap : MonoBehaviour {
         tilemap.SetTile(loc, settings.staircaseTile);
         oreTilemap.SetTile(loc, null);
 
+        tilemap.SetTile(new Vector3Int(0, 1, 0), settings.staircaseUpTile);
+        oreTilemap.SetTile(new Vector3Int(0, 1, 0), null);
+
         Debug.Log("Placed staircase");
     }
 

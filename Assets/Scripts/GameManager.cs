@@ -31,14 +31,23 @@ public class GameManager : MonoBehaviour {
     }
 
     public void GotoNextFloor() {
-        StartCoroutine(uiManager.FadeOut(FinishTransition));
+        uiManager.CloseDescendMessage();
+        StartCoroutine(uiManager.FadeOut(FinishFloorTransition));
     }
 
-    private void FinishTransition() {
+    private void FinishFloorTransition() {
         mapManager.GenerateNextFloor();
         vcam.ForceCameraPosition(new Vector3(0, 0, -10), Quaternion.identity);
         player.transform.position = Vector3.zero;
         StartCoroutine(uiManager.FadeIn());
+    }
+
+    public void ReturnToHome() {
+        StartCoroutine(uiManager.FadeOut(FinishHomeTransition));
+    }
+
+    private void FinishHomeTransition() {
+        SceneManager.LoadScene("HomeScene");
     }
 
     public void PlayerDie() {

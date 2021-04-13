@@ -37,8 +37,10 @@ public class GenerationSettings : ScriptableObject {
     public float rockSpawnRate;
     [Tooltip("The base rock tile to use in generation.")]
     public TileBase rockTile;
-    [Tooltip("The staircase tile to use in generation.")]
+    [Tooltip("The descending staircase tile to use in generation.")]
     public TileBase staircaseTile;
+    [Tooltip("The ascending staircase tile to use in generation.")]
+    public TileBase staircaseUpTile;
 
     [Tooltip("Data for spawning different types of ores.")]
     public List<OreSpawnInformation> oreSpawnInformation;
