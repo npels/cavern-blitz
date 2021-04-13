@@ -5,7 +5,11 @@ using UnityEngine.UI;
 
 public class InventorySlot : MonoBehaviour {
 
+    public float scale;
+
+    [HideInInspector]
     public ItemStack stack;
+    [HideInInspector]
     public GameObject itemObject;
 
     public void UpdateSlot(ItemStack newStack) {
@@ -36,6 +40,7 @@ public class InventorySlot : MonoBehaviour {
         if (itemObject != null) {
             itemObject.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = stack.count.ToString();
             itemObject.transform.localPosition = Vector3.zero;
+            itemObject.transform.localScale = Vector3.one * scale;
         }
     }
 }

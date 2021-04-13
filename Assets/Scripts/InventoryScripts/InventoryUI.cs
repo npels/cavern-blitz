@@ -36,7 +36,9 @@ public class InventoryUI : MonoBehaviour {
 
         //Set up UI
         menuSlots = inventoryMenu.GetComponentsInChildren<InventorySlot>();
-        barSlots = inventoryBar.GetComponentsInChildren<InventorySlot>();
+        if (inventory.numPrioritySlots > 0) {
+            barSlots = inventoryBar.GetComponentsInChildren<InventorySlot>();
+        }
         menuList = new List<InventorySlot>();
         menuList.AddRange(menuSlots);
         inventoryBar.SetActive(true);

@@ -93,6 +93,8 @@ MonoBehaviour:
   itemName: Bomb
   maxStack: 10
   sprite: {fileID: 5508725064705088119, guid: 386e54ebf91771d44908a7c6ce1926fe, type: 3}
+  flavorText: Make sure to stand back!
+  attributeText: 
 --- !u!225 &3433882965983963345
 CanvasGroup:
   m_ObjectHideFlags: 0
