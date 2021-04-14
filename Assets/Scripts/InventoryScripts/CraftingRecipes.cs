@@ -8,11 +8,9 @@ public class CraftingRecipes : MonoBehaviour {
     public int numColumns;
     public List<RecipeInfo> recipes;
 
-    private Inventory inventory;
     private List<RecipeSlot> recipeSlots;
 
-    private void Start() {
-        inventory = CraftingManager.instance.stockpileInventory;
+    private void OnEnable() {
         recipeSlots = new List<RecipeSlot>();
 
         foreach (RecipeSlot slot in GetComponentsInChildren<RecipeSlot>()) {
@@ -30,6 +28,16 @@ public class CraftingRecipes : MonoBehaviour {
             recipeSlots[i].recipeInfo = recipes[i];
             recipeSlots[i].UpdateSlot();
         }
+    }
+
+    public void OpenCrafting() {
+        transform.parent.gameObject.SetActive(true);
+        BaseManager.instance.player.GetComponent<PlayerMovement>().canMove = false;
+    }
+
+    public void CloseCrafting() {
+        transform.parent.gameObject.SetActive(false);
+        BaseManager.instance.player.GetComponent<PlayerMovement>().canMove = true;
     }
 
     public void UpdateRecipes() {

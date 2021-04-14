@@ -29,6 +29,8 @@ public class InventorySlot : MonoBehaviour {
             Destroy(itemObject);
             itemObject = Instantiate(stack.item.gameObject, transform);
             itemObject.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = stack.count.ToString();
+            itemObject.transform.localPosition = Vector3.zero;
+            itemObject.transform.localScale = Vector3.one * scale;
             return;
         }
         stack = newStack;

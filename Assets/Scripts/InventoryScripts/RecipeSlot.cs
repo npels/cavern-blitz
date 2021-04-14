@@ -30,7 +30,7 @@ public class RecipeSlot : MonoBehaviour {
     public void UpdateCraftability() {
         bool craftable = true;
         foreach (CraftingRecipes.RecipeItemInfo ingredient in recipeInfo.ingredientItems) {
-            if (CraftingManager.instance.stockpileInventory.GetTotalItemCount(ingredient.item) < ingredient.count) {
+            if (BaseManager.instance.stockpileInventory.GetTotalItemCount(ingredient.item) < ingredient.count) {
                 craftable = false;
                 break;
             }
@@ -41,6 +41,6 @@ public class RecipeSlot : MonoBehaviour {
 
     public void SelectRecipe() {
         if (recipeInfo.resultItem.item == null) return;
-        CraftingManager.instance.itemInfoUI.UpdateRecipeInfo(recipeInfo);
+        BaseManager.instance.itemInfoUI.UpdateRecipeInfo(recipeInfo);
     }
 }

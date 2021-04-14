@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-
+[System.Serializable]
 public class Inventory : MonoBehaviour {
 
     #region Inventory parameters
@@ -29,29 +29,38 @@ public class Inventory : MonoBehaviour {
     }
     #endregion
 
+    #region Static variables
+    public static List<ItemStack> savedPlayerInventory;
+    public static List<ItemStack> savedBaseInventory;
+    #endregion
+
     #region Unity functions
     void Awake() {
+        InitInventory();
+    }
+    #endregion
+
+    public void InitInventory() {
         stacks = new List<ItemStack>();
 
-        for (int i = 0; i < numSlots; i ++) {
+        for (int i = 0; i < numSlots; i++) {
             stacks.Add(new ItemStack(allowStockpile));
         }
     }
-    #endregion
 
 
     #region Item Funcs
     /* Tries to add the item to the inventory.
      * If there is no space, return -1. 
      * Otherwise, add the item and return the index of the slot. */
-    public int TryAddItem(Item item, int count) {
+    public int TryAddItem(Item item, int count, bool updateUI = true) {
         if (count <= 0) return -1;
         if (item == null) return -1;
 
         ItemStack stack = GetItemStack(item);
         if (stack != null) {
             if (stack.TryStackItem(item, count)) {
-                UpdateUI();
+                if (updateUI) UpdateUI();
                 return stacks.IndexOf(stack);
             }
         }
@@ -59,14 +68,14 @@ public class Inventory : MonoBehaviour {
         for (int i = stacks.Count - numPrioritySlots; i < stacks.Count; i++) {
             ItemStack s = stacks[i];
             if (s.TryStackItem(item, count)) {
-                UpdateUI();
+                if (updateUI) UpdateUI();
                 return stacks.IndexOf(s);
             }
         }
 
         foreach (ItemStack s in stacks) {
             if (s.TryStackItem(item, count)) {
-                UpdateUI();
+                if (updateUI) UpdateUI();
                 return stacks.IndexOf(s);
             }
         }
@@ -122,6 +131,10 @@ public class Inventory : MonoBehaviour {
         }
 
         stacks[slotIndex] = new ItemStack(stack);
+
+        if (allowStockpile) {
+            ConsolidateStacks();
+        }
     }
 
     /* Removes the item at slot 'slotIndex'. */
@@ -169,6 +182,41 @@ public class Inventory : MonoBehaviour {
         }
 
         return -1;
+    }
+
+    public void ConsolidateStacks() {
+        List<int> emptyStacks = new List<int>();
+        for (int i = 0; i < stacks.Count; i++) {
+            if (stacks[i].item == null) {
+                emptyStacks.Add(i);
+            } else {
+                if (emptyStacks.Count > 0) {
+                    ItemStack s = stacks[emptyStacks[0]];
+                    stacks[emptyStacks[0]] = stacks[i];
+                    stacks[i] = s;
+                    emptyStacks.RemoveAt(0);
+                    emptyStacks.Add(i);
+                }
+            }
+        }
+    }
+
+    public void SavePlayerInventory() {
+        savedPlayerInventory = stacks;
+    }
+
+    public void LoadPlayerInventory() {
+        if (savedPlayerInventory == null) return;
+        stacks = savedPlayerInventory;
+    }
+
+    public void SaveBaseInventory() {
+        savedBaseInventory = stacks;
+    }
+
+    public void LoadBaseInventory() {
+        if (savedBaseInventory == null) return;
+        stacks = savedBaseInventory;
     }
 
     public int GetPriorityIndex(int i) {

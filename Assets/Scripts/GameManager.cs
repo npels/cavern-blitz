@@ -28,6 +28,7 @@ public class GameManager : MonoBehaviour {
         mapManager.Initialize();
         player = Instantiate(playerPrefab, Vector3.zero, Quaternion.identity);
         vcam.Follow = player.transform;
+        inventory.LoadPlayerInventory();
     }
 
     public void GotoNextFloor() {
@@ -43,6 +44,7 @@ public class GameManager : MonoBehaviour {
     }
 
     public void ReturnToHome() {
+        inventory.SavePlayerInventory();
         StartCoroutine(uiManager.FadeOut(FinishHomeTransition));
     }
 

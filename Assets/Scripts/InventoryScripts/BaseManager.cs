@@ -1,17 +1,41 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class CraftingManager : MonoBehaviour {
+public class BaseManager : MonoBehaviour {
 
-    public static CraftingManager instance;
+    public static BaseManager instance;
 
     public CraftingRecipes craftingRecipes;
+    public Inventory playerInventory;
     public Inventory stockpileInventory;
     public ItemInfoUI itemInfoUI;
 
+    public BaseUIManager baseUIManager;
+    public GameObject player;
+
     private void Awake() {
         instance = this;
+    }
+
+    private void Start() {
+        stockpileInventory.LoadBaseInventory();
+        if (stockpileInventory.stacks.Count == 0) {
+            stockpileInventory.InitInventory();
+        }
+        playerInventory.LoadPlayerInventory();
+        StartCoroutine(baseUIManager.FadeIn());
+    }
+
+    public void EnterCave() {
+        stockpileInventory.SaveBaseInventory();
+        playerInventory.SavePlayerInventory();
+        StartCoroutine(baseUIManager.FadeOut(FinishEnterCave));
+    }
+
+    public void FinishEnterCave() {
+        SceneManager.LoadScene("GameScene");
     }
 
     public void CraftItem() {

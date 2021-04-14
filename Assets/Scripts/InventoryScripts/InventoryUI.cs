@@ -8,6 +8,8 @@ public class InventoryUI : MonoBehaviour {
     #region Inventory Variables
     public GameObject inventoryBar;
     public GameObject inventoryMenu;
+    public bool inBase = false;
+
     private InventorySlot[] menuSlots;
     private InventorySlot[] barSlots;
 
@@ -31,7 +33,7 @@ public class InventoryUI : MonoBehaviour {
 
     #region Unity Functions 
     void Start() {
-        inventory = GameManager.instance.inventory;
+        inventory = inBase ? BaseManager.instance.playerInventory : GameManager.instance.inventory;
         inventory.UpdateUIEvent += UpdateUI;
 
         //Set up UI
@@ -41,10 +43,10 @@ public class InventoryUI : MonoBehaviour {
         }
         menuList = new List<InventorySlot>();
         menuList.AddRange(menuSlots);
-        inventoryBar.SetActive(true);
+        inventoryBar.SetActive(true && !inBase);
         inventoryMenu.SetActive(false);
 
-        player = GameManager.instance.player;
+        player = inBase ? BaseManager.instance.player : GameManager.instance.player;
         playerInteractions = player.GetComponent<PlayerInteractions>();
         playerMovement = player.GetComponent<PlayerMovement>();
 
@@ -53,7 +55,7 @@ public class InventoryUI : MonoBehaviour {
     }
 
     private void Update() {
-        if (Input.GetKeyDown(KeyCode.E)) {
+        if (Input.GetKeyDown(KeyCode.E) && !inBase) {
             if (inventoryOpened) {
                 CloseInventory();
             } else {
@@ -91,13 +93,16 @@ public class InventoryUI : MonoBehaviour {
                 selectedItem.stack = null;
             } else {
                 InventorySlot slot = menuSlots[index];
+                Destroy(slot.itemObject);
                 slot.itemObject = selectedItem.itemObject;
-                selectedItem.itemObject.transform.SetParent(slot.transform);
+                slot.itemObject.transform.SetParent(slot.transform);
+                selectedItem.itemObject = null;
+                selectedItem.stack = null;
             }
         }
         itemIsSelected = false;
         inventoryOpened = false;
-        inventoryBar.SetActive(true);
+        inventoryBar.SetActive(true && !inBase);
         inventoryMenu.SetActive(false);
         playerInteractions.SetMenuOpen(false);
         playerMovement.SetMenuOpen(false);

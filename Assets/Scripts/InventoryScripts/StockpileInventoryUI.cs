@@ -7,11 +7,22 @@ public class StockpileInventoryUI : MonoBehaviour {
     private Inventory inventory;
     private InventorySlot[] menuSlots;
 
-    private void Start() {
-        inventory = CraftingManager.instance.stockpileInventory;
+    private void OnEnable() {
+        inventory = BaseManager.instance.stockpileInventory;
+        if (inventory.stacks == null) {
+            inventory.InitInventory();
+        }
+        inventory.LoadBaseInventory();
         inventory.UpdateUIEvent += UpdateUI;
 
         menuSlots = GetComponentsInChildren<InventorySlot>();
+
+        UpdateUI();
+    }
+
+    private void OnDisable() {
+        inventory.SaveBaseInventory();
+        inventory.UpdateUIEvent -= UpdateUI;
     }
 
     public void UpdateUI() {
