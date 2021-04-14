@@ -1400,6 +1400,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scale: 0.5
+  stack:
+    item: {fileID: 0}
+    count: 0
+    maxCount: 0
   itemObject: {fileID: 0}
 --- !u!114 &112929803
 MonoBehaviour:
@@ -2828,6 +2832,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scale: 0.5
+  stack:
+    item: {fileID: 0}
+    count: 0
+    maxCount: 0
   itemObject: {fileID: 0}
 --- !u!114 &184907370
 MonoBehaviour:
@@ -3402,6 +3410,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scale: 0.5
+  stack:
+    item: {fileID: 0}
+    count: 0
+    maxCount: 0
   itemObject: {fileID: 0}
 --- !u!114 &205880633
 MonoBehaviour:
@@ -3749,6 +3761,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scale: 0.5
+  stack:
+    item: {fileID: 0}
+    count: 0
+    maxCount: 0
   itemObject: {fileID: 0}
 --- !u!114 &218282804
 MonoBehaviour:
@@ -5506,6 +5522,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scale: 0.5
+  stack:
+    item: {fileID: 0}
+    count: 0
+    maxCount: 0
   itemObject: {fileID: 0}
 --- !u!114 &311738431
 MonoBehaviour:
@@ -6938,6 +6958,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scale: 0.5
+  stack:
+    item: {fileID: 0}
+    count: 0
+    maxCount: 0
   itemObject: {fileID: 0}
 --- !u!114 &419306692
 MonoBehaviour:
@@ -7030,6 +7054,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scale: 0.5
+  stack:
+    item: {fileID: 0}
+    count: 0
+    maxCount: 0
   itemObject: {fileID: 0}
 --- !u!114 &440352315
 MonoBehaviour:
@@ -7553,6 +7581,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scale: 0.5
+  stack:
+    item: {fileID: 0}
+    count: 0
+    maxCount: 0
   itemObject: {fileID: 0}
 --- !u!114 &454072297
 MonoBehaviour:
@@ -9052,6 +9084,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scale: 0.5
+  stack:
+    item: {fileID: 0}
+    count: 0
+    maxCount: 0
   itemObject: {fileID: 0}
 --- !u!114 &547005737
 MonoBehaviour:
@@ -28279,6 +28315,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scale: 0.5
+  stack:
+    item: {fileID: 0}
+    count: 0
+    maxCount: 0
   itemObject: {fileID: 0}
 --- !u!114 &695582373
 MonoBehaviour:
@@ -29363,6 +29403,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scale: 0.5
+  stack:
+    item: {fileID: 0}
+    count: 0
+    maxCount: 0
   itemObject: {fileID: 0}
 --- !u!114 &760915678
 MonoBehaviour:
@@ -29604,6 +29648,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scale: 0.5
+  stack:
+    item: {fileID: 0}
+    count: 0
+    maxCount: 0
   itemObject: {fileID: 0}
 --- !u!114 &775147222
 MonoBehaviour:
@@ -30071,6 +30119,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scale: 0.5
+  stack:
+    item: {fileID: 0}
+    count: 0
+    maxCount: 0
   itemObject: {fileID: 0}
 --- !u!114 &799348183
 MonoBehaviour:
@@ -30661,6 +30713,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scale: 0.5
+  stack:
+    item: {fileID: 0}
+    count: 0
+    maxCount: 0
   itemObject: {fileID: 0}
 --- !u!114 &830751503
 MonoBehaviour:
@@ -36887,6 +36943,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scale: 0.5
+  stack:
+    item: {fileID: 0}
+    count: 0
+    maxCount: 0
   itemObject: {fileID: 0}
 --- !u!114 &1354250547
 MonoBehaviour:
@@ -37849,6 +37909,7 @@ GameObject:
   - component: {fileID: 1398578066}
   - component: {fileID: 1398578068}
   - component: {fileID: 1398578067}
+  - component: {fileID: 1398578069}
   m_Layer: 0
   m_Name: Chest
   m_TagString: Untagged
@@ -37864,7 +37925,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1398578064}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -5, y: 1.5, z: 0}
+  m_LocalPosition: {x: -5.05, y: 1.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 583914500}
@@ -37909,7 +37970,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 849f68b94a0013343a95e49808f19cd8, type: 3}
+  m_Sprite: {fileID: -1266626694150919643, guid: 22e070559332fc54a950285af4f8a99a,
+    type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -37937,7 +37999,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 0.875, y: 0.71875}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -37958,6 +38020,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 492fa93180d83e74585d5cd4c5ca4712, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!61 &1398578069
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1398578064}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.875, y: 0.71875}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.875, y: 0.71875}
+  m_EdgeRadius: 0
 --- !u!1001 &1403960186
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -39591,6 +39679,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scale: 0.5
+  stack:
+    item: {fileID: 0}
+    count: 0
+    maxCount: 0
   itemObject: {fileID: 0}
 --- !u!114 &1489752010
 MonoBehaviour:
@@ -40622,6 +40714,7 @@ MonoBehaviour:
   numSlots: 48
   allowStockpile: 1
   numPrioritySlots: 0
+  stacks: []
 --- !u!114 &1555890246
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -42130,6 +42223,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scale: 0.5
+  stack:
+    item: {fileID: 0}
+    count: 0
+    maxCount: 0
   itemObject: {fileID: 0}
 --- !u!114 &1650326675
 MonoBehaviour:
@@ -42421,6 +42518,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scale: 0.5
+  stack:
+    item: {fileID: 0}
+    count: 0
+    maxCount: 0
   itemObject: {fileID: 0}
 --- !u!114 &1684122327
 MonoBehaviour:
@@ -42763,6 +42864,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scale: 0.5
+  stack:
+    item: {fileID: 0}
+    count: 0
+    maxCount: 0
   itemObject: {fileID: 0}
 --- !u!114 &1718033251
 MonoBehaviour:
@@ -44699,6 +44804,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scale: 0.5
+  stack:
+    item: {fileID: 0}
+    count: 0
+    maxCount: 0
   itemObject: {fileID: 0}
 --- !u!114 &1807450631
 MonoBehaviour:
@@ -47999,6 +48108,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scale: 0.5
+  stack:
+    item: {fileID: 0}
+    count: 0
+    maxCount: 0
   itemObject: {fileID: 0}
 --- !u!114 &2009469438
 MonoBehaviour:
@@ -48951,6 +49064,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scale: 0.5
+  stack:
+    item: {fileID: 0}
+    count: 0
+    maxCount: 0
   itemObject: {fileID: 0}
 --- !u!114 &2056492973
 MonoBehaviour:
@@ -51006,6 +51123,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scale: 0.5
+  stack:
+    item: {fileID: 0}
+    count: 0
+    maxCount: 0
   itemObject: {fileID: 0}
 --- !u!114 &2140078145
 MonoBehaviour:
@@ -51663,6 +51784,7 @@ MonoBehaviour:
   numSlots: 24
   allowStockpile: 0
   numPrioritySlots: 6
+  stacks: []
 --- !u!1 &2249643842908687184
 GameObject:
   m_ObjectHideFlags: 0
@@ -52441,6 +52563,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scale: 0.5
+  stack:
+    item: {fileID: 0}
+    count: 0
+    maxCount: 0
   itemObject: {fileID: 0}
 --- !u!114 &8305426536370299772
 MonoBehaviour:
@@ -52538,6 +52664,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scale: 0
+  stack:
+    item: {fileID: 0}
+    count: 0
+    maxCount: 0
   itemObject: {fileID: 0}
 --- !u!224 &8589665806797323855
 RectTransform:
