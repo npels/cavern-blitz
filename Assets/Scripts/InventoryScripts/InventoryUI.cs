@@ -10,10 +10,13 @@ public class InventoryUI : MonoBehaviour {
     public GameObject inventoryMenu;
     public bool inBase = false;
 
-    private InventorySlot[] menuSlots;
-    private InventorySlot[] barSlots;
+    private List<InventorySlot> menuSlots;
+    private List<InventorySlot> barSlots;
 
-    List<InventorySlot> menuList;
+    public EquipmentSlot armorChestSlot;
+    public EquipmentSlot armorGloveSlot;
+    public EquipmentSlot armorBootSlot;
+    public EquipmentSlot trinketSlot;
 
     private Inventory inventory;
 
@@ -24,6 +27,7 @@ public class InventoryUI : MonoBehaviour {
     private GameObject player;
     private PlayerInteractions playerInteractions;
     private PlayerMovement playerMovement;
+    private PlayerAttributes playerAttributes;
     #endregion
 
     #region Inventory Organization Variables
@@ -37,18 +41,27 @@ public class InventoryUI : MonoBehaviour {
         inventory.UpdateUIEvent += UpdateUI;
 
         //Set up UI
-        menuSlots = inventoryMenu.GetComponentsInChildren<InventorySlot>();
-        if (inventory.numPrioritySlots > 0) {
-            barSlots = inventoryBar.GetComponentsInChildren<InventorySlot>();
+        menuSlots = new List<InventorySlot>();
+        InventorySlot[] slots = inventoryMenu.GetComponentsInChildren<InventorySlot>();
+        foreach (InventorySlot slot in slots) {
+            if (!(slot is EquipmentSlot)) menuSlots.Add(slot);
         }
-        menuList = new List<InventorySlot>();
-        menuList.AddRange(menuSlots);
+
+        barSlots = new List<InventorySlot>();
+        if (inventory.numPrioritySlots > 0) {
+            slots = inventoryBar.GetComponentsInChildren<InventorySlot>();
+            foreach (InventorySlot slot in slots) {
+                barSlots.Add(slot);
+            }
+        }
+
         inventoryBar.SetActive(true && !inBase);
         inventoryMenu.SetActive(false);
 
         player = inBase ? BaseManager.instance.player : GameManager.instance.player;
         playerInteractions = player.GetComponent<PlayerInteractions>();
         playerMovement = player.GetComponent<PlayerMovement>();
+        playerAttributes = player.GetComponent<PlayerAttributes>();
 
         //Set up Inventory Organization
         itemIsSelected = false;
@@ -79,6 +92,8 @@ public class InventoryUI : MonoBehaviour {
         inventoryBar.SetActive(false);
         playerInteractions.SetMenuOpen(true);
         playerMovement.SetMenuOpen(true);
+        playerMovement.canMove = false;
+        player.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
 
         UpdateUI();
     }
@@ -106,6 +121,7 @@ public class InventoryUI : MonoBehaviour {
         inventoryMenu.SetActive(false);
         playerInteractions.SetMenuOpen(false);
         playerMovement.SetMenuOpen(false);
+        playerMovement.canMove = true;
 
         UpdateUI();
     }
@@ -119,6 +135,11 @@ public class InventoryUI : MonoBehaviour {
         for (int i = 0; i < inventory.numPrioritySlots; i++) {
             barSlots[i].UpdateSlot(inventory.stacks[inventory.GetPriorityIndex(i)]);
         }
+
+        armorChestSlot.UpdateSlot(new ItemStack(false, PlayerAttributes.chestArmor, 1));
+        armorGloveSlot.UpdateSlot(new ItemStack(false, PlayerAttributes.glovesArmor, 1));
+        armorBootSlot.UpdateSlot(new ItemStack(false, PlayerAttributes.bootsArmor, 1));
+        trinketSlot.UpdateSlot(new ItemStack(false, PlayerAttributes.trinket, 1));
     }
 
     #region Inventory Organization Functions
@@ -135,9 +156,48 @@ public class InventoryUI : MonoBehaviour {
         }
     }
 
-    private void PutSelectedItem(GameObject item) {
+    public void OnClickEquipment(GameObject item) {
+        if (inventoryOpened && itemIsSelected) {
+            if (selectedItem.stack.item is EquipmentItem) {
+                EquipmentItem equipment = (EquipmentItem)selectedItem.stack.item;
+                if (equipment.type == item.GetComponent<EquipmentSlot>().slotType) {
+                    PutSelectedItem(item);
+                    PlayerAttributes.SwapEquipment(equipment);
+                    UpdateUI();
+                }
+            }
+        } else if (inventoryOpened && !itemIsSelected) {
+            EquipmentItem equipment = item.GetComponentInChildren<EquipmentItem>();
+            PickupItem(item);
+            PlayerAttributes.RemoveEquipment(equipment);
+            UpdateUI();
+        }
+    }
+
+    public void PutSelectedItem(GameObject item) {
         int index = GetIndexOfItem(item);
-        InventorySlot slot = menuSlots[index];
+        InventorySlot slot;
+        if (index < -1) {
+            switch (index) {
+                case -2:
+                    slot = armorChestSlot;
+                    break;
+                case -3:
+                    slot = armorGloveSlot;
+                    break;
+                case -4:
+                    slot = armorBootSlot;
+                    break;
+                case -5:
+                    slot = trinketSlot;
+                    break;
+                default:
+                    slot = null;
+                    break;
+            }
+        } else {
+            slot = menuSlots[index];
+        }
         ItemStack stack = slot.stack;
         GameObject obj = slot.itemObject;
 
@@ -148,7 +208,7 @@ public class InventoryUI : MonoBehaviour {
             selectedItem.stack = null;
             selectedItem.itemObject = null;
 
-            inventory.SetItemStack(index, slot.stack);
+            if (index > -1) inventory.SetItemStack(index, slot.stack);
 
             slot.itemObject.transform.SetParent(slot.transform);
 
@@ -160,7 +220,7 @@ public class InventoryUI : MonoBehaviour {
             selectedItem.stack = stack;
             selectedItem.itemObject = obj;
 
-            inventory.SetItemStack(index, slot.stack);
+            if (index > -1) inventory.SetItemStack(index, slot.stack);
 
             slot.itemObject.transform.SetParent(slot.transform);
             selectedItem.itemObject.transform.SetParent(inventoryMenu.transform);
@@ -171,7 +231,28 @@ public class InventoryUI : MonoBehaviour {
 
     private void PickupItem(GameObject item) {
         int index = GetIndexOfItem(item);
-        InventorySlot slot = menuSlots[index];
+        InventorySlot slot;
+        if (index < -1) {
+            switch (index) {
+                case -2:
+                    slot = armorChestSlot;
+                    break;
+                case -3:
+                    slot = armorGloveSlot;
+                    break;
+                case -4:
+                    slot = armorBootSlot;
+                    break;
+                case -5:
+                    slot = trinketSlot;
+                    break;
+                default:
+                    slot = null;
+                    break;
+            }
+        } else {
+            slot = menuSlots[index];
+        }
 
         if (slot.stack.item != null) {
             selectedItem.stack = slot.stack;
@@ -180,7 +261,7 @@ public class InventoryUI : MonoBehaviour {
             slot.stack = new ItemStack(inventory.allowStockpile);
             slot.itemObject = null;
 
-            inventory.SetItemStack(index, slot.stack);
+            if (index > -1) inventory.SetItemStack(index, slot.stack);
 
             selectedItem.itemObject.transform.SetParent(inventoryMenu.transform);
 
@@ -202,7 +283,13 @@ public class InventoryUI : MonoBehaviour {
     // Returns -1 if item is null
     private int GetIndexOfItem(GameObject item)
     {
-        return menuList.IndexOf(item.GetComponent<InventorySlot>());
+        int slot = menuSlots.IndexOf(item.GetComponent<InventorySlot>());
+        if (slot >= 0) return slot;
+        if (item == armorChestSlot.gameObject) return -2;
+        if (item == armorGloveSlot.gameObject) return -3;
+        if (item == armorBootSlot.gameObject) return -4;
+        if (item == trinketSlot.gameObject) return -5;
+        else return -1;
     }
 
     #endregion 

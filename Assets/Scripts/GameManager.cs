@@ -7,8 +7,6 @@ public class GameManager : MonoBehaviour {
 
     public static GameManager instance;
 
-    public GameObject playerPrefab;
-
     public MapManager mapManager;
 
     public UIManager uiManager;
@@ -17,7 +15,6 @@ public class GameManager : MonoBehaviour {
 
     public Inventory inventory;
 
-    [HideInInspector]
     public GameObject player;
 
     private void Awake() {
@@ -26,7 +23,6 @@ public class GameManager : MonoBehaviour {
 
     private void Start() {
         mapManager.Initialize();
-        player = Instantiate(playerPrefab, Vector3.zero, Quaternion.identity);
         vcam.Follow = player.transform;
         inventory.LoadPlayerInventory();
     }

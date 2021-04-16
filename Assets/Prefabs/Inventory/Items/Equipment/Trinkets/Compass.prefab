@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 1327428614806910832}
   - component: {fileID: 1799048676894937354}
   - component: {fileID: 3033619753938771347}
-  - component: {fileID: 5582871322809918087}
   - component: {fileID: 3433882965983963345}
+  - component: {fileID: -7664756608882937310}
   m_Layer: 5
   m_Name: Compass
   m_TagString: Untagged
@@ -67,7 +67,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 225143332bbc5ca46854ca74e1cbbb85, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 3ada53d9bdb47be4199a1cda19d5fe80, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -77,21 +77,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &5582871322809918087
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2231963776779333744}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a7f0e9bac07b6b49afbf007230d5e96, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  itemName: Compass
-  maxStack: 1
-  sprite: {fileID: 1559704157218881296, guid: a4422c3191c68604a9d652fbc47f83c5, type: 3}
 --- !u!225 &3433882965983963345
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -104,6 +89,30 @@ CanvasGroup:
   m_Interactable: 0
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
+--- !u!114 &-7664756608882937310
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2231963776779333744}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00216ed332a318345ba049f9f75a241d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemName: Compass
+  maxStack: 1
+  sprite: {fileID: 21300000, guid: 3ada53d9bdb47be4199a1cda19d5fe80, type: 3}
+  flavorText: Points towards the next staircase down.
+  attributeText: 'Range: 15'
+  type: 3
+  armorValue: 0
+  speedBonus: 0
+  miningSpeedBonus: 0
+  attackSpeedBonus: 0
+  compassArrowPrefab: {fileID: 9057816079738930670, guid: b6cc6ea23f135c84bbd9db1e1fbbfbda,
+    type: 3}
 --- !u!1 &6611947231748883709
 GameObject:
   m_ObjectHideFlags: 0
@@ -121,7 +130,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2598082303165601634
 RectTransform:
   m_ObjectHideFlags: 0

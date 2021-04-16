@@ -103,7 +103,7 @@ public class PlayerInteractions : MonoBehaviour {
         else
         {
             Debug.Log("Fire1");
-            attackTimer = cooldown;
+            attackTimer = (cooldown - PlayerAttributes.attackSpeedBonus);
             StartCoroutine(AttackRoutine());
         }
     }
@@ -189,13 +189,13 @@ public class PlayerInteractions : MonoBehaviour {
         if (attackTimer > 0 && !isAttacking)
         {
             attackTimer -= Time.deltaTime;
-            attackCooldown.rectTransform.sizeDelta = new Vector2(20, 20 * attackTimer / cooldown);
+            attackCooldown.rectTransform.sizeDelta = new Vector2(20, 20 * attackTimer / (cooldown - PlayerAttributes.attackSpeedBonus));
             if (attackTimer <= 0) playerMovement.canMove = true;
         }
         if (mineTimer > 0)
         {
             mineTimer -= Time.deltaTime;
-            mineCooldown.rectTransform.sizeDelta = new Vector2(20, 20 * mineTimer / miningCooldown);
+            mineCooldown.rectTransform.sizeDelta = new Vector2(20, 20 * mineTimer / (miningCooldown - PlayerAttributes.miningSpeedBonus));
         }
     }
     #endregion
@@ -203,7 +203,7 @@ public class PlayerInteractions : MonoBehaviour {
     #region Health Functions
     public void takeDamage(int dmg) {
         Debug.Log("Damage taken!");
-        currentHealth -= dmg;
+        currentHealth -= dmg / (1 + PlayerAttributes.armorValue);
         if (currentHealth <= 0) {
             gameObject.SetActive(false);
             GameManager.instance.PlayerDie();
@@ -235,7 +235,7 @@ public class PlayerInteractions : MonoBehaviour {
         }
         else
         {
-            mineTimer = miningCooldown;
+            mineTimer = (miningCooldown - PlayerAttributes.miningSpeedBonus);
             StartCoroutine(MiningRoutine());
         }
     }
@@ -278,7 +278,7 @@ public class PlayerInteractions : MonoBehaviour {
 
         playerMovement.canMove = false;
 
-        yield return new WaitForSeconds(miningCooldown);
+        yield return new WaitForSeconds((miningCooldown - PlayerAttributes.miningSpeedBonus));
         isMining = false;
         playerMovement.canMove = true;
         yield return null;

@@ -57,7 +57,13 @@ public class ItemInfoUI : MonoBehaviour {
         itemSprite.GetComponentInChildren<TMPro.TextMeshProUGUI>().enabled = false;
 
         itemName.text = item.itemName;
-        itemAttributes.text = "\"" + item.flavorText + "\"\n" + item.attributeText;
+
+        string newAttributes = "";
+        for (int i = 0; i < item.attributeText.Length; i++) {
+            if (item.attributeText[i] == '$') newAttributes += "\n";
+            else newAttributes += item.attributeText[i];
+        }
+        itemAttributes.text = "\"" + item.flavorText + "\"\n" + newAttributes;
 
         foreach (GameObject ingredient in ingredientObjects) {
             Destroy(ingredient);

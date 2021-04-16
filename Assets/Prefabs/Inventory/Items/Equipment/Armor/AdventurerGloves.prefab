@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1327428614806910832}
   - component: {fileID: 1799048676894937354}
   - component: {fileID: 3033619753938771347}
-  - component: {fileID: 5582871322809918087}
+  - component: {fileID: 2284191045978817875}
   - component: {fileID: 3433882965983963345}
   m_Layer: 5
   m_Name: AdventurerGloves
@@ -67,7 +67,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 225143332bbc5ca46854ca74e1cbbb85, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e0a2463d30780d148b02227facbfa39e, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -77,7 +77,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &5582871322809918087
+--- !u!114 &2284191045978817875
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -86,12 +86,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 2231963776779333744}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a7f0e9bac07b6b49afbf007230d5e96, type: 3}
+  m_Script: {fileID: 11500000, guid: 72e8d1ece4c7ffa4e88048470e2e375f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemName: AdventurerGloves
+  itemName: Adventurer's Gloves
   maxStack: 1
-  sprite: {fileID: 1559704157218881296, guid: a4422c3191c68604a9d652fbc47f83c5, type: 3}
+  sprite: {fileID: 21300000, guid: e0a2463d30780d148b02227facbfa39e, type: 3}
+  flavorText: Padded gloves with a firm grip.
+  attributeText: 'Armor: 0.15$Mine Spd: 0.5$Atk Spd: 0.5'
+  type: 1
+  armorValue: 0.15
+  speedBonus: 0
+  miningSpeedBonus: 0.2
+  attackSpeedBonus: 0.2
 --- !u!225 &3433882965983963345
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -121,7 +128,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2598082303165601634
 RectTransform:
   m_ObjectHideFlags: 0

@@ -1,18 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class InventorySlot : MonoBehaviour {
+public class EquipmentSlot : InventorySlot {
 
-    public float scale;
+    public EquipmentItem.EquipmentType slotType;
 
     [HideInInspector]
-    public ItemStack stack;
-    [HideInInspector]
-    public GameObject itemObject;
+    public EquipmentItem item;
 
-    public virtual void UpdateSlot(ItemStack newStack) {
+    public override void UpdateSlot(ItemStack newStack) {
         if (stack == null) {
             stack = newStack;
             if (stack.item != null) {
@@ -26,7 +23,18 @@ public class InventorySlot : MonoBehaviour {
             itemObject = null;
             return;
         } else if (newStack.item != stack.item) {
+            if (newStack.item != null && !(newStack.item is EquipmentItem)) {
+                Debug.LogError("Tried to equip non-equipment item");
+                return;
+            }
             stack = newStack;
+            if (item != null) {
+                item.RemoveItem();
+            }
+            item = (EquipmentItem)newStack.item;
+            if (item != null) {
+                item.EquipItem();
+            }
             Destroy(itemObject);
             itemObject = Instantiate(stack.item.gameObject, transform);
             itemObject.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = stack.count.ToString();
@@ -35,12 +43,33 @@ public class InventorySlot : MonoBehaviour {
             itemObject.transform.localScale = Vector3.one * scale;
             return;
         }
+
+        if (newStack.item != null && !(newStack.item is EquipmentItem)) {
+            Debug.LogError("Tried to equip non-equipment item");
+            return;
+        }
         stack = newStack;
+        if (item != null) {
+            item.RemoveItem();
+        }
+        item = (EquipmentItem)newStack.item;
+        if (item != null) {
+            item.EquipItem();
+        }
 
         if (stack.item != null && itemObject == null) {
             itemObject = Instantiate(stack.item.gameObject, transform);
         }
 
+        if (itemObject != null) {
+            itemObject.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = stack.count.ToString();
+            itemObject.GetComponentInChildren<TMPro.TextMeshProUGUI>().enabled = stack.count != 1;
+            itemObject.transform.localPosition = Vector3.zero;
+            itemObject.transform.localScale = Vector3.one * scale;
+        }
+    }
+
+    public void DrawItem() {
         if (itemObject != null) {
             itemObject.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = stack.count.ToString();
             itemObject.GetComponentInChildren<TMPro.TextMeshProUGUI>().enabled = stack.count != 1;

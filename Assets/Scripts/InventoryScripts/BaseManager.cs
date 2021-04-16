@@ -15,6 +15,10 @@ public class BaseManager : MonoBehaviour {
     public BaseUIManager baseUIManager;
     public GameObject player;
 
+    public Item compassItem;
+
+    private static bool gaveCompass = false;
+
     private void Awake() {
         instance = this;
     }
@@ -26,6 +30,11 @@ public class BaseManager : MonoBehaviour {
         }
         playerInventory.LoadPlayerInventory();
         StartCoroutine(baseUIManager.FadeIn());
+        if (!gaveCompass) {
+            PlayerAttributes.trinket = (EquipmentItem)compassItem;
+            gaveCompass = true;
+        }
+        
     }
 
     public void EnterCave() {

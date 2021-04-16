@@ -25,6 +25,9 @@ public class CaveMap : MonoBehaviour {
     List<Vector3Int> rockLocations;
 
     Random.State randomState;
+
+    [HideInInspector]
+    public Vector3 staircaseLocation;
     #endregion
 
     #region Generation functions
@@ -252,6 +255,7 @@ public class CaveMap : MonoBehaviour {
         }
         tilemap.SetTile(loc, settings.staircaseTile);
         oreTilemap.SetTile(loc, null);
+        staircaseLocation = loc;
 
         tilemap.SetTile(new Vector3Int(0, 1, 0), settings.staircaseUpTile);
         oreTilemap.SetTile(new Vector3Int(0, 1, 0), null);

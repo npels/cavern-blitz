@@ -33,6 +33,7 @@ public class CraftingRecipes : MonoBehaviour {
     public void OpenCrafting() {
         transform.parent.gameObject.SetActive(true);
         BaseManager.instance.player.GetComponent<PlayerMovement>().canMove = false;
+        BaseManager.instance.player.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
     }
 
     public void CloseCrafting() {
