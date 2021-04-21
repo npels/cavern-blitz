@@ -6,11 +6,10 @@ public class Ore : MonoBehaviour {
     public int maxHealth; //The number of hits it takes to break the ore 
     public int numDrops; //The number of ores that drops when broken
     private int currHealth;
-    public Item oreItem;
     private AudioSource mineAudio;
     private AudioSource popAudio;
+    public GameObject drop; 
 
-    private bool isPickupable = false;
     private void Start()
     {
         currHealth = maxHealth;
@@ -43,34 +42,14 @@ public class Ore : MonoBehaviour {
     {
         if (numDrops > 0) {
             popAudio.Play();
-            g.transform.localScale = new Vector3(0.5f, 0.5f, 0);
-            isPickupable = true;
+            Instantiate(drop, transform.position, transform.rotation);
+            Destroy(gameObject);
         } else {
             GetComponentInChildren<SpriteRenderer>().enabled = false;
             foreach (Collider2D c in GetComponents<Collider2D>()) c.enabled = false;
         }
         
     }
-    private void PickupOre()
-    {
-        if (oreItem == null) {
-            isPickupable = false;
-            Destroy(gameObject);
-        }
-        if (GameManager.instance.inventory.TryAddItem(oreItem, 1) != -1) {
-            isPickupable = false;
-            Destroy(gameObject);
-        }
-    }
-
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.tag == "Player" && isPickupable)
-        {
-            PickupOre();
-        }
-    }
-
-
+   
     #endregion
 }
