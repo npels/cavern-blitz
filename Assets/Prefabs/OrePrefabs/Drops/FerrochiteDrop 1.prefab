@@ -73,7 +73,7 @@ SpriteRenderer:
   m_SortingLayerID: 1906057801
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: -1687325867822468099, guid: 7983e539a275c4349a23412436ed0aea,
+  m_Sprite: {fileID: 4535135798759915263, guid: 7983e539a275c4349a23412436ed0aea,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -97,7 +97,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9f8f3725a719dd4bb90908c188cdba9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  oreItem: {fileID: 5582871322809918087, guid: 4c586b46bf1998d4a8cdbf86fe2266af, type: 3}
+  oreItem: {fileID: 5582871322809918087, guid: 7c6f6cf23c3028f41afee848155cee0c, type: 3}
 --- !u!60 &9123723775809743966
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -123,15 +123,16 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: -0.0006491095, y: 0.3712252}
-      - {x: -0.1422512, y: 0.37721476}
-      - {x: -0.17903665, y: 0.34127754}
-      - {x: -0.2912777, y: 0.1634139}
-      - {x: -0.2912777, y: -0.12422}
-      - {x: -0.100261986, y: -0.33828288}
-      - {x: 0.18229343, y: -0.34127757}
-      - {x: 0.33828282, y: -0.25299478}
-      - {x: 0.3173194, y: 0.029036716}
+    - - {x: -0.14817809, y: 0.362241}
+      - {x: -0.21640864, y: 0.03528802}
+      - {x: -0.29726717, y: -0.058335215}
+      - {x: -0.116885476, y: -0.2793815}
+      - {x: -0.010157116, y: -0.29935095}
+      - {x: 0.115620404, y: -0.34639144}
+      - {x: 0.17395826, y: -0.3023457}
+      - {x: 0.24218856, y: -0.31315193}
+      - {x: 0.11341371, y: 0.32096338}
+      - {x: 0.013152018, y: 0.34726718}
 --- !u!50 &7393888883844754129
 Rigidbody2D:
   serializedVersion: 4
@@ -163,7 +164,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7074451091298020147}
   m_Layer: 0
-  m_Name: OrdiniteDrop
+  m_Name: FerrochiteDrop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

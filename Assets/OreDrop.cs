@@ -14,7 +14,7 @@ public class OreDrop : MonoBehaviour
         }
         if (GameManager.instance.inventory.TryAddItem(oreItem, 1) != -1)
         {
-            Destroy(gameObject);
+            Destroy(transform.parent.gameObject);
         }
     }
 
