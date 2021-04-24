@@ -7,8 +7,6 @@ public class GameManager : MonoBehaviour {
 
     public static GameManager instance;
 
-    public GameObject playerPrefab;
-
     public MapManager mapManager;
 
     public UIManager uiManager;
@@ -17,7 +15,6 @@ public class GameManager : MonoBehaviour {
 
     public Inventory inventory;
 
-    [HideInInspector]
     public GameObject player;
 
     private void Awake() {
@@ -26,19 +23,29 @@ public class GameManager : MonoBehaviour {
 
     private void Start() {
         mapManager.Initialize();
-        player = Instantiate(playerPrefab, Vector3.zero, Quaternion.identity);
         vcam.Follow = player.transform;
+        inventory.LoadPlayerInventory();
     }
 
     public void GotoNextFloor() {
-        StartCoroutine(uiManager.FadeOut(FinishTransition));
+        uiManager.CloseDescendMessage();
+        StartCoroutine(uiManager.FadeOut(FinishFloorTransition));
     }
 
-    private void FinishTransition() {
+    private void FinishFloorTransition() {
         mapManager.GenerateNextFloor();
         vcam.ForceCameraPosition(new Vector3(0, 0, -10), Quaternion.identity);
         player.transform.position = Vector3.zero;
         StartCoroutine(uiManager.FadeIn());
+    }
+
+    public void ReturnToHome() {
+        inventory.SavePlayerInventory();
+        StartCoroutine(uiManager.FadeOut(FinishHomeTransition));
+    }
+
+    private void FinishHomeTransition() {
+        SceneManager.LoadScene("HomeScene");
     }
 
     public void PlayerDie() {

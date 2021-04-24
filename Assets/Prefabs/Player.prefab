@@ -94,6 +94,7 @@ GameObject:
   - component: {fileID: 8153334603779752004}
   - component: {fileID: 8153334603779752005}
   - component: {fileID: 1256970680}
+  - component: {fileID: 7945407962313156167}
   - component: {fileID: 5789233828953361236}
   - component: {fileID: 8153334603779752002}
   - component: {fileID: 4678668094427505356}
@@ -203,13 +204,29 @@ MonoBehaviour:
   damage: 3
   cooldown: 0.7
   reach: 1.5
-  maxHealth: 3
+  maxHealth: 10
   miningCooldown: 0.7
   miningOffset: {x: 0, y: -0.3}
   attackItem: {fileID: 5582871322809918087, guid: d7172619fd810f6458b25ccb37c9e0ad,
     type: 3}
   mineItem: {fileID: 5582871322809918087, guid: 8ecc3c4beb7e9b0418cd63d5afae28ad,
     type: 3}
+--- !u!114 &7945407962313156167
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8153334603779752003}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89ff16cb153cfa74ab0f39814a3bb376, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  armorValue: 0
+  speedBonus: 0
+  miningSpeedBonus: 0
+  attackSpeedBonus: 0
 --- !u!95 &5789233828953361236
 Animator:
   serializedVersion: 3

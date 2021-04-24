@@ -6,7 +6,7 @@ public class RandomSprite : MonoBehaviour {
     public List<Sprite> sprites;
 
     private void Start() {
-        if (sprites.Count > 0) GetComponent<SpriteRenderer>().sprite = sprites[Random.Range(0, sprites.Count)];
-        if (Random.Range(0f, 1f) > 0.5f) transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
+        if (sprites.Count > 0) GetComponentInChildren<SpriteRenderer>().sprite = sprites[Random.Range(0, sprites.Count)];
+        if (Random.Range(0f, 1f) > 0.5f) GetComponentInChildren<SpriteRenderer>().flipX = true;
     }
 }

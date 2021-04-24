@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class ItemStack {
 
     public Item item;
@@ -47,6 +48,15 @@ public class ItemStack {
         if (newItem != item) return false;
         if (count + num > maxCount) return false;
         count += num;
+        return true;
+    }
+
+    public bool TrySubtractItem(int num) {
+        if (item == null) {
+            return false;
+        }
+        if (count < num) return false;
+        count -= num;
         return true;
     }
 }

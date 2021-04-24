@@ -47,15 +47,16 @@ public class PlayerMovement : MonoBehaviour {
 
     private void FixedUpdate()
     {
-        if (!menuOpen)
-            DoMovement();
+        DoMovement();
     }
     #endregion
 
     #region Movement functions
     private void DoMovement() {
-        if (!canMove)
-        {
+        if (!canMove) {
+            animator.SetBool("Moving", false);
+            animator.SetInteger("FacingDirection", facingDirection);
+            animator.SetFloat("Speed", 0);
             return;
         }
 
@@ -79,7 +80,7 @@ public class PlayerMovement : MonoBehaviour {
 
         animator.SetBool("Moving", moving);
         animator.SetInteger("FacingDirection", facingDirection);
-        animator.SetFloat("Speed", playerRB.velocity.magnitude / maxSpeed);
+        animator.SetFloat("Speed", playerRB.velocity.magnitude / (maxSpeed + PlayerAttributes.speedBonus));
         if (oldDirection != facingDirection || oldMoving != moving) animator.SetTrigger("ChangeMode");
 
         Vector2 direction = new Vector2(xInput, yInput);
@@ -89,8 +90,8 @@ public class PlayerMovement : MonoBehaviour {
     }
 
     private void CheckVelocity() {
-        if (playerRB.velocity.magnitude > maxSpeed) {
-            playerRB.velocity = playerRB.velocity.normalized * maxSpeed;
+        if (playerRB.velocity.magnitude > (maxSpeed + PlayerAttributes.speedBonus)) {
+            playerRB.velocity = playerRB.velocity.normalized * (maxSpeed + PlayerAttributes.speedBonus);
         }
     }
 

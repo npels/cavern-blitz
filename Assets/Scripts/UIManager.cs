@@ -12,11 +12,33 @@ public class UIManager : MonoBehaviour {
     public TMPro.TextMeshProUGUI oreText;
     public Image blackout;
     public Slider healthSlider;
+    public GameObject descendMessage;
+    public GameObject leaveMessage;
 
     [HideInInspector]
     public bool fading = false;
 
     public delegate void OnFadeFunction();
+
+    public void OpenDescendMessage() {
+        GameManager.instance.player.GetComponent<PlayerMovement>().canMove = false;
+        descendMessage.SetActive(true);
+    }
+
+    public void CloseDescendMessage() {
+        GameManager.instance.player.GetComponent<PlayerMovement>().canMove = true;
+        descendMessage.SetActive(false);
+    }
+
+    public void OpenLeaveMessage() {
+        GameManager.instance.player.GetComponent<PlayerMovement>().canMove = false;
+        leaveMessage.SetActive(true);
+    }
+
+    public void CloseLeaveMessage() {
+        GameManager.instance.player.GetComponent<PlayerMovement>().canMove = true;
+        leaveMessage.SetActive(false);
+    }
 
     public IEnumerator FadeOut(OnFadeFunction func = null) {
         while (fading) yield return null;
