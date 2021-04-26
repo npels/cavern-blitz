@@ -1,16 +1,19 @@
 fileFormatVersion: 2
-guid: c7cfb5486d3a728478e1306a19648c60
+guid: 20654530bfd5a7e4db6769a1a3732198
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 622970793744358341
-    second: ImprovedPickaxe
+      213: 9143868440440847147
+    second: AdventurerBoots
   - first:
-      213: 3744024631493419868
-    second: ImprovedMachete
+      213: -6116311029358466808
+    second: AdventurerVest
   - first:
-      213: -1393196237062221584
-    second: ImprovedClub
+      213: 7468278412319249001
+    second: AdventurerGloves1
+  - first:
+      213: -4710488717584078819
+    second: AdventurerGloves2
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -120,64 +123,85 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: ImprovedPickaxe
+      name: AdventurerBoots
       rect:
         serializedVersion: 2
         x: 0
-        y: 23
-        width: 17
-        height: 17
-      alignment: 9
-      pivot: {x: 0.47058824, y: 0.1764706}
+        y: 20
+        width: 20
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5cb5392e2ac35a800800000000000000
-      internalID: 622970793744358341
+      spriteID: b2bb16976eb85ee70800000000000000
+      internalID: 9143868440440847147
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ImprovedMachete
+      name: AdventurerVest
       rect:
         serializedVersion: 2
         x: 20
         y: 20
-        width: 6
+        width: 20
         height: 20
-      alignment: 9
-      pivot: {x: 0.5, y: 0.15}
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c536a7ec09275f330800000000000000
-      internalID: 3744024631493419868
+      spriteID: 809e84f368f7e1ba0800000000000000
+      internalID: -6116311029358466808
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ImprovedClub
+      name: AdventurerGloves1
       rect:
         serializedVersion: 2
         x: 0
-        y: 1
-        width: 9
-        height: 19
+        y: 0
+        width: 20
+        height: 20
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0f0de73676f5aace0800000000000000
-      internalID: -1393196237062221584
+      spriteID: 962d10ab5a7a4a760800000000000000
+      internalID: 7468278412319249001
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: AdventurerGloves2
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 0
+        width: 20
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d186ae5f77bf0aeb0800000000000000
+      internalID: -4710488717584078819
       vertices: []
       indices: 
       edges: []

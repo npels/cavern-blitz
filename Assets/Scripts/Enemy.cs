@@ -6,8 +6,8 @@ public class Enemy : MonoBehaviour {
     #region Health variables
     [SerializeField]
     [Tooltip("The maximum full health of this enemy.")]
-    private int maxHealth;
-    private int currentHealth;
+    private float maxHealth;
+    private float currentHealth;
     #endregion
 
     #region Movement variables
@@ -61,7 +61,7 @@ public class Enemy : MonoBehaviour {
         EnemyRB.AddForce(direction.normalized * acceleration, ForceMode2D.Force);
     }
 
-    public void takeDamage(int dmg) {
+    public void takeDamage(float dmg) {
         Debug.Log("Damage taken!");
         currentHealth -= dmg;
         if (currentHealth <= 0) {
