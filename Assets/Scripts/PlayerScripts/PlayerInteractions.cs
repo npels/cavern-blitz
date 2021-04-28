@@ -243,7 +243,7 @@ public class PlayerInteractions : MonoBehaviour {
     #endregion
 
     #region Health Functions
-    public void takeDamage(int dmg) {
+    public void takeDamage(float dmg) {
         Debug.Log("Damage taken!");
         currentHealth -= dmg / (1 + PlayerAttributes.armorValue);
         if (currentHealth <= 0) {
@@ -253,6 +253,11 @@ public class PlayerInteractions : MonoBehaviour {
             StartCoroutine(DamageFlash());
             GameManager.instance.uiManager.SetHealth(currentHealth / maxHealth);
         }
+    }
+
+    public void HealPlayer(float amount) {
+        currentHealth += amount;
+        GameManager.instance.uiManager.SetHealth(currentHealth / maxHealth);
     }
 
     public IEnumerator DamageFlash() {

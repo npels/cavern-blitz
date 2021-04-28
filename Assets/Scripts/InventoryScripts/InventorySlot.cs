@@ -41,6 +41,10 @@ public class InventorySlot : MonoBehaviour {
             itemObject = Instantiate(stack.item.gameObject, transform);
         }
 
+        if (stack.item == null && itemObject != null) {
+            Destroy(itemObject);
+        }
+
         if (itemObject != null) {
             itemObject.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = stack.count.ToString();
             itemObject.GetComponentInChildren<TMPro.TextMeshProUGUI>().enabled = stack.count != 1;

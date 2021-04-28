@@ -41,7 +41,8 @@ public class Ore : MonoBehaviour {
     private void DropOre(GameObject g)
     {
         if (numDrops > 0) {
-            popAudio.Play();
+            // This should be moved to the ore item pickup object
+            // popAudio.Play();
             Instantiate(drop, transform.position, transform.rotation);
             Destroy(gameObject);
         } else {
