@@ -22,6 +22,8 @@ public class StockpileTransferUI : MonoBehaviour {
     private EquipmentSlot armorGloveSlot;
     private EquipmentSlot armorBootSlot;
     private EquipmentSlot trinketSlot;
+    public ToolSlot leftSlot;
+    public ToolSlot rightSlot;
 
     private bool inventoryOpened = false;
     private bool itemIsSelected = false;
@@ -55,7 +57,7 @@ public class StockpileTransferUI : MonoBehaviour {
 
         InventorySlot[] slots = inventoryObject.GetComponentsInChildren<InventorySlot>();
         foreach (InventorySlot slot in slots) {
-            if (!(slot is EquipmentSlot)) playerMenuSlots.Add(slot);
+            if (!(slot is EquipmentSlot) && !(slot is ToolSlot)) playerMenuSlots.Add(slot);
         }
 
         slots = stockpileObject.GetComponentsInChildren<InventorySlot>();
@@ -123,6 +125,8 @@ public class StockpileTransferUI : MonoBehaviour {
         armorGloveSlot.UpdateSlot(new ItemStack(false, PlayerAttributes.glovesArmor, 1));
         armorBootSlot.UpdateSlot(new ItemStack(false, PlayerAttributes.bootsArmor, 1));
         trinketSlot.UpdateSlot(new ItemStack(false, PlayerAttributes.trinket, 1));
+        leftSlot.UpdateSlot(new ItemStack(false, PlayerAttributes.leftHand, 1));
+        rightSlot.UpdateSlot(new ItemStack(false, PlayerAttributes.rightHand, 1));
     }
 
     #region Inventory Organization Functions
@@ -156,6 +160,22 @@ public class StockpileTransferUI : MonoBehaviour {
         }
     }
 
+    public void OnClickTool(GameObject item) {
+        if (inventoryOpened && itemIsSelected) {
+            if (selectedItem.stack.item is ToolItem) {
+                ToolItem tool = (ToolItem)selectedItem.stack.item;
+                PutSelectedItem(item);
+                PlayerAttributes.SwapTool(tool, item == leftSlot.gameObject);
+                UpdateUI();
+            }
+        } else if (inventoryOpened && !itemIsSelected) {
+            ToolItem tool = item.GetComponentInChildren<ToolItem>();
+            PickupItem(item);
+            PlayerAttributes.RemoveTool(tool, item == leftSlot.gameObject);
+            UpdateUI();
+        }
+    }
+
     private void PutSelectedItem(GameObject item) {
         int index = GetIndexOfItem(item);
         bool inPlayerInventory = playerMenuSlots.Contains(item.GetComponent<InventorySlot>());
@@ -173,6 +193,12 @@ public class StockpileTransferUI : MonoBehaviour {
                     break;
                 case -5:
                     slot = trinketSlot;
+                    break;
+                case -6:
+                    slot = leftSlot;
+                    break;
+                case -7:
+                    slot = rightSlot;
                     break;
                 default:
                     slot = null;
@@ -232,6 +258,12 @@ public class StockpileTransferUI : MonoBehaviour {
                 case -5:
                     slot = trinketSlot;
                     break;
+                case -6:
+                    slot = leftSlot;
+                    break;
+                case -7:
+                    slot = rightSlot;
+                    break;
                 default:
                     slot = null;
                     break;
@@ -278,6 +310,8 @@ public class StockpileTransferUI : MonoBehaviour {
         if (item == armorGloveObject) return -3;
         if (item == armorBootObject) return -4;
         if (item == trinketObject) return -5;
+        if (item == leftSlot.gameObject) return -6;
+        if (item == rightSlot.gameObject) return -7;
         else return -1;
     }
 

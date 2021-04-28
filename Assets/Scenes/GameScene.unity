@@ -2828,13 +2828,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fadeSpeed: 5
-  attackCooldown: {fileID: 1929486034}
-  mineCooldown: {fileID: 1480428581}
-  oreText: {fileID: 0}
+  leftCooldown: {fileID: 1929486034}
+  rightCooldown: {fileID: 1480428581}
   blackout: {fileID: 314805048}
   healthSlider: {fileID: 1435423989}
   descendMessage: {fileID: 1492040242}
   leaveMessage: {fileID: 1391422241}
+  leftSprite: {fileID: 483470442}
+  rightSprite: {fileID: 1381809240}
   fading: 0
 --- !u!1 &1361777707
 GameObject:

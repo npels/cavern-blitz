@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Ore : MonoBehaviour {
-    public int maxHealth; //The number of hits it takes to break the ore 
+    public float maxHealth; //The number of hits it takes to break the ore 
     public int numDrops; //The number of ores that drops when broken
-    private int currHealth;
+    private float currHealth;
     private AudioSource mineAudio;
     private AudioSource popAudio;
     public GameObject drop; 
@@ -18,7 +18,7 @@ public class Ore : MonoBehaviour {
     }
 
     //Decrements the current health of the ore
-    public void TakeDamage(int val)
+    public void TakeDamage(float val)
     {
         GetComponent<ParticleSystem>().Play();
         mineAudio.Play();
