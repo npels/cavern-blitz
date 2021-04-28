@@ -17,6 +17,11 @@ public class GameManager : MonoBehaviour {
 
     public GameObject player;
 
+    public RopeItem ropeItem;
+
+    [HideInInspector]
+    public bool setRope = false;
+
     private void Awake() {
         instance = this;
     }
@@ -29,6 +34,8 @@ public class GameManager : MonoBehaviour {
 
     public void GotoNextFloor() {
         uiManager.CloseDescendMessage();
+        if (setRope) RemoveRope();
+        setRope = false;
         StartCoroutine(uiManager.FadeOut(FinishFloorTransition));
     }
 
@@ -55,5 +62,9 @@ public class GameManager : MonoBehaviour {
 
     private void FinishPlayerDeath() {
         SceneManager.LoadScene("GameOver");
+    }
+
+    private void RemoveRope() {
+        inventory.TryRemoveItem(ropeItem, 1);
     }
 }

@@ -16,10 +16,21 @@ public class UIManager : MonoBehaviour {
     public Image leftSprite;
     public Image rightSprite;
 
+    public GameObject ropeTipPrefab;
+    public GameObject ropeSetPrefab;
+
     [HideInInspector]
     public bool fading = false;
 
     public delegate void OnFadeFunction();
+
+    public void OpenRopeTip() {
+        Instantiate(ropeTipPrefab, transform);
+    }
+
+    public void SetRopeMessage() {
+        Instantiate(ropeSetPrefab, transform);
+    }
 
     public void OpenDescendMessage() {
         GameManager.instance.player.GetComponent<PlayerMovement>().canMove = false;

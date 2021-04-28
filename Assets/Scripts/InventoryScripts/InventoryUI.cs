@@ -23,6 +23,8 @@ public class InventoryUI : MonoBehaviour {
     private Inventory inventory;
 
     private bool inventoryOpened = false;
+
+    static KeyCode[] numKeys = { KeyCode.Alpha1, KeyCode.Alpha2, KeyCode.Alpha3, KeyCode.Alpha4, KeyCode.Alpha5, KeyCode.Alpha6 };
     #endregion
 
     #region Player Variables
@@ -50,11 +52,9 @@ public class InventoryUI : MonoBehaviour {
         }
 
         barSlots = new List<InventorySlot>();
-        if (inventory.numPrioritySlots > 0) {
-            slots = inventoryBar.GetComponentsInChildren<InventorySlot>();
-            foreach (InventorySlot slot in slots) {
-                barSlots.Add(slot);
-            }
+        slots = inventoryBar.GetComponentsInChildren<InventorySlot>();
+        foreach (InventorySlot slot in slots) {
+            barSlots.Add(slot);
         }
 
         inventoryBar.SetActive(true && !inBase);
@@ -67,6 +67,8 @@ public class InventoryUI : MonoBehaviour {
 
         //Set up Inventory Organization
         itemIsSelected = false;
+
+        UpdateUI();
     }
 
     private void Update() {
@@ -77,7 +79,23 @@ public class InventoryUI : MonoBehaviour {
                 OpenInventory();
             }
         }
+
+        for (int i = 0; i < 6; i++) {
+            if (Input.GetKeyDown(numKeys[i]) && !inBase && !inventoryOpened) {
+                ItemStack stack = inventory.stacks[i];
+                if (stack.item is ConsumableItem) {
+                    ConsumableItem consumable = (ConsumableItem)stack.item;
+                    int delta = consumable.Activate();
+                    stack.count += delta;
+                    if (stack.count <= 0) {
+                        stack.SetStack(null, 0, false);
+                    }
+                    UpdateUI();
+                }
+            }
+        }
     }
+
     private void FixedUpdate() {
         if (itemIsSelected) {
             FollowCurser();
@@ -134,8 +152,8 @@ public class InventoryUI : MonoBehaviour {
             menuSlots[i].UpdateSlot(inventory.stacks[i]);
         }
 
-        for (int i = 0; i < inventory.numPrioritySlots; i++) {
-            barSlots[i].UpdateSlot(inventory.stacks[inventory.GetPriorityIndex(i)]);
+        for (int i = 0; i < barSlots.Count; i++) {
+            barSlots[i].UpdateSlot(inventory.stacks[i]);
         }
 
         armorChestSlot.UpdateSlot(new ItemStack(false, PlayerAttributes.chestArmor, 1));
