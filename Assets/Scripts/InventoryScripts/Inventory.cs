@@ -188,6 +188,14 @@ public class Inventory : MonoBehaviour {
         savedPlayerInventory = stacks;
     }
 
+    public void DeletePlayerInventory()
+    {
+        for (int i = 0; i < stacks.Count; i++) {
+            RemoveItem(i);
+        }
+        savedPlayerInventory = stacks;
+    }
+
     public void LoadPlayerInventory() {
         if (savedPlayerInventory == null) return;
         stacks = savedPlayerInventory;

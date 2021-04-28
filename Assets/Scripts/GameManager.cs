@@ -56,6 +56,7 @@ public class GameManager : MonoBehaviour {
     }
 
     public void PlayerDie() {
+        inventory.DeletePlayerInventory();
         StartCoroutine(uiManager.FadeOut(FinishPlayerDeath));
     }
 
