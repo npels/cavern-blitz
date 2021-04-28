@@ -13,7 +13,8 @@ public class PlayerMovement : MonoBehaviour {
     [Tooltip("The rate at which the player accelerates in the direction they are moving.")]
     private float acceleration;
 
-    private int facingDirection = 0;
+    [HideInInspector]
+    public int facingDirection = 0;
     private bool moving = false;
 
     [HideInInspector]

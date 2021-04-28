@@ -14,6 +14,7 @@ public class EquipmentItem : Item {
     [Tooltip("The type of equipment this is.")]
     public EquipmentType type;
 
+    [Header("Armor Variables")]
     [Tooltip("The amount of armor that this piece of equipment provides.")]
     public float armorValue;
     [Tooltip("The movement speed bonus that this piece of armor provides.")]

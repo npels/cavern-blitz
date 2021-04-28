@@ -15,9 +15,11 @@ public class BaseManager : MonoBehaviour {
     public BaseUIManager baseUIManager;
     public GameObject player;
 
-    public Item compassItem;
+    public EquipmentItem compassItem;
+    public ToolItem pickItem;
+    public ToolItem weaponItem;
 
-    private static bool gaveCompass = false;
+    private static bool startingItems = false;
 
     private void Awake() {
         instance = this;
@@ -30,9 +32,13 @@ public class BaseManager : MonoBehaviour {
         }
         playerInventory.LoadPlayerInventory();
         StartCoroutine(baseUIManager.FadeIn());
-        if (!gaveCompass) {
-            PlayerAttributes.trinket = (EquipmentItem)compassItem;
-            gaveCompass = true;
+        if (!startingItems) {
+            PlayerAttributes.trinket = compassItem;
+            PlayerAttributes.leftHand = weaponItem;
+            PlayerAttributes.rightHand = pickItem;
+            PlayerAttributes.AddTool(weaponItem, true);
+            PlayerAttributes.AddTool(pickItem, false);
+            startingItems = true;
         }
         
     }

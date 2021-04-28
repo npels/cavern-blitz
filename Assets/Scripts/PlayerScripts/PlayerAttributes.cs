@@ -9,16 +9,27 @@ public class PlayerAttributes : MonoBehaviour {
     public static EquipmentItem bootsArmor;
     public static EquipmentItem trinket;
 
+    public static ToolItem leftHand;
+    public static ToolItem rightHand;
+
     public static float armorValue;
     public static float speedBonus;
     public static float miningSpeedBonus;
     public static float attackSpeedBonus;
+
+    public static float attackDamage;
+    public static float attackSpeed;
+
+    public static float miningSpeed;
+    public static float miningDamage;
 
     private void OnEnable() {
         if (chestArmor != null) chestArmor.EquipItem();
         if (glovesArmor != null) glovesArmor.EquipItem();
         if (bootsArmor != null) bootsArmor.EquipItem();
         if (trinket != null) trinket.EquipItem();
+        if (leftHand != null) leftHand.EquipItem();
+        if (rightHand != null) rightHand.EquipItem();
     }
 
     private void OnDisable() {
@@ -26,6 +37,8 @@ public class PlayerAttributes : MonoBehaviour {
         if (glovesArmor != null) glovesArmor.RemoveItem();
         if (bootsArmor != null) bootsArmor.RemoveItem();
         if (trinket != null) trinket.RemoveItem();
+        if (leftHand != null) leftHand.RemoveItem();
+        if (rightHand != null) rightHand.RemoveItem();
     }
 
     public static void AddEquipment(EquipmentItem item) {
@@ -103,5 +116,56 @@ public class PlayerAttributes : MonoBehaviour {
         speedBonus += item.speedBonus;
         miningSpeedBonus += item.miningSpeedBonus;
         attackSpeedBonus += item.attackSpeedBonus;
+    }
+
+    public static void AddTool(ToolItem item, bool isLeft) {
+        if (isLeft) leftHand = item;
+        else rightHand = item;
+
+        if (item.type == ToolItem.ToolType.PICKAXE) {
+            miningSpeed += item.miningSpeed;
+            miningDamage += item.miningDamage;
+        } else {
+            attackDamage += item.attackDamage;
+            attackSpeed += item.attackSpeed;
+        }
+    }
+
+    public static void RemoveTool(ToolItem item, bool isLeft) {
+        if (item == null) return;
+        if (isLeft) leftHand = null;
+        else rightHand = null;
+
+        if (item.type == ToolItem.ToolType.PICKAXE) {
+            miningSpeed -= item.miningSpeed;
+            miningDamage -= item.miningDamage;
+        } else {
+            attackDamage -= item.attackDamage;
+            attackSpeed -= item.attackSpeed;
+        }
+    }
+
+    public static void SwapTool(ToolItem item, bool isLeft) {
+        ToolItem oldTool = isLeft ? leftHand : rightHand;
+        if (isLeft) leftHand = item;
+        else rightHand = item;
+
+        if (oldTool != null) {
+            if (oldTool.type == ToolItem.ToolType.PICKAXE) {
+                miningSpeed -= oldTool.miningSpeed;
+                miningDamage -= oldTool.miningDamage;
+            } else {
+                attackDamage -= oldTool.attackDamage;
+                attackSpeed -= oldTool.attackSpeed;
+            }
+        }
+
+        if (item.type == ToolItem.ToolType.PICKAXE) {
+            miningSpeed += item.miningSpeed;
+            miningDamage += item.miningDamage;
+        } else {
+            attackDamage += item.attackDamage;
+            attackSpeed += item.attackSpeed;
+        }
     }
 }
