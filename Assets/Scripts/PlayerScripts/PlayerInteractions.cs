@@ -18,6 +18,9 @@ public class PlayerInteractions : MonoBehaviour {
     [SerializeField]
     [Tooltip("The distance from the player that the currently equipped weapon can reach when attacking.")]
     private float reach;
+    [SerializeField]
+    [Tooltip("The width of the boxcast hitbox of the player's weapon.")]
+    private float width;
     private bool isAttacking;
     private Vector2 mousePos;
     #endregion
@@ -147,10 +150,24 @@ public class PlayerInteractions : MonoBehaviour {
         animator.SetTrigger("Swing");
 
         transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = isLeft ? PlayerAttributes.leftHand.sprite : PlayerAttributes.rightHand.sprite;
+        
+        RaycastHit2D[] hits = Physics2D.BoxCastAll(playerRB.position, new Vector2(width, width), 0, cardinalDirection, reach, LayerMask.GetMask("Enemy"));
 
-        RaycastHit2D[] hits = Physics2D.BoxCastAll(playerRB.position + (cardinalDirection * 0.5f), new Vector2(0.3f, 0.3f), 0, cardinalDirection, reach, LayerMask.GetMask("Enemy"));
-        Debug.DrawRay(playerRB.position, direction, Color.blue, 10.0f, false); // For debugging purposes
-        Debug.DrawRay(playerRB.position, cardinalDirection, Color.red, 10.0f, false); // For debugging purposes
+        // DEBUG ---------------------
+        cardinalDirection.Normalize();
+        cardinalDirection = cardinalDirection*(reach + width/2);
+        Vector2 ortho = new Vector2(cardinalDirection.y, cardinalDirection.x);
+        ortho.Normalize();
+        ortho = ortho * width/2;
+        Color col = Color.blue;
+        Debug.DrawRay(playerRB.position + ortho, cardinalDirection, col, 10.0f, false);
+        Debug.DrawRay(playerRB.position - ortho, cardinalDirection, col, 10.0f, false);
+        Debug.DrawRay(playerRB.position + cardinalDirection, ortho, col, 10.0f, false);
+        Debug.DrawRay(playerRB.position + cardinalDirection, -ortho, col, 10.0f, false);
+        Debug.DrawRay(playerRB.position, ortho, col, 10.0f, false);
+        Debug.DrawRay(playerRB.position, -ortho, col, 10.0f, false);
+        // DEBUG ----------------------
+
         foreach (RaycastHit2D hit in hits) {
             if (hit.transform != null)
             {
