@@ -20,11 +20,12 @@ public class Enemy : MonoBehaviour {
     [SerializeField]
     [Tooltip("The furthest distance this enemy can detect the player.")]
     private float aggroRange;
+    private bool facingRight;
     #endregion
 
     [SerializeField]
     [Tooltip("Amount of damage this enemy's attacks deal to the player.")]
-    private int attackDamage;
+    protected int attackDamage;
     private Transform target;
     private Rigidbody2D EnemyRB;
     
@@ -34,6 +35,7 @@ public class Enemy : MonoBehaviour {
         EnemyRB = GetComponent<Rigidbody2D>();
         currentHealth = maxHealth;
         target = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+        facingRight = false;
     }
 
     void FixedUpdate()
@@ -41,6 +43,7 @@ public class Enemy : MonoBehaviour {
         if (Vector2.Distance(transform.position, target.position) <= aggroRange) {
             Move();
         }
+        updateAnim();  
     }
 
     private void Update() {
@@ -60,6 +63,15 @@ public class Enemy : MonoBehaviour {
         Vector2 direction = target.position - transform.position;
         EnemyRB.AddForce(direction.normalized * acceleration, ForceMode2D.Force);
     }
+    protected virtual void updateAnim() {
+        Vector2 direction = EnemyRB.velocity;
+        if ((direction.x < 0 && facingRight) || (direction.x > 0 && !facingRight)) {
+            facingRight = !facingRight;
+            Vector3 t_scale = transform.localScale;
+            t_scale.x *= -1;
+            transform.localScale = t_scale;
+        }
+    }
 
     public void takeDamage(int dmg) {
         Debug.Log("Damage taken!");
@@ -76,4 +88,5 @@ public class Enemy : MonoBehaviour {
         yield return new WaitForSeconds(0.2f);
         GetComponent<SpriteRenderer>().color = Color.red;
     }
+    
 }
