@@ -7,18 +7,30 @@ public class UIManager : MonoBehaviour {
 
     public float fadeSpeed = 1;
 
-    public Image attackCooldown;
-    public Image mineCooldown;
-    public TMPro.TextMeshProUGUI oreText;
+    public Image leftCooldown;
+    public Image rightCooldown;
     public Image blackout;
     public Slider healthSlider;
     public GameObject descendMessage;
     public GameObject leaveMessage;
+    public Image leftSprite;
+    public Image rightSprite;
+
+    public GameObject ropeTipPrefab;
+    public GameObject ropeSetPrefab;
 
     [HideInInspector]
     public bool fading = false;
 
     public delegate void OnFadeFunction();
+
+    public void OpenRopeTip() {
+        Instantiate(ropeTipPrefab, transform);
+    }
+
+    public void SetRopeMessage() {
+        Instantiate(ropeSetPrefab, transform);
+    }
 
     public void OpenDescendMessage() {
         GameManager.instance.player.GetComponent<PlayerMovement>().canMove = false;

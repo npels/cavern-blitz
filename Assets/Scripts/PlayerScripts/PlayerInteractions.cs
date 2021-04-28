@@ -4,8 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class PlayerInteractions : MonoBehaviour {
-    private Image attackCooldown;
-    private Image mineCooldown;
+    private Image leftCooldown;
+    private Image rightCooldown;
     private TMPro.TextMeshProUGUI oreText;
   
     private float mineTimer;
@@ -14,9 +14,6 @@ public class PlayerInteractions : MonoBehaviour {
     [SerializeField]
     [Tooltip("The damage dealt by the currently equipped weapon.")]
     private int damage;
-    [SerializeField]
-    [Tooltip("The amount of time player must wait after attacking before attacking again.")]
-    private float cooldown;
     private float attackTimer;
     [SerializeField]
     [Tooltip("The distance from the player that the currently equipped weapon can reach when attacking.")]
@@ -38,20 +35,13 @@ public class PlayerInteractions : MonoBehaviour {
     #region Mining Variables
     private bool isMining;
     [SerializeField]
-    [Tooltip("The amount of time player must wait after mining before mining again.")]
-    private float miningCooldown;
-    [SerializeField]
     [Tooltip("The offset from which the pickaxe ray is cast when mining.")]
     private Vector2 miningOffset;
     private float miningReach; // The distance from the player that the currently equipped pickaxe can reach
-    private int pickaxeDamage; // The damage of the currently equipped pickaxe 
     #endregion
 
     #region Inventory Vars
     private bool inventoryOpen;
-
-    public Item attackItem;
-    public Item mineItem;
     #endregion
 
     #region Components
@@ -70,13 +60,11 @@ public class PlayerInteractions : MonoBehaviour {
         isAttacking = false;
         isMining = false;
         miningReach = 1;
-        pickaxeDamage = 1;
 
         currentHealth = maxHealth;
 
-        attackCooldown = GameManager.instance.uiManager.attackCooldown;
-        mineCooldown = GameManager.instance.uiManager.mineCooldown;
-        oreText = GameManager.instance.uiManager.oreText;
+        leftCooldown = GameManager.instance.uiManager.leftCooldown;
+        rightCooldown = GameManager.instance.uiManager.rightCooldown;
         
         inventoryOpen = false;
         mineTimer = 0;
@@ -89,29 +77,50 @@ public class PlayerInteractions : MonoBehaviour {
 
     private void FixedUpdate()
     {
-        DoAttack();
         mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        DoMining();
+        HandleClicks();
     }
     #endregion
 
     #region Attack functions
-    private void DoAttack()
+    private void HandleClicks()
     {
-        float attackInput = Input.GetAxis("Fire1");
-        if (attackInput == 0 || isAttacking || isMining || attackTimer > 0 || inventoryOpen)
-        {
-            return;
+        float leftInput = Input.GetAxis("Fire1");
+        if (PlayerAttributes.leftHand != null && leftInput > 0) {
+            if (PlayerAttributes.leftHand.type == ToolItem.ToolType.WEAPON) {
+                if (leftInput != 0 && !isAttacking && !isMining && attackTimer <= 0 && !inventoryOpen) {
+                    attackTimer = (PlayerAttributes.attackSpeed - PlayerAttributes.attackSpeedBonus);
+                    StartCoroutine(AttackRoutine(true));
+                    return;
+                }
+            } else {
+                if (leftInput != 0 && !isMining && !isAttacking && mineTimer <= 0 && !inventoryOpen) {
+                    mineTimer = (PlayerAttributes.miningSpeed - PlayerAttributes.miningSpeedBonus);
+                    StartCoroutine(MiningRoutine(true));
+                    return;
+                }
+            }
         }
-        else
-        {
-            Debug.Log("Fire1");
-            attackTimer = (cooldown - PlayerAttributes.attackSpeedBonus);
-            StartCoroutine(AttackRoutine());
+
+        float rightInput = Input.GetAxis("Fire2");
+        if (PlayerAttributes.rightHand != null && rightInput > 0) {
+            if (PlayerAttributes.rightHand.type == ToolItem.ToolType.WEAPON) {
+                if (!isAttacking && !isMining && attackTimer <= 0 && !inventoryOpen) {
+                    attackTimer = (PlayerAttributes.attackSpeed - PlayerAttributes.attackSpeedBonus);
+                    StartCoroutine(AttackRoutine(false));
+                    return;
+                }
+            } else {
+                if (!isMining && !isAttacking && mineTimer <= 0 && !inventoryOpen) {
+                    mineTimer = (PlayerAttributes.miningSpeed - PlayerAttributes.miningSpeedBonus);
+                    StartCoroutine(MiningRoutine(false));
+                    return;
+                }
+            }
         }
     }
 
-    IEnumerator AttackRoutine()
+    IEnumerator AttackRoutine(bool isLeft)
     {
         isAttacking = true;
         GetComponent<Animator>().SetTrigger("Swing");
@@ -134,11 +143,13 @@ public class PlayerInteractions : MonoBehaviour {
             facingDirection = 0;
         }
 
+        playerMovement.facingDirection = facingDirection;
         animator.SetInteger("FacingDirection", facingDirection);
         animator.SetTrigger("ChangeMode");
+        animator.SetFloat("SwingSpeed", 1f / (PlayerAttributes.attackSpeed - PlayerAttributes.attackSpeedBonus));
         animator.SetTrigger("Swing");
 
-        transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = attackItem.sprite;
+        transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = isLeft ? PlayerAttributes.leftHand.sprite : PlayerAttributes.rightHand.sprite;
         
         RaycastHit2D[] hits = Physics2D.BoxCastAll(playerRB.position, new Vector2(width, width), 0, cardinalDirection, reach, LayerMask.GetMask("Enemy"));
 
@@ -164,7 +175,7 @@ public class PlayerInteractions : MonoBehaviour {
 
                 if (hit.transform.CompareTag("Enemy"))
                 {
-                    hit.transform.GetComponent<Enemy>().takeDamage(damage);
+                    hit.transform.GetComponent<Enemy>().takeDamage(isLeft ? PlayerAttributes.leftHand.attackDamage : PlayerAttributes.rightHand.attackDamage);
                 }
             }
         }
@@ -203,22 +214,36 @@ public class PlayerInteractions : MonoBehaviour {
 
     private void UpdateCooldown()
     {
+        if (PlayerAttributes.leftHand != null) {
+            GameManager.instance.uiManager.leftSprite.enabled = true;
+            GameManager.instance.uiManager.leftSprite.sprite = PlayerAttributes.leftHand.sprite;
+        } else {
+            GameManager.instance.uiManager.leftSprite.enabled = false;
+        }
+
+        if (PlayerAttributes.rightHand != null) {
+            GameManager.instance.uiManager.rightSprite.enabled = true;
+            GameManager.instance.uiManager.rightSprite.sprite = PlayerAttributes.rightHand.sprite;
+        } else {
+            GameManager.instance.uiManager.rightSprite.enabled = false;
+        }
+
         if (attackTimer > 0 && !isAttacking)
         {
             attackTimer -= Time.deltaTime;
-            attackCooldown.rectTransform.sizeDelta = new Vector2(20, 20 * attackTimer / (cooldown - PlayerAttributes.attackSpeedBonus));
+            (PlayerAttributes.leftHand.type == ToolItem.ToolType.WEAPON ? leftCooldown : rightCooldown).rectTransform.sizeDelta = new Vector2(20, 20 * attackTimer / (PlayerAttributes.attackSpeed - PlayerAttributes.attackSpeedBonus));
             if (attackTimer <= 0) playerMovement.canMove = true;
         }
         if (mineTimer > 0)
         {
             mineTimer -= Time.deltaTime;
-            mineCooldown.rectTransform.sizeDelta = new Vector2(20, 20 * mineTimer / (miningCooldown - PlayerAttributes.miningSpeedBonus));
+            (PlayerAttributes.leftHand.type == ToolItem.ToolType.PICKAXE ? leftCooldown : rightCooldown).rectTransform.sizeDelta = new Vector2(20, 20 * mineTimer / (PlayerAttributes.miningSpeed - PlayerAttributes.miningSpeedBonus));
         }
     }
     #endregion
 
     #region Health Functions
-    public void takeDamage(int dmg) {
+    public void takeDamage(float dmg) {
         Debug.Log("Damage taken!");
         currentHealth -= dmg / (1 + PlayerAttributes.armorValue);
         if (currentHealth <= 0) {
@@ -230,6 +255,11 @@ public class PlayerInteractions : MonoBehaviour {
         }
     }
 
+    public void HealPlayer(float amount) {
+        currentHealth += amount;
+        GameManager.instance.uiManager.SetHealth(currentHealth / maxHealth);
+    }
+
     public IEnumerator DamageFlash() {
         GetComponent<SpriteRenderer>().color = Color.red;
         yield return new WaitForSeconds(0.1f);
@@ -238,26 +268,8 @@ public class PlayerInteractions : MonoBehaviour {
     #endregion
 
     #region Mining Functions
-    private void DoMining()
-    {
-        float miningInput = Input.GetAxis("Fire2");
-        if (miningInput == 0 || isMining || isAttacking || inventoryOpen)
-        {
-            return;
-        }
-        else if (mineTimer > 0)
-        {
-            Debug.Log("On Cooldown!");
-            return;
-        }
-        else
-        {
-            mineTimer = (miningCooldown - PlayerAttributes.miningSpeedBonus);
-            StartCoroutine(MiningRoutine());
-        }
-    }
 
-    IEnumerator MiningRoutine()
+    IEnumerator MiningRoutine(bool isLeft)
     {
         isMining = true;
 
@@ -277,10 +289,12 @@ public class PlayerInteractions : MonoBehaviour {
             facingDirection = 0;
         }
 
-        transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = mineItem.sprite;
+        transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = isLeft ? PlayerAttributes.leftHand.sprite : PlayerAttributes.rightHand.sprite;
 
+        playerMovement.facingDirection = facingDirection;
         animator.SetInteger("FacingDirection", facingDirection);
         animator.SetTrigger("ChangeMode");
+        animator.SetFloat("SwingSpeed", 1f / PlayerAttributes.miningSpeed - PlayerAttributes.miningSpeedBonus);
         animator.SetTrigger("Swing");
 
         RaycastHit2D hit = Physics2D.Raycast(playerRB.position + miningOffset, cardinalDirection, miningReach, LayerMask.GetMask("Environment"));
@@ -290,12 +304,12 @@ public class PlayerInteractions : MonoBehaviour {
         if (hit.transform != null)
         {
             Ore ore = hit.transform.GetComponent<Ore>();
-            ore.TakeDamage(pickaxeDamage);
+            ore.TakeDamage(PlayerAttributes.miningDamage);
         }
 
         playerMovement.canMove = false;
 
-        yield return new WaitForSeconds((miningCooldown - PlayerAttributes.miningSpeedBonus));
+        yield return new WaitForSeconds(PlayerAttributes.miningSpeed - PlayerAttributes.miningSpeedBonus);
         isMining = false;
         playerMovement.canMove = true;
         yield return null;

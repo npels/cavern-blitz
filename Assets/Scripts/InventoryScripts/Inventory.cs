@@ -11,8 +11,6 @@ public class Inventory : MonoBehaviour {
     public int numSlots;
     [Tooltip("If true, the maximum stack sizes of items are ignored.")]
     public bool allowStockpile;
-    [Tooltip("The last 'numPrioritySlots' inventory slots will be filled first before any others.")]
-    public int numPrioritySlots;
     #endregion
 
     #region Inventory variables
@@ -65,14 +63,6 @@ public class Inventory : MonoBehaviour {
             }
         }
 
-        for (int i = stacks.Count - numPrioritySlots; i < stacks.Count; i++) {
-            ItemStack s = stacks[i];
-            if (s.TryStackItem(item, count)) {
-                if (updateUI) UpdateUI();
-                return stacks.IndexOf(s);
-            }
-        }
-
         foreach (ItemStack s in stacks) {
             if (s.TryStackItem(item, count)) {
                 if (updateUI) UpdateUI();
@@ -95,13 +85,6 @@ public class Inventory : MonoBehaviour {
 
     /* Returns the first stack of 'item' in the inventory, or null if there are none. */
     public ItemStack GetItemStack(Item item) {
-        for (int i = stacks.Count - numPrioritySlots; i < stacks.Count; i++) {
-            ItemStack stack = stacks[i];
-            if (stack.item == item) {
-                return stack;
-            }
-        }
-
         foreach (ItemStack stack in stacks) {
             if (stack.item == item) {
                 return stack;
@@ -205,6 +188,14 @@ public class Inventory : MonoBehaviour {
         savedPlayerInventory = stacks;
     }
 
+    public void DeletePlayerInventory()
+    {
+        for (int i = 0; i < stacks.Count; i++) {
+            RemoveItem(i);
+        }
+        savedPlayerInventory = stacks;
+    }
+
     public void LoadPlayerInventory() {
         if (savedPlayerInventory == null) return;
         stacks = savedPlayerInventory;
@@ -217,10 +208,6 @@ public class Inventory : MonoBehaviour {
     public void LoadBaseInventory() {
         if (savedBaseInventory == null) return;
         stacks = savedBaseInventory;
-    }
-
-    public int GetPriorityIndex(int i) {
-        return stacks.Count - numPrioritySlots + i;
     }
     #endregion
 }
