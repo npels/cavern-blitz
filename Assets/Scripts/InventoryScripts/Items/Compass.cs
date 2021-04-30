@@ -11,7 +11,7 @@ public class Compass : EquipmentItem {
 
     public override void EquipItem() {
         base.EquipItem();
-        if (SceneManager.GetActiveScene().name.Equals("GameScene")) {
+        if (SceneManager.GetActiveScene().name.Equals("GameScene") && compassArrowObject == null) {
             compassArrowObject = Instantiate(compassArrowPrefab, GameManager.instance.player.transform);
         }
     }

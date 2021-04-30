@@ -20,21 +20,14 @@ public class GenerationSettings : ScriptableObject {
     public int minStaircaseDistance;
     [Tooltip("Whether there are any unreachable areas on this map.")]
     public bool removeUnreachableAreas;
+    [Tooltip("The starting and ending floor for this type of cave.")]
+    public Vector2Int endFloors;
 
-    [Range(0, 1)]
-    [Tooltip("Any points with a noise value below the threshold are walls, any above the treshold are floors.")]
-    public float threshold;
-    [Tooltip("The settings for layered noise filters for map generation.")]
-    public List<NoiseFilterSettings> noiseFilterSettings;
-
+    [Header("Tile Assets")]
     [Tooltip("The floor tile to use in generation.")]
     public TileBase floorTile;
     [Tooltip("The wall tile to use in generation.")]
     public TileBase wallTile;
-
-    [Range(0, 1)]
-    [Tooltip("The rate at which rocks are placed on floor tiles, scaled by the floor's distance from wall tiles.")]
-    public float rockSpawnRate;
     [Tooltip("The base rock tile to use in generation.")]
     public TileBase rockTile;
     [Tooltip("The descending staircase tile to use in generation.")]
@@ -42,9 +35,19 @@ public class GenerationSettings : ScriptableObject {
     [Tooltip("The ascending staircase tile to use in generation.")]
     public TileBase staircaseUpTile;
 
+    [Header("Tile Generation Settings")]
+    [Range(0, 1)]
+    [Tooltip("Any points with a noise value below the threshold are walls, any above the treshold are floors.")]
+    public float threshold;
+    [Tooltip("The settings for layered noise filters for map generation.")]
+    public List<NoiseFilterSettings> noiseFilterSettings;
+    [Range(0, 1)]
+    [Tooltip("The rate at which rocks are placed on floor tiles, scaled by the floor's distance from wall tiles.")]
+    public float rockSpawnRate;
     [Tooltip("Data for spawning different types of ores.")]
     public List<OreSpawnInformation> oreSpawnInformation;
 
+    [Header("Enemy Data")]
     [Tooltip("The min/max number of enemies that can spawn on this floor.")]
     public Vector2Int enemySpawnLimits;
     [Tooltip("Data for spawning enemies.")]
@@ -62,8 +65,8 @@ public class GenerationSettings : ScriptableObject {
 
     [System.Serializable]
     public class OreSpawnInformation {
-        [Tooltip("How likely a rock is to be an ore of this type.")]
-        public float rarity;
+        [Tooltip("How likely a rock is to be an ore of this type. Scales from the first to second value across the floors of this type.")]
+        public Vector2 rarity;
         [Tooltip("The tile for this ore.")]
         public TileBase oreTile;
     }
@@ -74,5 +77,7 @@ public class GenerationSettings : ScriptableObject {
         public float rarity;
         [Tooltip("The prefab for this enemy.")]
         public GameObject enemyPrefab;
+        [Tooltip("Whether or not this enemy can be spawned on top of a rock.")]
+        public bool floatingEnemy;
     }
 }

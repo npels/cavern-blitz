@@ -1,0 +1,63 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e764e19e4820174fadf8d8572a53d70, type: 3}
+  m_Name: BlueCave_Settings
+  m_EditorClassIdentifier: 
+  seed: 871699835
+  mapSize: 40
+  caveRadius: 30
+  spawnBoxSize: 2
+  minStaircaseDistance: 10
+  removeUnreachableAreas: 1
+  endFloors: {x: 11, y: 20}
+  floorTile: {fileID: 11400000, guid: 410f12ca56de0b94aaf3b1a861ebfe19, type: 2}
+  wallTile: {fileID: 11400000, guid: 37c416676dd4c8e4fb85b8a2dd51d0c2, type: 2}
+  rockTile: {fileID: 11400000, guid: f198c2b5804f8ba4dbe159e4c5e8d3bf, type: 2}
+  staircaseTile: {fileID: 11400000, guid: 35d1569bb11081a4d823fc7c53e2b728, type: 2}
+  staircaseUpTile: {fileID: 11400000, guid: 87ad3d186b2b0d94ebcd0ea0ccd91d71, type: 2}
+  threshold: 0.37
+  noiseFilterSettings:
+  - roughness: 2
+    strength: 1.5
+    falloff: 0.5
+  - roughness: 5
+    strength: -0.7
+    falloff: 0
+  - roughness: 3.58
+    strength: 0.2
+    falloff: 1
+  rockSpawnRate: 0.47
+  oreSpawnInformation:
+  - rarity: {x: 0.02, y: 0.03}
+    oreTile: {fileID: 11400000, guid: 74c6a78465d4a5c4b8c79c43affb4bfc, type: 2}
+  - rarity: {x: 0.15, y: 0.12}
+    oreTile: {fileID: 11400000, guid: 8e9335f5e9998fc47bf767b70cb25af7, type: 2}
+  - rarity: {x: 0.05, y: 0.08}
+    oreTile: {fileID: 11400000, guid: 672bd26a489c9044cb8f8f96612a0130, type: 2}
+  - rarity: {x: 0.05, y: 0.08}
+    oreTile: {fileID: 11400000, guid: d3842a15da6d99d4b8936675d48abd35, type: 2}
+  - rarity: {x: 0.12, y: 0.15}
+    oreTile: {fileID: 11400000, guid: 8c243b0b183a8874c9789eba18b8c456, type: 2}
+  enemySpawnLimits: {x: 5, y: 10}
+  enemySpawnInformation:
+  - rarity: 0.2
+    enemyPrefab: {fileID: 4320254023474582, guid: a4d61f64bf2c8e64ebaab79bc1221b8c,
+      type: 3}
+    floatingEnemy: 1
+  - rarity: 0.3
+    enemyPrefab: {fileID: 5443817944558168496, guid: 9fa745935cecf8543bfe91e6ebe32461,
+      type: 3}
+    floatingEnemy: 0
+  - rarity: 0.4
+    enemyPrefab: {fileID: 4320254023474582, guid: 3a71c39bc8e34bf45aa5412ff0898080,
+      type: 3}
+    floatingEnemy: 1
