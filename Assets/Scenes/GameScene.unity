@@ -2519,10 +2519,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7840d4ca9efbe694d904093faeec3747, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  floorPrefab: {fileID: 2640819655347601048, guid: d5960305aa435dc44877222bb0c6996c,
-    type: 3}
+  floorPrefabs:
+  - {fileID: 2640819655347601048, guid: d5960305aa435dc44877222bb0c6996c, type: 3}
+  - {fileID: 2640819655347601048, guid: bd83d90ab25fc7541936ae07202f60ce, type: 3}
+  - {fileID: 2640819655347601048, guid: 0b5e1d4a624a9df43a635b09a70c0ed7, type: 3}
   floorObjects: []
   currentFloor: {fileID: 0}
+  floorNumber: 0
+  prefabNumber: 0
+  currentPrefab: {fileID: 0}
 --- !u!1 &855438131
 GameObject:
   m_ObjectHideFlags: 0

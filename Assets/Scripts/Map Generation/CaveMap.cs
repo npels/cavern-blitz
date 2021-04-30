@@ -26,6 +26,8 @@ public class CaveMap : MonoBehaviour {
 
     Random.State randomState;
 
+    int floorNumber = 0;
+
     [HideInInspector]
     public Vector3 staircaseLocation;
     #endregion
@@ -36,7 +38,8 @@ public class CaveMap : MonoBehaviour {
         GenerateMap();
     }
 
-    public void GenerateRandomCave() {
+    public void GenerateRandomCave(int floorNumber) {
+        this.floorNumber = floorNumber;
         settings.seed = Random.Range(int.MinValue, int.MaxValue);
         Initialize();
         GenerateMap();
@@ -228,11 +231,13 @@ public class CaveMap : MonoBehaviour {
         List<GenerationSettings.OreSpawnInformation> oreSpawnInformation = settings.oreSpawnInformation;
         ShuffleList(oreSpawnInformation);
 
+        float floorPercent = (float)(floorNumber - settings.endFloors.x) / (float)(settings.endFloors.y - settings.endFloors.x);
         for (int i = 0; i < rockLocations.Count; i++) {
             float oreSpawnValue = Random.Range(0f, 1f);
             ShuffleList(oreSpawnInformation);
             foreach (GenerationSettings.OreSpawnInformation ore in oreSpawnInformation) {
-                if (oreSpawnValue < ore.rarity) {
+                float rarity = Mathf.Lerp(ore.rarity.x, ore.rarity.y, floorPercent);
+                if (oreSpawnValue < rarity) {
                     oreTiles[i] = ore.oreTile;
                 }
             }
@@ -274,18 +279,20 @@ public class CaveMap : MonoBehaviour {
             if (enemy.rarity > enemyRarityMax) enemyRarityMax = enemy.rarity;
         }
 
+        ShuffleList(enemySpawnInformation);
+
         for (int i = 0; i < numEnemies; i++) {
             float enemySpawnValue = Random.Range(0f, enemyRarityMax);
-            ShuffleList(enemySpawnInformation);
             foreach (GenerationSettings.EnemySpawnInformation enemy in enemySpawnInformation) {
                 if (enemySpawnValue < enemy.rarity) {
-                    Vector3Int loc = floorLocations[Random.Range(0, floorLocations.Count)];
+                    Vector3 loc = floorLocations[Random.Range(0, floorLocations.Count)];
                     int numIterations = 0;
-                    while (loc.magnitude < 10 && numIterations < 1000) {
+                    while ((loc.magnitude < 10 || (!enemy.floatingEnemy && rockLocations.Contains(Vector3Int.RoundToInt(loc)))) && numIterations < 1000) {
                         loc = floorLocations[Random.Range(0, floorLocations.Count)];
                         numIterations++;
                     }
-                    Instantiate(enemy.enemyPrefab, loc, Quaternion.identity, transform.GetChild(1));
+                    Instantiate(enemy.enemyPrefab, loc + Vector3.one * 0.5f, Quaternion.identity, transform.GetChild(1));
+                    break;
                 }
             }
         }
