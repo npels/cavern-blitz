@@ -70,7 +70,7 @@ SpriteRenderer:
   m_SortingLayerID: 1906057801
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: -9149531721242413312, guid: 7983e539a275c4349a23412436ed0aea,
+  m_Sprite: {fileID: 6319759086366437861, guid: 7983e539a275c4349a23412436ed0aea,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 2893409220472730790}
   - component: {fileID: 8227266446036917990}
   m_Layer: 0
-  m_Name: OrdiniteDrop
+  m_Name: FerrochiteDrop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -148,7 +148,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9f8f3725a719dd4bb90908c188cdba9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  oreItem: {fileID: 5582871322809918087, guid: 4c586b46bf1998d4a8cdbf86fe2266af, type: 3}
+  oreItem: {fileID: 5582871322809918087, guid: 7c6f6cf23c3028f41afee848155cee0c, type: 3}
 --- !u!58 &2893409220472730790
 CircleCollider2D:
   m_ObjectHideFlags: 0

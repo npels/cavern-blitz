@@ -31433,6 +31433,7 @@ MonoBehaviour:
     item: {fileID: 0}
     count: 0
     maxCount: 0
+    allowStockpile: 0
   itemObject: {fileID: 0}
 --- !u!1 &808638572
 GameObject:
@@ -31604,11 +31605,11 @@ MonoBehaviour:
         type: 3}
       count: 3
   - resultItem:
-      item: {fileID: 3518580032908920438, guid: d7172619fd810f6458b25ccb37c9e0ad,
+      item: {fileID: 2932063270696868577, guid: 081f470a1a374da4886348701543ac60,
         type: 3}
       count: 1
     ingredientItems:
-    - item: {fileID: 2932063270696868577, guid: 081f470a1a374da4886348701543ac60,
+    - item: {fileID: 3518580032908920438, guid: d7172619fd810f6458b25ccb37c9e0ad,
         type: 3}
       count: 1
     - item: {fileID: 5582871322809918087, guid: 7c6f6cf23c3028f41afee848155cee0c,
@@ -51124,4 +51125,5 @@ MonoBehaviour:
     item: {fileID: 0}
     count: 0
     maxCount: 0
+    allowStockpile: 0
   itemObject: {fileID: 0}

@@ -92,7 +92,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 2
   numDrops: 1
-  drop: {fileID: 6152912218843919099, guid: f5a2132f8174c6c46b64ab496eebb239, type: 3}
+  drop: {fileID: 6152912218843919099, guid: 0846d4314a6a1eb40bc9424dea64a898, type: 3}
 --- !u!61 &8082856825601682945
 BoxCollider2D:
   m_ObjectHideFlags: 0

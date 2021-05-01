@@ -48,13 +48,16 @@ public class EquipmentSlot : InventorySlot {
             Debug.LogError("Tried to equip non-equipment item");
             return;
         }
-        stack = newStack;
-        if (item != null) {
-            item.RemoveItem();
-        }
-        item = (EquipmentItem)newStack.item;
-        if (item != null) {
-            item.EquipItem();
+
+        if (stack.item != newStack.item) {
+            stack = newStack;
+            if (item != null) {
+                item.RemoveItem();
+            }
+            item = (EquipmentItem)newStack.item;
+            if (item != null) {
+                item.EquipItem();
+            }
         }
 
         if (stack.item != null && itemObject == null) {

@@ -138,7 +138,9 @@ MonoBehaviour:
   speed: 2
   acceleration: 3
   aggroRange: 6
-  attackDamage: 2
+  itemDrop: {fileID: 6152912218843919099, guid: 8e14eda8d5ffeb7458451fb49a359976,
+    type: 3}
+  attackDamage: 4
 --- !u!95 &8926603330224427147
 Animator:
   serializedVersion: 3

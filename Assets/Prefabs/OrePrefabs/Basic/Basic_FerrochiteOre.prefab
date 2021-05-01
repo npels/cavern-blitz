@@ -101,7 +101,7 @@ GameObject:
   - component: {fileID: 9157028791416771270}
   - component: {fileID: 6542876895980082238}
   m_Layer: 9
-  m_Name: FerrochiteOre
+  m_Name: Basic_FerrochiteOre
   m_TagString: Iron
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -173,7 +173,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 2
   numDrops: 1
-  drop: {fileID: 6152912218843919099, guid: 9bdd8efa2a2147b448bff5b87fb84e72, type: 3}
+  drop: {fileID: 6152912218843919099, guid: b9301927d156b3d4b99278bff16c2925, type: 3}
 --- !u!61 &8082856825601682945
 BoxCollider2D:
   m_ObjectHideFlags: 0

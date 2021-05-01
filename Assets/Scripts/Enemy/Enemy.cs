@@ -24,10 +24,16 @@ public class Enemy : MonoBehaviour {
     #endregion
 
     [SerializeField]
+    [Tooltip("The item that this enemy drops when it dies.")]
+    private GameObject itemDrop;
+
+    [SerializeField]
     [Tooltip("Amount of damage this enemy's attacks deal to the player.")]
     protected int attackDamage;
     private Transform target;
     private Rigidbody2D EnemyRB;
+
+    private bool takingDamage = false;
     
 
     // Start is called before the first frame update
@@ -60,6 +66,7 @@ public class Enemy : MonoBehaviour {
     }
 
     private void Move() {
+        if (takingDamage) return;
         Vector2 direction = target.position - transform.position;
         EnemyRB.AddForce(direction.normalized * acceleration, ForceMode2D.Force);
     }
@@ -74,20 +81,26 @@ public class Enemy : MonoBehaviour {
     }
 
     public void takeDamage(float dmg, Vector3 origin) {
+        if (takingDamage) return;
         Debug.Log("Damage taken!");
         currentHealth -= dmg;
-        if (currentHealth <= 0) {
-            Destroy(gameObject);
-        } else {
-            GetComponent<Rigidbody2D>().AddForce((transform.position - origin).normalized * dmg * 5, ForceMode2D.Impulse);
-            StartCoroutine(DamageFlash());
-        }
+        GetComponent<Rigidbody2D>().AddForce((transform.position - origin).normalized * dmg * 3, ForceMode2D.Impulse);
+        StartCoroutine(DamageFlash());
     }
 
     private IEnumerator DamageFlash() {
         GetComponent<SpriteRenderer>().color = Color.red;
+        takingDamage = true;
         yield return new WaitForSeconds(0.2f);
+        takingDamage = false;
         GetComponent<SpriteRenderer>().color = Color.white;
+        if (currentHealth <= 0) {
+            if (itemDrop != null) {
+                GameObject drop = Instantiate(itemDrop, transform.position, transform.rotation);
+                drop.transform.parent = transform.parent;
+            }
+            Destroy(gameObject);
+        }
     }
     
 }

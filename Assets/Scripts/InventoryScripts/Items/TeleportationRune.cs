@@ -8,8 +8,11 @@ public class TeleportationRune : ConsumableItem {
     public float delay;
 
     public override int Activate() {
-        GameManager.instance.player.GetComponent<PlayerMovement>().Teleport(delay);
-        return -1;
+        if (GameManager.instance.player.GetComponent<PlayerMovement>().canMove) {
+            GameManager.instance.player.GetComponent<PlayerMovement>().Teleport(delay);
+            return -1;
+        }
+        return 0;
     }
 
     

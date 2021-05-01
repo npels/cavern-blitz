@@ -43,7 +43,8 @@ public class Ore : MonoBehaviour {
         if (numDrops > 0) {
             // This should be moved to the ore item pickup object
             // popAudio.Play();
-            Instantiate(drop, transform.position, transform.rotation);
+            GameObject itemdrop = Instantiate(drop, transform.position, transform.rotation);
+            itemdrop.transform.parent = transform.parent;
             Destroy(gameObject);
         } else {
             GetComponentInChildren<SpriteRenderer>().enabled = false;

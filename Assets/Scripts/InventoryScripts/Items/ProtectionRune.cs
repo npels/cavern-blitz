@@ -7,7 +7,10 @@ public class ProtectionRune : ConsumableItem {
     public float duration;
 
     public override int Activate() {
-        GameManager.instance.player.GetComponent<PlayerInteractions>().Protection(duration);
-        return -1;
+        if (!GameManager.instance.player.GetComponent<PlayerInteractions>().invulnerable) {
+            GameManager.instance.player.GetComponent<PlayerInteractions>().Protection(duration);
+            return -1;
+        }
+        return 0;
     }
 }

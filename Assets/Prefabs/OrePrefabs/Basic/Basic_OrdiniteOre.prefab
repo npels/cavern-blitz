@@ -20,7 +20,7 @@ GameObject:
   - component: {fileID: 4944327477727871168}
   - component: {fileID: 6496645260229345167}
   m_Layer: 9
-  m_Name: OrdiniteOre
+  m_Name: Basic_OrdiniteOre
   m_TagString: Iron
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -92,7 +92,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 2
   numDrops: 1
-  drop: {fileID: 6152912218843919099, guid: f5a2132f8174c6c46b64ab496eebb239, type: 3}
+  drop: {fileID: 6152912218843919099, guid: 0846d4314a6a1eb40bc9424dea64a898, type: 3}
 --- !u!61 &8082856825601682945
 BoxCollider2D:
   m_ObjectHideFlags: 0

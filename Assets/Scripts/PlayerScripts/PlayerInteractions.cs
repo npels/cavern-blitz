@@ -30,7 +30,8 @@ public class PlayerInteractions : MonoBehaviour {
     [Tooltip("The maximum full health of the player.")]
     private float maxHealth;
     private float currentHealth;
-    private bool invulnerable = false;
+    [HideInInspector]
+    public bool invulnerable = false;
     #endregion
 
     #region Mining Variables

@@ -101,7 +101,7 @@ GameObject:
   - component: {fileID: 9157028791416771270}
   - component: {fileID: 6542876895980082238}
   m_Layer: 9
-  m_Name: VerdiumOre
+  m_Name: Basic_VerdiumOre
   m_TagString: Iron
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -173,7 +173,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 2
   numDrops: 1
-  drop: {fileID: 6152912218843919099, guid: c65802408e2238242b76759189db97d0, type: 3}
+  drop: {fileID: 6152912218843919099, guid: c868b6ccf53ac87459c957bc19394631, type: 3}
 --- !u!61 &8082856825601682945
 BoxCollider2D:
   m_ObjectHideFlags: 0

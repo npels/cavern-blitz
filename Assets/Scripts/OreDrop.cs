@@ -14,7 +14,7 @@ public class OreDrop : MonoBehaviour
         }
         if (GameManager.instance.inventory.TryAddItem(oreItem, 1) != -1)
         {
-            Destroy(transform.parent.gameObject);
+            Destroy(gameObject);
         }
     }
 
@@ -24,6 +24,14 @@ public class OreDrop : MonoBehaviour
         {
             Debug.Log("pick up ore");
             PickupOre();
+        }
+    }
+
+    private void FixedUpdate() {
+        Vector3 direction = GameManager.instance.player.transform.position - transform.position;
+        direction.y -= 0.2f;
+        if (direction.magnitude < 2) {
+            GetComponent<Rigidbody2D>().AddForce(direction.normalized * 5, ForceMode2D.Force);
         }
     }
 }
