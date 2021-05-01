@@ -106,9 +106,10 @@ MonoBehaviour:
   maxStack: 1
   sprite: {fileID: 8699069900992395679, guid: a4422c3191c68604a9d652fbc47f83c5, type: 3}
   flavorText: Good for slicing bats.
-  attributeText: 'Damage: 3$Speed: 0.7'
+  attributeText: 'Damage: 2$Speed: 0.7'
   type: 0
-  attackDamage: 3
+  spriteSize: {x: 6, y: 20}
+  attackDamage: 2
   attackSpeed: 0.7
   miningSpeed: 0
   miningDamage: 0

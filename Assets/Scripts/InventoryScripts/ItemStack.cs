@@ -9,7 +9,8 @@ public class ItemStack {
     public int count;
     public int maxCount;
 
-    private bool allowStockpile;
+    [HideInInspector]
+    public bool allowStockpile;
 
     public static int MAX_STOCKPILE_SIZE = 999999;
 

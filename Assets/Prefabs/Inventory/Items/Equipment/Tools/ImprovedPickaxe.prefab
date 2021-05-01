@@ -107,6 +107,7 @@ MonoBehaviour:
   flavorText: Strengthened with rare ores.
   attributeText: 'Speed: 0.6$Strength: 2'
   type: 1
+  spriteSize: {x: 17, y: 17}
   attackDamage: 0
   attackSpeed: 0
   miningSpeed: 0.6

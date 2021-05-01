@@ -105,6 +105,23 @@ public class PlayerMovement : MonoBehaviour {
     {
         walkAudioTwo.Play();
     }
+
+    public void Teleport(float delay) {
+        StartCoroutine(TeleportRoutine(delay));
+    }
+
+    private IEnumerator TeleportRoutine(float delay) {
+        GetComponent<SpriteRenderer>().color = Color.blue;
+        canMove = false;
+        animator.SetBool("Moving", false);
+        animator.SetInteger("FacingDirection", 0);
+        animator.SetTrigger("ChangeMode");
+
+        yield return new WaitForSeconds(delay);
+        canMove = true;
+        GetComponent<SpriteRenderer>().color = Color.white;
+        GameManager.instance.GotoNextFloor();
+    }
     #endregion
 
     #region Menu Functions

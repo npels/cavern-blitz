@@ -108,6 +108,7 @@ MonoBehaviour:
   flavorText: Ol' Reliable.
   attributeText: 'Speed: 0.6$Strength: 1'
   type: 1
+  spriteSize: {x: 17, y: 17}
   attackDamage: 0
   attackSpeed: 0
   miningSpeed: 0.6

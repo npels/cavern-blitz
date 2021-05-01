@@ -12,6 +12,8 @@ public class ToolItem : Item {
     [Tooltip("The type of tool this is.")]
     public ToolType type;
 
+    public Vector2 spriteSize;
+
     [Header("Weapon Variables")]
     [Tooltip("The damage that weapon does")]
     public float attackDamage;

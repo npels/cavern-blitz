@@ -73,20 +73,21 @@ public class Enemy : MonoBehaviour {
         }
     }
 
-    public void takeDamage(float dmg) {
+    public void takeDamage(float dmg, Vector3 origin) {
         Debug.Log("Damage taken!");
         currentHealth -= dmg;
         if (currentHealth <= 0) {
             Destroy(gameObject);
         } else {
+            GetComponent<Rigidbody2D>().AddForce((transform.position - origin).normalized * dmg * 5, ForceMode2D.Impulse);
             StartCoroutine(DamageFlash());
         }
     }
 
     private IEnumerator DamageFlash() {
-        GetComponent<SpriteRenderer>().color = Color.white;
-        yield return new WaitForSeconds(0.2f);
         GetComponent<SpriteRenderer>().color = Color.red;
+        yield return new WaitForSeconds(0.2f);
+        GetComponent<SpriteRenderer>().color = Color.white;
     }
     
 }

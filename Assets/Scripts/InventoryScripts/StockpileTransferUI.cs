@@ -224,19 +224,47 @@ public class StockpileTransferUI : MonoBehaviour {
 
             itemIsSelected = false;
         } else {
-            slot.stack = selectedItem.stack;
-            slot.itemObject = selectedItem.itemObject;
+            if (inPlayerInventory) {
+                slot.stack.allowStockpile = false;
+                slot.stack.maxCount = slot.stack.item.maxStack;
+            }
+            if (slot.stack.item == selectedItem.stack.item && slot.stack.maxCount >= slot.stack.count + selectedItem.stack.count) {
+                slot.stack.count += selectedItem.stack.count;
 
-            selectedItem.stack = stack;
-            selectedItem.itemObject = obj;
+                selectedItem.stack = null;
+                Destroy(selectedItem.itemObject);
+                selectedItem.itemObject = null;
 
-            if (inPlayerInventory && index > -1) playerInventory.SetItemStack(index, slot.stack);
-            else if (index > -1) stockpileInventory.TryAddItem(slot.stack.item, slot.stack.count, false);
+                if (inPlayerInventory && index > -1) playerInventory.SetItemStack(index, slot.stack);
+                else if (index > -1) stockpileInventory.SetItemStack(index, slot.stack);
 
-            slot.itemObject.transform.SetParent(slot.transform);
-            selectedItem.itemObject.transform.SetParent(inventoryObject.transform);
+                itemIsSelected = false;
+            } else if (slot.stack.item.maxStack < slot.stack.count) {
+                selectedItem.UpdateSlot(new ItemStack(false, slot.stack.item, slot.stack.item.maxStack));
+                slot.stack.count -= slot.stack.item.maxStack;
 
-            itemIsSelected = true;
+                if (inPlayerInventory && index > -1) playerInventory.SetItemStack(index, slot.stack);
+                else if (index > -1) stockpileInventory.SetItemStack(index, slot.stack);
+
+                slot.itemObject.transform.SetParent(slot.transform);
+                selectedItem.itemObject.transform.SetParent(selectedItem.transform);
+
+                itemIsSelected = true;
+            } else {
+                slot.stack = selectedItem.stack;
+                slot.itemObject = selectedItem.itemObject;
+
+                selectedItem.stack = stack;
+                selectedItem.itemObject = obj;
+
+                if (inPlayerInventory && index > -1) playerInventory.SetItemStack(index, slot.stack);
+                else if (index > -1) stockpileInventory.TryAddItem(slot.stack.item, slot.stack.count, false);
+
+                slot.itemObject.transform.SetParent(slot.transform);
+                selectedItem.itemObject.transform.SetParent(inventoryObject.transform);
+
+                itemIsSelected = true;
+            }
         }
     }
 
@@ -273,16 +301,27 @@ public class StockpileTransferUI : MonoBehaviour {
         }
 
         if (slot.stack.item != null) {
-            selectedItem.stack = slot.stack;
-            selectedItem.itemObject = slot.itemObject;
+            if (slot.stack.item.maxStack < slot.stack.count) {
 
-            slot.stack = new ItemStack(!inPlayerInventory);
-            slot.itemObject = null;
+                selectedItem.UpdateSlot(new ItemStack(false, slot.stack.item, slot.stack.item.maxStack));
+                slot.stack.count -= slot.stack.item.maxStack;
 
-            if (inPlayerInventory && index > -1) playerInventory.SetItemStack(index, slot.stack);
-            else if (index > -1) stockpileInventory.SetItemStack(index, slot.stack);
+                if (inPlayerInventory && index > -1) playerInventory.SetItemStack(index, slot.stack);
+                else if (index > -1) stockpileInventory.SetItemStack(index, slot.stack);
 
-            selectedItem.itemObject.transform.SetParent(selectedItem.transform);
+                selectedItem.itemObject.transform.SetParent(selectedItem.transform);
+            } else {
+                selectedItem.stack = slot.stack;
+                selectedItem.itemObject = slot.itemObject;
+
+                slot.stack = new ItemStack(!inPlayerInventory);
+                slot.itemObject = null;
+
+                if (inPlayerInventory && index > -1) playerInventory.SetItemStack(index, slot.stack);
+                else if (index > -1) stockpileInventory.SetItemStack(index, slot.stack);
+
+                selectedItem.itemObject.transform.SetParent(selectedItem.transform);
+            }
 
             itemIsSelected = true;
         } else {

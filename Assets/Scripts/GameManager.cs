@@ -36,6 +36,10 @@ public class GameManager : MonoBehaviour {
         uiManager.CloseDescendMessage();
         if (setRope) RemoveRope();
         setRope = false;
+        if (PlayerAttributes.trinket is BloodAmulet) {
+            BloodAmulet b = (BloodAmulet)PlayerAttributes.trinket;
+            player.GetComponent<PlayerInteractions>().HealPlayer(b.healAmount);
+        }
         StartCoroutine(uiManager.FadeOut(FinishFloorTransition));
     }
 

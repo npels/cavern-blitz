@@ -13,7 +13,7 @@ public class Explosion : MonoBehaviour {
             if (hit.transform.GetComponent<PlayerInteractions>()) {
                 hit.transform.GetComponent<PlayerInteractions>().takeDamage(damage);
             } else if (hit.transform.GetComponent<Enemy>()) {
-                hit.transform.GetComponent<Enemy>().takeDamage(damage);
+                hit.transform.GetComponent<Enemy>().takeDamage(damage, transform.position);
             } else if (hit.transform.GetComponent<Ore>()) {
                 hit.transform.GetComponent<Ore>().TakeDamage(damage);
             }

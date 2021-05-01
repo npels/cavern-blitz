@@ -103,7 +103,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: Bomb
-  maxStack: 10
+  maxStack: 15
   sprite: {fileID: 5508725064705088119, guid: 386e54ebf91771d44908a7c6ce1926fe, type: 3}
   flavorText: Make sure to stand back!
   attributeText: 

@@ -106,9 +106,10 @@ MonoBehaviour:
   maxStack: 1
   sprite: {fileID: 3744024631493419868, guid: c7cfb5486d3a728478e1306a19648c60, type: 3}
   flavorText: Fortified with the blood of monsters.
-  attributeText: 'Damage: 5$Speed: 0.6'
+  attributeText: 'Damage: 4$Speed: 0.6'
   type: 0
-  attackDamage: 5
+  spriteSize: {x: 6, y: 20}
+  attackDamage: 4
   attackSpeed: 0.6
   miningSpeed: 0
   miningDamage: 0

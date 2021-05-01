@@ -30,6 +30,7 @@ public class PlayerInteractions : MonoBehaviour {
     [Tooltip("The maximum full health of the player.")]
     private float maxHealth;
     private float currentHealth;
+    private bool invulnerable = false;
     #endregion
 
     #region Mining Variables
@@ -175,7 +176,7 @@ public class PlayerInteractions : MonoBehaviour {
 
                 if (hit.transform.CompareTag("Enemy"))
                 {
-                    hit.transform.GetComponent<Enemy>().takeDamage(isLeft ? PlayerAttributes.leftHand.attackDamage : PlayerAttributes.rightHand.attackDamage);
+                    hit.transform.GetComponent<Enemy>().takeDamage(isLeft ? PlayerAttributes.leftHand.attackDamage : PlayerAttributes.rightHand.attackDamage, transform.position);
                 }
             }
         }
@@ -217,6 +218,7 @@ public class PlayerInteractions : MonoBehaviour {
         if (PlayerAttributes.leftHand != null) {
             GameManager.instance.uiManager.leftSprite.enabled = true;
             GameManager.instance.uiManager.leftSprite.sprite = PlayerAttributes.leftHand.sprite;
+            GameManager.instance.uiManager.leftSprite.rectTransform.sizeDelta = PlayerAttributes.leftHand.spriteSize;
         } else {
             GameManager.instance.uiManager.leftSprite.enabled = false;
         }
@@ -224,6 +226,7 @@ public class PlayerInteractions : MonoBehaviour {
         if (PlayerAttributes.rightHand != null) {
             GameManager.instance.uiManager.rightSprite.enabled = true;
             GameManager.instance.uiManager.rightSprite.sprite = PlayerAttributes.rightHand.sprite;
+            GameManager.instance.uiManager.rightSprite.rectTransform.sizeDelta = PlayerAttributes.rightHand.spriteSize;
         } else {
             GameManager.instance.uiManager.rightSprite.enabled = false;
         }
@@ -244,6 +247,7 @@ public class PlayerInteractions : MonoBehaviour {
 
     #region Health Functions
     public void takeDamage(float dmg) {
+        if (invulnerable) return;
         Debug.Log("Damage taken!");
         currentHealth -= dmg / (1 + PlayerAttributes.armorValue);
         if (currentHealth <= 0) {
@@ -264,6 +268,18 @@ public class PlayerInteractions : MonoBehaviour {
         GetComponent<SpriteRenderer>().color = Color.red;
         yield return new WaitForSeconds(0.1f);
         GetComponent<SpriteRenderer>().color = Color.white;
+    }
+
+    public void Protection(float duration) {
+        StartCoroutine(ProtectionRoutine(duration));
+    }
+
+    public IEnumerator ProtectionRoutine(float duration) {
+        invulnerable = true;
+        GetComponent<SpriteRenderer>().color = Color.magenta;
+        yield return new WaitForSeconds(duration);
+        GetComponent<SpriteRenderer>().color = Color.white;
+        invulnerable = false;
     }
     #endregion
 

@@ -7,6 +7,10 @@ public class CompassArrow : MonoBehaviour {
     public float followDistance;
     public float maxDisance;
 
+    private void Start() {
+        if (GetComponent<Animation>()) GetComponent<Animation>().wrapMode = WrapMode.Loop;
+    }
+
     public void FixedUpdate() {
         Vector3 direction = GameManager.instance.mapManager.currentFloor.GetComponent<CaveMap>().staircaseLocation + new Vector3(0.5f, 0.5f, 0) - transform.parent.position;
         if (direction.magnitude < followDistance || direction.magnitude > maxDisance) {
