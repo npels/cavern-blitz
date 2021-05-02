@@ -10,6 +10,7 @@ public class StockpileChest : MonoBehaviour {
         if (collision.CompareTag("Player")) {
             BaseManager.instance.baseUIManager.nearStockpile = true;
             GetComponent<SpriteRenderer>().color = Color.yellow;
+            TutorialManager.instance.EnableStockpileTip();
         }
     }
 
@@ -17,6 +18,7 @@ public class StockpileChest : MonoBehaviour {
         if (collision.CompareTag("Player")) {
             BaseManager.instance.baseUIManager.nearStockpile = false;
             GetComponent<SpriteRenderer>().color = Color.white;
+            TutorialManager.instance.DisableStockpileTip();
         }
     }
 

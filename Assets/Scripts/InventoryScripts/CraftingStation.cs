@@ -10,8 +10,9 @@ public class CraftingStation : MonoBehaviour {
         if (collision.CompareTag("Player")) {
             BaseManager.instance.baseUIManager.nearCrafting = true;
             foreach (Transform child in transform) {
-                child.GetComponent<SpriteRenderer>().color = Color.yellow;
+                if (child.GetComponent<SpriteRenderer>()) child.GetComponent<SpriteRenderer>().color = Color.yellow;
             }
+            TutorialManager.instance.EnableCraftingTip();
         }
     }
 
@@ -19,13 +20,15 @@ public class CraftingStation : MonoBehaviour {
         if (collision.CompareTag("Player")) {
             BaseManager.instance.baseUIManager.nearCrafting = false;
             foreach (Transform child in transform) {
-                child.GetComponent<SpriteRenderer>().color = Color.white;
+                if (child.GetComponent<SpriteRenderer>()) child.GetComponent<SpriteRenderer>().color = Color.white;
             }
+            TutorialManager.instance.DisableCraftingTip();
         }
     }
 
     private void FixedUpdate() {
         foreach (Transform child in transform) {
+            if (!child.GetComponent<SpriteRenderer>()) continue;
             if (growing) {
                 if (child.localScale.x > 1.05) {
                     growing = false;

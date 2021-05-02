@@ -8,6 +8,7 @@ public class BaseUIManager : MonoBehaviour {
     public float fadeSpeed = 1;
     public Image blackout;
     public GameObject descendMessage;
+    public GameObject tutorialDescendMessage;
     public InventoryUI playerInventoryUI;
     public CraftingRecipes craftingUI;
     public StockpileTransferUI stockpileUI;
@@ -38,8 +39,12 @@ public class BaseUIManager : MonoBehaviour {
             } else {
                 if (nearCrafting) {
                     craftingUI.OpenCrafting();
+                    TutorialManager.instance.DisableCraftingTip();
+                    TutorialManager.instance.StartCraftingTutorial();
                 } else if (nearStockpile) {
                     stockpileUI.OpenInventory();
+                    TutorialManager.instance.DisableStockpileTip();
+                    TutorialManager.instance.StartStockpileTutorial();
                 } else {
                     playerInventoryUI.OpenInventory();
                 }
@@ -50,12 +55,14 @@ public class BaseUIManager : MonoBehaviour {
 
     public void OpenDescendMessage() {
         BaseManager.instance.player.GetComponent<PlayerMovement>().canMove = false;
-        descendMessage.SetActive(true);
+        if (TutorialManager.completedCraftingTutorial && TutorialManager.completedStockpileTutorial) descendMessage.SetActive(true);
+        else tutorialDescendMessage.SetActive(true);
     }
 
     public void CloseDescendMessage() {
         BaseManager.instance.player.GetComponent<PlayerMovement>().canMove = true;
-        descendMessage.SetActive(false);
+        if (TutorialManager.completedCraftingTutorial && TutorialManager.completedStockpileTutorial) descendMessage.SetActive(false);
+        else tutorialDescendMessage.SetActive(false);
     }
 
     public IEnumerator FadeOut(OnFadeFunction func = null) {
