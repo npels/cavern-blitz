@@ -19,6 +19,7 @@ public class BaseManager : MonoBehaviour {
     public ToolItem pickItem;
     public ToolItem weaponItem;
     public AudioSource craftingSound;
+    public AudioSource stairSound;
 
     private static bool startingItems = false;
 
@@ -27,7 +28,8 @@ public class BaseManager : MonoBehaviour {
     }
 
     private void Start() {
-        craftingSound = GetComponent<AudioSource>();
+        craftingSound = GetComponents<AudioSource>()[0];
+        stairSound = GetComponents<AudioSource>()[1];
         stockpileInventory.LoadBaseInventory();
         if (stockpileInventory.stacks.Count == 0) {
             stockpileInventory.InitInventory();
@@ -48,7 +50,7 @@ public class BaseManager : MonoBehaviour {
     public void EnterCave() {
         stockpileInventory.SaveBaseInventory();
         playerInventory.SavePlayerInventory();
-        StartCoroutine(baseUIManager.FadeOut(FinishEnterCave));
+        StartCoroutine(baseUIManager.FadeOut(FinishEnterCave, stairSound));
     }
 
     public void FinishEnterCave() {

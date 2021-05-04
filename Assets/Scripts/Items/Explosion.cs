@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class Explosion : MonoBehaviour {
 
+    private AudioSource explosionSound;
     public float range;
     public float damage;
 
     private void Start() {
         RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position, range, Vector2.zero);
+        explosionSound = GetComponent<AudioSource>();
+        explosionSound.Play();
         foreach (RaycastHit2D hit in hits) {
             if (hit.transform.GetComponent<PlayerInteractions>()) {
                 hit.transform.GetComponent<PlayerInteractions>().takeDamage(damage);
