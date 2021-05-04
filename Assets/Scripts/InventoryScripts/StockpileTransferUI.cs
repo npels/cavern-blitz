@@ -232,7 +232,7 @@ public class StockpileTransferUI : MonoBehaviour {
             slot.itemObject.transform.SetParent(slot.transform);
 
             itemIsSelected = false;
-        } else if (!inPlayerInventory) {
+        } else if (stockpileSlots.Contains(item.GetComponent<InventorySlot>())) {
             stockpileInventory.TryAddItem(selectedItem.stack.item, selectedItem.stack.count, false);
 
             Destroy(selectedItem.itemObject);
