@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour {
+public class Enemy : MonoBehaviour
+{
     #region Health variables
     [SerializeField]
     [Tooltip("The maximum full health of this enemy.")]
@@ -34,10 +35,11 @@ public class Enemy : MonoBehaviour {
     private Rigidbody2D EnemyRB;
 
     private bool takingDamage = false;
-    
+
 
     // Start is called before the first frame update
-    void Start() {
+    void Start()
+    {
         EnemyRB = GetComponent<Rigidbody2D>();
         currentHealth = maxHealth;
         target = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
@@ -46,33 +48,40 @@ public class Enemy : MonoBehaviour {
 
     void FixedUpdate()
     {
-        if (Vector2.Distance(transform.position, target.position) <= aggroRange) {
+        if (Vector2.Distance(transform.position, target.position) <= aggroRange)
+        {
             Move();
         }
-        updateAnim();  
+        updateAnim();
     }
 
-    private void Update() {
-        if (EnemyRB.velocity.magnitude > speed) {
+    private void Update()
+    {
+        if (EnemyRB.velocity.magnitude > speed)
+        {
             EnemyRB.velocity = EnemyRB.velocity.normalized * speed;
         }
     }
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.transform.CompareTag("Player")) {
+        if (col.transform.CompareTag("Player"))
+        {
             col.transform.GetComponent<PlayerInteractions>().takeDamage(attackDamage);
         }
     }
 
-    private void Move() {
+    private void Move()
+    {
         if (takingDamage) return;
         Vector2 direction = target.position - transform.position;
         EnemyRB.AddForce(direction.normalized * acceleration, ForceMode2D.Force);
     }
-    protected virtual void updateAnim() {
+    protected virtual void updateAnim()
+    {
         Vector2 direction = EnemyRB.velocity;
-        if ((direction.x < 0 && facingRight) || (direction.x > 0 && !facingRight)) {
+        if ((direction.x < 0 && facingRight) || (direction.x > 0 && !facingRight))
+        {
             facingRight = !facingRight;
             Vector3 t_scale = transform.localScale;
             t_scale.x *= -1;
@@ -80,27 +89,44 @@ public class Enemy : MonoBehaviour {
         }
     }
 
-    public void takeDamage(float dmg, Vector3 origin) {
+    public void takeDamage(float dmg, Vector3 origin)
+    {
         if (takingDamage) return;
         Debug.Log("Damage taken!");
+        GameManager.instance.enemyDamage.Play();
         currentHealth -= dmg;
         GetComponent<Rigidbody2D>().AddForce((transform.position - origin).normalized * dmg * 3, ForceMode2D.Impulse);
         StartCoroutine(DamageFlash());
     }
 
-    private IEnumerator DamageFlash() {
+    private IEnumerator DamageFlash()
+    {
         GetComponent<SpriteRenderer>().color = Color.red;
         takingDamage = true;
         yield return new WaitForSeconds(0.2f);
         takingDamage = false;
         GetComponent<SpriteRenderer>().color = Color.white;
-        if (currentHealth <= 0) {
-            if (itemDrop != null) {
+        if (currentHealth <= 0)
+        {
+            if (itemDrop != null)
+            {
                 GameObject drop = Instantiate(itemDrop, transform.position, transform.rotation);
                 drop.transform.parent = transform.parent;
             }
             Destroy(gameObject);
+            //StartCoroutine(EnemyDeath());
         }
     }
-    
+
+    //private IEnumerator EnemyDeath()
+    //{
+    //    GameManager.instance.enemyDeath.Play();
+    //    yield return new WaitForSeconds(GameManager.instance.enemyDeath.clip.length);
+    //    if (itemDrop != null)
+    //    {
+    //        GameObject drop = Instantiate(itemDrop, transform.position, transform.rotation);
+    //        drop.transform.parent = transform.parent;
+    //    }
+    //    Destroy(gameObject);
+    //}
 }

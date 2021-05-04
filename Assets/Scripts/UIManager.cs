@@ -61,7 +61,11 @@ public class UIManager : MonoBehaviour {
         floorText.text = num.ToString();
     }
 
-    public IEnumerator FadeOut(OnFadeFunction func = null) {
+    public IEnumerator FadeOut(OnFadeFunction func = null, AudioSource audio = null) {
+        if (!(audio == null))
+        {
+            audio.Play();
+        }
         while (fading) yield return null;
 
         fading = true;
