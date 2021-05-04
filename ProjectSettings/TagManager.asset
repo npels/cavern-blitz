@@ -7,6 +7,8 @@ TagManager:
   - Enemy
   - Iron
   - Rock
+  - GameManager
+  - MapManager
   layers:
   - Default
   - TransparentFX

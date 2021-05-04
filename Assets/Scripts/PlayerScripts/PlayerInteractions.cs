@@ -21,6 +21,7 @@ public class PlayerInteractions : MonoBehaviour {
     [SerializeField]
     [Tooltip("The width of the boxcast hitbox of the player's weapon.")]
     private float width;
+    public bool isDescending;
     private bool isAttacking;
     private Vector2 mousePos;
     #endregion
@@ -50,6 +51,11 @@ public class PlayerInteractions : MonoBehaviour {
     private Rigidbody2D playerRB;
     private PlayerMovement playerMovement;
     private Animator animator;
+    private AudioSource swordAudio;
+    private AudioSource damageAudio;
+    private AudioSource mineAudio;
+    public AudioSource playerDeathSound;
+    private AudioSource healthSound;
     #endregion
 
     #region Unity functions
@@ -58,7 +64,15 @@ public class PlayerInteractions : MonoBehaviour {
         playerRB = GetComponent<Rigidbody2D>();
         playerMovement = GetComponent<PlayerMovement>();
         animator = GetComponent<Animator>();
+
+        GameObject gameManager = GameObject.FindWithTag("GameManager");
+        mineAudio = GetComponents<AudioSource>()[0];
+        damageAudio = GetComponents<AudioSource>()[4];
+        swordAudio = GetComponents<AudioSource>()[3];
+        healthSound = GetComponents<AudioSource>()[5];
+        playerDeathSound = gameManager.GetComponents<AudioSource>()[0];
         attackTimer = 0;
+        isDescending = false;
         isAttacking = false;
         isMining = false;
         miningReach = 1;
@@ -89,7 +103,7 @@ public class PlayerInteractions : MonoBehaviour {
     {
         float leftInput = Input.GetAxis("Fire1");
         if (PlayerAttributes.leftHand != null && leftInput > 0) {
-            if (PlayerAttributes.leftHand.type == ToolItem.ToolType.WEAPON) {
+            if (PlayerAttributes.leftHand.type == ToolItem.ToolType.WEAPON && !isDescending) {
                 if (leftInput != 0 && !isAttacking && !isMining && attackTimer <= 0 && !inventoryOpen) {
                     attackTimer = (PlayerAttributes.attackSpeed - PlayerAttributes.attackSpeedBonus);
                     StartCoroutine(AttackRoutine(true));
@@ -106,7 +120,7 @@ public class PlayerInteractions : MonoBehaviour {
 
         float rightInput = Input.GetAxis("Fire2");
         if (PlayerAttributes.rightHand != null && rightInput > 0) {
-            if (PlayerAttributes.rightHand.type == ToolItem.ToolType.WEAPON) {
+            if (PlayerAttributes.rightHand.type == ToolItem.ToolType.WEAPON && !isDescending) {
                 if (!isAttacking && !isMining && attackTimer <= 0 && !inventoryOpen) {
                     attackTimer = (PlayerAttributes.attackSpeed - PlayerAttributes.attackSpeedBonus);
                     StartCoroutine(AttackRoutine(false));
@@ -150,6 +164,8 @@ public class PlayerInteractions : MonoBehaviour {
         animator.SetTrigger("ChangeMode");
         animator.SetFloat("SwingSpeed", 1f / (PlayerAttributes.attackSpeed - PlayerAttributes.attackSpeedBonus));
         animator.SetTrigger("Swing");
+        swordAudio.Play();
+
 
         transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = isLeft ? PlayerAttributes.leftHand.sprite : PlayerAttributes.rightHand.sprite;
         
@@ -250,19 +266,39 @@ public class PlayerInteractions : MonoBehaviour {
     public void takeDamage(float dmg) {
         if (invulnerable) return;
         Debug.Log("Damage taken!");
+        
         currentHealth -= dmg / (1 + PlayerAttributes.armorValue);
         if (currentHealth <= 0) {
-            gameObject.SetActive(false);
-            GameManager.instance.PlayerDie();
+            invulnerable = true;
+            playerMovement.canMove = false;
+            isAttacking = true;
+            isMining = true;
+            GameManager.instance.mapManager.currentSong.Stop();
+            StartCoroutine(PlayerDeath());
+            
+            
+            
         } else {
+            damageAudio.Play();
             StartCoroutine(DamageFlash());
             GameManager.instance.uiManager.SetHealth(currentHealth / maxHealth);
         }
     }
 
     public void HealPlayer(float amount) {
+        healthSound.Play();
         currentHealth += amount;
         GameManager.instance.uiManager.SetHealth(currentHealth / maxHealth);
+    }
+
+    public IEnumerator PlayerDeath()
+    {
+        playerDeathSound.Play();
+        yield return new WaitForSeconds(playerDeathSound.clip.length);
+        gameObject.SetActive(false);
+
+        GameManager.instance.PlayerDie();
+
     }
 
     public IEnumerator DamageFlash() {
@@ -321,6 +357,7 @@ public class PlayerInteractions : MonoBehaviour {
         if (hit.transform != null)
         {
             Ore ore = hit.transform.GetComponent<Ore>();
+            mineAudio.Play();
             ore.TakeDamage(PlayerAttributes.miningDamage);
         }
 

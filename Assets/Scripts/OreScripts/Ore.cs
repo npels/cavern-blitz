@@ -13,7 +13,7 @@ public class Ore : MonoBehaviour {
     private void Start()
     {
         currHealth = maxHealth;
-        mineAudio = GetComponents<AudioSource>()[0];
+        
         popAudio = GetComponents<AudioSource>()[1];
     }
 
@@ -21,13 +21,13 @@ public class Ore : MonoBehaviour {
     public void TakeDamage(float val)
     {
         GetComponent<ParticleSystem>().Play();
-        mineAudio.Play();
+        
         if (GetComponent<Animation>()) GetComponent<Animation>().Play();
 
         currHealth -= val;
         if (currHealth <= 0)
         {
-            
+
             DropOre(this.gameObject);
         }
     }
@@ -40,6 +40,7 @@ public class Ore : MonoBehaviour {
     #region Drop Functions/Animations
     private void DropOre(GameObject g)
     {
+
         if (numDrops > 0) {
             // This should be moved to the ore item pickup object
             // popAudio.Play();

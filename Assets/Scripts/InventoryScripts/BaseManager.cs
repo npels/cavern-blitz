@@ -18,6 +18,7 @@ public class BaseManager : MonoBehaviour {
     public EquipmentItem compassItem;
     public ToolItem pickItem;
     public ToolItem weaponItem;
+    public AudioSource craftingSound;
 
     private static bool startingItems = false;
 
@@ -26,6 +27,7 @@ public class BaseManager : MonoBehaviour {
     }
 
     private void Start() {
+        craftingSound = GetComponent<AudioSource>();
         stockpileInventory.LoadBaseInventory();
         if (stockpileInventory.stacks.Count == 0) {
             stockpileInventory.InitInventory();
@@ -73,7 +75,7 @@ public class BaseManager : MonoBehaviour {
             Debug.LogError("Failed to add crafted item to inventory");
             return;
         }
-
+        craftingSound.Play();
         craftingRecipes.UpdateRecipes();
     }
 }

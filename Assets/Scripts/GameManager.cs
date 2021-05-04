@@ -19,6 +19,9 @@ public class GameManager : MonoBehaviour {
 
     public RopeItem ropeItem;
 
+    public AudioSource pickUpSound;
+
+
     [HideInInspector]
     public bool setRope = false;
 
@@ -28,6 +31,7 @@ public class GameManager : MonoBehaviour {
 
     private void Start() {
         mapManager.Initialize();
+        pickUpSound = GetComponents<AudioSource>()[1];
         vcam.Follow = player.transform;
         inventory.LoadPlayerInventory();
     }
@@ -60,11 +64,13 @@ public class GameManager : MonoBehaviour {
     }
 
     public void PlayerDie() {
+
         inventory.DeletePlayerInventory();
         StartCoroutine(uiManager.FadeOut(FinishPlayerDeath));
     }
 
     private void FinishPlayerDeath() {
+        
         SceneManager.LoadScene("GameOver");
     }
 
