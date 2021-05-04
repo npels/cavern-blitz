@@ -32,7 +32,7 @@ public class OreDrop : MonoBehaviour
         Vector3 direction = GameManager.instance.player.transform.position - transform.position;
         direction.y -= 0.2f;
         if (direction.magnitude < 2) {
-            GetComponent<Rigidbody2D>().AddForce(direction.normalized * 5, ForceMode2D.Force);
+            GetComponent<Rigidbody2D>().AddForce(direction.normalized * 10, ForceMode2D.Force);
         }
     }
 }
