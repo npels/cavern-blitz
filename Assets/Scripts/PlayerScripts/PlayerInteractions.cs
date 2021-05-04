@@ -21,6 +21,9 @@ public class PlayerInteractions : MonoBehaviour {
     [SerializeField]
     [Tooltip("The width of the boxcast hitbox of the player's weapon.")]
     private float width;
+    [SerializeField]
+    [Tooltip("The length of the boxcast hitbox of the player's weapon.")]
+    private float length;
     public bool isDescending;
     private bool isAttacking;
     private Vector2 mousePos;
@@ -168,8 +171,15 @@ public class PlayerInteractions : MonoBehaviour {
 
 
         transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = isLeft ? PlayerAttributes.leftHand.sprite : PlayerAttributes.rightHand.sprite;
-        
-        RaycastHit2D[] hits = Physics2D.BoxCastAll(playerRB.position, new Vector2(width, width), 0, cardinalDirection, reach, LayerMask.GetMask("Enemy"));
+
+        Vector2 box;
+        if (facingDirection % 2 == 0) {
+            box = new Vector2(width, length);
+        } else {
+            box = new Vector2(length, width);
+        }
+
+        RaycastHit2D[] hits = Physics2D.BoxCastAll(playerRB.position, box, 0, cardinalDirection, reach, LayerMask.GetMask("Enemy"));
 
         // DEBUG ---------------------
         cardinalDirection.Normalize();
@@ -274,10 +284,8 @@ public class PlayerInteractions : MonoBehaviour {
             isAttacking = true;
             isMining = true;
             GameManager.instance.mapManager.currentSong.Stop();
+            GameManager.instance.uiManager.SetHealth(0);
             StartCoroutine(PlayerDeath());
-            
-            
-            
         } else {
             damageAudio.Play();
             StartCoroutine(DamageFlash());

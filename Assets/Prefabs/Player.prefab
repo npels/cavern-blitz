@@ -207,7 +207,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 3
   reach: 0.5
-  width: 1
+  width: 1.5
+  length: 1
   isDescending: 0
   maxHealth: 10
   invulnerable: 0

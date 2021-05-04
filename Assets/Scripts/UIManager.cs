@@ -15,6 +15,7 @@ public class UIManager : MonoBehaviour {
     public GameObject leaveMessage;
     public Image leftSprite;
     public Image rightSprite;
+    public TMPro.TextMeshProUGUI floorText;
 
     public GameObject ropeTipPrefab;
     public GameObject ropeSetPrefab;
@@ -54,6 +55,10 @@ public class UIManager : MonoBehaviour {
         GameManager.instance.player.GetComponent<PlayerMovement>().canMove = true;
         GameManager.instance.player.GetComponent<PlayerInteractions>().isDescending = false;
         leaveMessage.SetActive(false);
+    }
+
+    public void SetFloorNumber(int num) {
+        floorText.text = num.ToString();
     }
 
     public IEnumerator FadeOut(OnFadeFunction func = null) {

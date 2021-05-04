@@ -37,6 +37,7 @@ public class MapManager : MonoBehaviour {
         currentFloor.GetComponent<CaveMap>().GenerateRandomCave(++floorNumber); ;
         floorSongs = GetComponents<AudioSource>();
         floorObjects.Add(currentFloor);
+        GameManager.instance.uiManager.SetFloorNumber(floorNumber);
 
         currentSong = floorSongs[0];
         currentSong.Play();
@@ -53,5 +54,6 @@ public class MapManager : MonoBehaviour {
         currentFloor = Instantiate(currentPrefab, transform);
         currentFloor.GetComponent<CaveMap>().GenerateRandomCave(++floorNumber);
         floorObjects.Add(currentFloor);
+        GameManager.instance.uiManager.SetFloorNumber(floorNumber);
     }
 }
