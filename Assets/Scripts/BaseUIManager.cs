@@ -37,7 +37,7 @@ public class BaseUIManager : MonoBehaviour {
     }
 
     private void Update() {
-        if (Input.GetKeyDown(KeyCode.E)) {
+        if (Input.GetKeyDown(KeyCode.E) && !TutorialManager.instance.inTutorial) {
             if (inventoryOpen) {
                 if (nearCrafting) {
                     craftingUI.CloseCrafting();

@@ -13,6 +13,7 @@ public class Tutorial : MonoBehaviour {
         if (index + 1 < tutorialScreens.Count) {
             tutorialScreens[++index].SetActive(true);
         } else {
+            TutorialManager.instance.inTutorial = false;
             gameObject.SetActive(false);
         }
     }
