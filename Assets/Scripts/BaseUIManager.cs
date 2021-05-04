@@ -13,17 +13,28 @@ public class BaseUIManager : MonoBehaviour {
     public CraftingRecipes craftingUI;
     public StockpileTransferUI stockpileUI;
 
+    
+
     public delegate void OnFadeFunction();
 
     [HideInInspector]
     public bool nearCrafting = false;
     [HideInInspector]
     public bool nearStockpile = false;
-
+    [HideInInspector]
+    public AudioSource openChestSound;
+    [HideInInspector]
+    public AudioSource closeChestSound;
     private bool inventoryOpen = false;
 
     [HideInInspector]
     public bool fading = false;
+
+    private void Start()
+    {
+        openChestSound = GetComponents<AudioSource>()[0];
+        closeChestSound = GetComponents<AudioSource>()[1];
+    }
 
     private void Update() {
         if (Input.GetKeyDown(KeyCode.E)) {
@@ -31,6 +42,7 @@ public class BaseUIManager : MonoBehaviour {
                 if (nearCrafting) {
                     craftingUI.CloseCrafting();
                 } else if (nearStockpile) {
+                    closeChestSound.Play();
                     stockpileUI.CloseInventory();
                 } else {
                     playerInventoryUI.CloseInventory();
@@ -42,6 +54,7 @@ public class BaseUIManager : MonoBehaviour {
                     TutorialManager.instance.DisableCraftingTip();
                     TutorialManager.instance.StartCraftingTutorial();
                 } else if (nearStockpile) {
+                    openChestSound.Play();
                     stockpileUI.OpenInventory();
                     TutorialManager.instance.DisableStockpileTip();
                     TutorialManager.instance.StartStockpileTutorial();

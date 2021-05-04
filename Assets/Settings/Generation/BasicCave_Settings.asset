@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e764e19e4820174fadf8d8572a53d70, type: 3}
   m_Name: BasicCave_Settings
   m_EditorClassIdentifier: 
-  seed: -631013714
+  seed: -1790082829
   mapSize: 40
   caveRadius: 30
   spawnBoxSize: 2
   minStaircaseDistance: 10
   removeUnreachableAreas: 1
-  endFloors: {x: 1, y: 10}
+  endFloors: {x: 1, y: 2}
   floorTile: {fileID: 11400000, guid: 91901e662e550154a89d9ef4247e7a34, type: 2}
   wallTile: {fileID: 11400000, guid: 4b30814e9f6913e49a2b1cc29217092d, type: 2}
   rockTile: {fileID: 11400000, guid: 779624739e7509d42bf2a2bb0260a3d7, type: 2}
@@ -39,22 +39,22 @@ MonoBehaviour:
   oreSpawnInformation:
   - rarity: {x: 0.005, y: 0.02}
     oreTile: {fileID: 11400000, guid: 4bc03db2ae3c5d94e9b6246df4c6f657, type: 2}
+  - rarity: {x: 0.05, y: 0.12}
+    oreTile: {fileID: 11400000, guid: edd3c56d6f47a4d359b3e69f4c3a48d9, type: 2}
   - rarity: {x: 0.1, y: 0.15}
     oreTile: {fileID: 11400000, guid: d22d09d6257102a4e98b4869933ca23b, type: 2}
   - rarity: {x: 0.02, y: 0.05}
     oreTile: {fileID: 11400000, guid: 36e29d226c2ecb042bb55e955dad9bb4, type: 2}
   - rarity: {x: 0.02, y: 0.05}
     oreTile: {fileID: 11400000, guid: 53deae3fccbb8784eaa1a84dbcb86483, type: 2}
-  - rarity: {x: 0.05, y: 0.12}
-    oreTile: {fileID: 11400000, guid: edd3c56d6f47a4d359b3e69f4c3a48d9, type: 2}
   enemySpawnLimits: {x: 3, y: 7}
   enemySpawnInformation:
-  - rarity: 0.1
-    enemyPrefab: {fileID: 4320254023474582, guid: 3a71c39bc8e34bf45aa5412ff0898080,
-      type: 3}
-    floatingEnemy: 1
   - rarity: 0.6
     enemyPrefab: {fileID: 4320254023474582, guid: a4d61f64bf2c8e64ebaab79bc1221b8c,
+      type: 3}
+    floatingEnemy: 1
+  - rarity: 0.1
+    enemyPrefab: {fileID: 4320254023474582, guid: 3a71c39bc8e34bf45aa5412ff0898080,
       type: 3}
     floatingEnemy: 1
   - rarity: 0.3

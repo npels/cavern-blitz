@@ -14,8 +14,9 @@ public class Stairs : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision) {
         if (collision.gameObject.tag == "Player") {
-            stairAudio.Play();
+            
             if (descending) {
+                stairAudio.Play();
                 GameManager.instance.uiManager.OpenDescendMessage();
             } else {
                 GameManager.instance.uiManager.OpenLeaveMessage();

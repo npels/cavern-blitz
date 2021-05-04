@@ -22,6 +22,7 @@ public class OreDrop : MonoBehaviour
     {
         if (other.tag == "Player")
         {
+            GameManager.instance.pickUpSound.Play();
             Debug.Log("pick up ore");
             PickupOre();
         }

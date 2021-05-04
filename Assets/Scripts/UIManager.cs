@@ -34,21 +34,25 @@ public class UIManager : MonoBehaviour {
 
     public void OpenDescendMessage() {
         GameManager.instance.player.GetComponent<PlayerMovement>().canMove = false;
+        GameManager.instance.player.GetComponent<PlayerInteractions>().isDescending = true;
         descendMessage.SetActive(true);
     }
 
     public void CloseDescendMessage() {
         GameManager.instance.player.GetComponent<PlayerMovement>().canMove = true;
+        GameManager.instance.player.GetComponent<PlayerInteractions>().isDescending = false;
         descendMessage.SetActive(false);
     }
 
     public void OpenLeaveMessage() {
         GameManager.instance.player.GetComponent<PlayerMovement>().canMove = false;
+        GameManager.instance.player.GetComponent<PlayerInteractions>().isDescending = true;
         leaveMessage.SetActive(true);
     }
 
     public void CloseLeaveMessage() {
         GameManager.instance.player.GetComponent<PlayerMovement>().canMove = true;
+        GameManager.instance.player.GetComponent<PlayerInteractions>().isDescending = false;
         leaveMessage.SetActive(false);
     }
 

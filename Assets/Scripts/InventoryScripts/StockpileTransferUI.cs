@@ -18,6 +18,8 @@ public class StockpileTransferUI : MonoBehaviour {
     private List<InventorySlot> playerMenuSlots;
     private List<InventorySlot> stockpileSlots;
 
+    
+
     private EquipmentSlot armorChestSlot;
     private EquipmentSlot armorGloveSlot;
     private EquipmentSlot armorBootSlot;
@@ -30,7 +32,10 @@ public class StockpileTransferUI : MonoBehaviour {
 
     public InventorySlot selectedItem;
 
+
     private void OnEnable() {
+        
+        
         playerInventory = BaseManager.instance.playerInventory;
         if (playerInventory.stacks == null) {
             stockpileInventory.InitInventory();
@@ -75,6 +80,8 @@ public class StockpileTransferUI : MonoBehaviour {
     }
 
     public void OpenInventory() {
+        
+        
         itemIsSelected = false;
         inventoryOpened = true;
         gameObject.SetActive(true);
@@ -87,6 +94,7 @@ public class StockpileTransferUI : MonoBehaviour {
     }
 
     public void CloseInventory() {
+        
         if (itemIsSelected) {
             int index = playerInventory.TryAddItem(selectedItem.stack.item, selectedItem.stack.count);
             if (index == -1) {
@@ -102,6 +110,7 @@ public class StockpileTransferUI : MonoBehaviour {
                 selectedItem.stack = null;
             }
         }
+        
         itemIsSelected = false;
         inventoryOpened = false;
         gameObject.SetActive(false);
