@@ -1,25 +1,25 @@
 fileFormatVersion: 2
-guid: cc805bd3b2e17c14b83a0f46b0b0a5ae
+guid: 34cfe76f87dfccc4aba2dccbec400dba
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 988917147571243707
-    second: moth_fly_0
+      213: -1011880802010920795
+    second: skelly_0
   - first:
-      213: 8414046614984510675
-    second: moth_fly_1
+      213: -43999314859511557
+    second: skelly_1
   - first:
-      213: 3091382094108908129
-    second: moth_fly_2
+      213: 6994735492953745287
+    second: skelly_2
   - first:
-      213: -1220587510195093534
-    second: moth_fly_3
+      213: 6865650891491693643
+    second: skelly_3
   - first:
-      213: -5382826504562268706
-    second: moth_fly_4
+      213: 6951761765593758769
+    second: skelly_4
   - first:
-      213: 5670375001789851212
-    second: moth_fly_5
+      213: -2783112494604299931
+    second: skelly_5
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -105,13 +105,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: moth_fly_0
+      name: skelly_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 48
-        height: 48
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -119,20 +119,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bbac64df7e659bd00800000000000000
-      internalID: 988917147571243707
+      spriteID: 5a80a1195c315f1f0800000000000000
+      internalID: -1011880802010920795
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: moth_fly_1
+      name: skelly_1
       rect:
         serializedVersion: 2
-        x: 48
+        x: 32
         y: 0
-        width: 48
-        height: 48
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -140,20 +140,41 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3dccab911d2b4c470800000000000000
-      internalID: 8414046614984510675
+      spriteID: bf030733bdea36ff0800000000000000
+      internalID: -43999314859511557
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: moth_fly_2
+      name: skelly_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 78723530fda421160800000000000000
+      internalID: 6994735492953745287
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: skelly_3
       rect:
         serializedVersion: 2
         x: 96
         y: 0
-        width: 48
-        height: 48
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -161,20 +182,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 16a5d50c2abc6ea20800000000000000
-      internalID: 3091382094108908129
+      spriteID: b44d43b2c11b74f50800000000000000
+      internalID: 6865650891491693643
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: moth_fly_3
+      name: skelly_4
       rect:
         serializedVersion: 2
-        x: 144
+        x: 128
         y: 0
-        width: 48
-        height: 48
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -182,20 +203,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2effa8d502a9f0fe0800000000000000
-      internalID: -1220587510195093534
+      spriteID: 13cbb596e7e997060800000000000000
+      internalID: 6951761765593758769
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: moth_fly_4
+      name: skelly_5
       rect:
         serializedVersion: 2
-        x: 192
+        x: 160
         y: 0
-        width: 48
-        height: 48
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -203,29 +224,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ed5220440db5c45b0800000000000000
-      internalID: -5382826504562268706
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: moth_fly_5
-      rect:
-        serializedVersion: 2
-        x: 240
-        y: 0
-        width: 48
-        height: 48
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c4660fc650831be40800000000000000
-      internalID: 5670375001789851212
+      spriteID: 561d8258ee56069d0800000000000000
+      internalID: -2783112494604299931
       vertices: []
       indices: 
       edges: []

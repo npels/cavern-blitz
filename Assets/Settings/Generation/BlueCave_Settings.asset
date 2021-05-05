@@ -53,10 +53,6 @@ MonoBehaviour:
     enemyPrefab: {fileID: 5443817944558168496, guid: 9fa745935cecf8543bfe91e6ebe32461,
       type: 3}
     floatingEnemy: 0
-  - rarity: 0.2
-    enemyPrefab: {fileID: 4320254023474582, guid: a4d61f64bf2c8e64ebaab79bc1221b8c,
-      type: 3}
-    floatingEnemy: 1
   - rarity: 0.4
     enemyPrefab: {fileID: 4320254023474582, guid: 3a71c39bc8e34bf45aa5412ff0898080,
       type: 3}
