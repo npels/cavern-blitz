@@ -8,7 +8,7 @@ public class RopeItem : ConsumableItem {
     public override int Activate() {
         if ((GameManager.instance.player.transform.position - Vector3.one * 0.5f).magnitude > 3) {
             if (GameManager.instance.setRope) {
-                
+                GameManager.instance.ropeSound.Play();
                 GameManager.instance.setRope = false;
                 GameManager.instance.player.transform.position = new Vector3(0.5f, 0.5f, 0);
                 return -1;
