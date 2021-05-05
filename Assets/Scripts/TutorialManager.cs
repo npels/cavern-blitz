@@ -9,6 +9,8 @@ public class TutorialManager : MonoBehaviour {
     public static bool completedCraftingTutorial = false;
     public static bool completedStockpileTutorial = false;
 
+    public bool inTutorial = false;
+
     public GameObject craftingTip;
     public GameObject craftingTutorial;
     public GameObject craftingArrow;
@@ -51,6 +53,7 @@ public class TutorialManager : MonoBehaviour {
         if (completedCraftingTutorial) return;
         craftingTutorial.SetActive(true);
         craftingArrow.SetActive(false);
+        inTutorial = true;
         completedCraftingTutorial = true;
     }
 
@@ -58,6 +61,7 @@ public class TutorialManager : MonoBehaviour {
         if (completedStockpileTutorial) return;
         stockpileTutorial.SetActive(true);
         stockpileArrow.SetActive(false);
+        inTutorial = true;
         completedStockpileTutorial = true;
     }
 }

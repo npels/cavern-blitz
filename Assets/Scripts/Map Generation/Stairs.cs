@@ -16,7 +16,6 @@ public class Stairs : MonoBehaviour {
         if (collision.gameObject.tag == "Player") {
             
             if (descending) {
-                stairAudio.Play();
                 GameManager.instance.uiManager.OpenDescendMessage();
             } else {
                 GameManager.instance.uiManager.OpenLeaveMessage();
