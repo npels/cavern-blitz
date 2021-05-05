@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 1933427475957761428}
   - component: {fileID: 8926603330224427147}
   m_Layer: 10
-  m_Name: flameskull
+  m_Name: flameskull green
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -74,7 +74,7 @@ SpriteRenderer:
   m_SortingLayerID: 657488151
   m_SortingLayer: 3
   m_SortingOrder: 0
-  m_Sprite: {fileID: -1011880802010920795, guid: 34cfe76f87dfccc4aba2dccbec400dba,
+  m_Sprite: {fileID: 7460919518904249087, guid: e7ffef1d7832f0a40aa698f015ac3d31,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -135,13 +135,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eff76623d1586704eba8a5c47806c833, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 6
+  maxHealth: 1
   speed: 6
   acceleration: 8
   aggroRange: 6
   itemDrop: {fileID: 6152912218843919099, guid: 84ca6d8b21b1fdb4e9b5b442054e2715,
     type: 3}
-  attackDamage: 5
+  attackDamage: 3
 --- !u!95 &8926603330224427147
 Animator:
   serializedVersion: 3
@@ -152,7 +152,7 @@ Animator:
   m_GameObject: {fileID: 4320254023474582}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 13008996061f27d47b7e19b62099246d, type: 2}
+  m_Controller: {fileID: 9100000, guid: b9444a117af479a4487ec9880be0e70e, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
