@@ -296,6 +296,7 @@ public class PlayerInteractions : MonoBehaviour {
     public void HealPlayer(float amount) {
         healthSound.Play();
         currentHealth += amount;
+        if (currentHealth > maxHealth) currentHealth = maxHealth;
         GameManager.instance.uiManager.SetHealth(currentHealth / maxHealth);
     }
 
