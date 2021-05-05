@@ -113,7 +113,7 @@ public class PlayerInteractions : MonoBehaviour {
                     return;
                 }
             } else {
-                if (leftInput != 0 && !isMining && !isAttacking && mineTimer <= 0 && !inventoryOpen) {
+                if (leftInput != 0 && !isMining && !isAttacking && mineTimer <= 0 && !inventoryOpen && !isDescending) {
                     mineTimer = (PlayerAttributes.miningSpeed - PlayerAttributes.miningSpeedBonus);
                     StartCoroutine(MiningRoutine(true));
                     return;
@@ -130,7 +130,7 @@ public class PlayerInteractions : MonoBehaviour {
                     return;
                 }
             } else {
-                if (!isMining && !isAttacking && mineTimer <= 0 && !inventoryOpen) {
+                if (!isMining && !isAttacking && mineTimer <= 0 && !inventoryOpen && !isDescending) {
                     mineTimer = (PlayerAttributes.miningSpeed - PlayerAttributes.miningSpeedBonus);
                     StartCoroutine(MiningRoutine(false));
                     return;
